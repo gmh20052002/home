@@ -1,17 +1,23 @@
 package com.gmh.wzz.core.dao;
 
+import java.util.List;
+
+import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
 
 public interface WzzBusinessClassEntityMapper {
-    int deleteByPrimaryKey(String id);
+	int deleteByPrimaryKey(String id);
 
-    int insert(WzzBusinessClassEntity record);
+	int insert(WzzBusinessClassEntity record);
 
-    int insertSelective(WzzBusinessClassEntity record);
+	int insertSelective(WzzBusinessClassEntity record);
 
-    WzzBusinessClassEntity selectByPrimaryKey(String id);
+	WzzBusinessClassEntity selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(WzzBusinessClassEntity record);
+	List<WzzBusinessClassEntity> selectByCondition(
+			WzzBusinessClassEntity condition, Page<WzzBusinessClassEntity> page);
 
-    int updateByPrimaryKey(WzzBusinessClassEntity record);
+	int updateByPrimaryKeySelective(WzzBusinessClassEntity record);
+
+	int updateByPrimaryKey(WzzBusinessClassEntity record);
 }

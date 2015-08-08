@@ -10,7 +10,7 @@
                  http://www.springframework.org/schema/mvc    
                         http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 	<!-- 自动扫描 -->
-	<context:component-scan base-package="com.cn.hnust" />
+	<context:component-scan base-package="com.gmh.wzz" />
 	<!-- 引入配置文件 -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -20,18 +20,17 @@
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
 		<!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="driverClassName" value="${driverClassName}" />
 		<!-- 基本属性 url、user、password -->
-		<property name="url"
-			value="jdbc:mysql://120.25.226.197:3306/wzz?useUnicode=true&characterEncoding=utf-8;" />
-		<property name="username" value="root" />
-		<property name="password" value="wzzmysql" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
 		<!-- 配置初始化大小、最小、最大 -->
-		<property name="initialSize" value="3" />
-		<property name="minIdle" value="3" />
-		<property name="maxActive" value="20" />
+		<property name="initialSize" value="${initialSize}" />
+		<property name="minIdle" value="${minIdle}" />
+		<property name="maxActive" value="${maxActive}" />
 		<!-- 配置获取连接等待超时的时间 -->
-		<property name="maxWait" value="60000" />
+		<property name="maxWait" value="${maxWait}" />
 		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
 		<property name="timeBetweenEvictionRunsMillis" value="60000" />
 		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
@@ -48,12 +47,19 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations" value="classpath:com/cn/hnust/mapping/*.xml"></property>
+		<property name="mapperLocations"
+			value="classpath:com/gmh/wzz/core/entity/mapper/*.xml"></property>
+
+		<property name="plugins">
+			<bean
+				class="com.gmh.wzz.mybatis.MybatisSpringPageInterceptor">
+			</bean>
+		</property>
 	</bean>
 
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.cn.hnust.dao" />
+		<property name="basePackage" value="com.gmh.wzz.core.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 
