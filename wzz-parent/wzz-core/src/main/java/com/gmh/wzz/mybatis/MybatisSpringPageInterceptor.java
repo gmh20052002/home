@@ -292,7 +292,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 	protected void queryTotalRecord(Page<?> page, Object parameterObject,
 			MappedStatement mappedStatement, Connection connection)
 			throws SQLException {
-		BoundSql boundSql = mappedStatement.getBoundSql(page);
+		BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
 		String sql = boundSql.getSql();
 		String countSql = this.buildCountSql(sql);
 		if (log.isDebugEnabled()) {
@@ -314,7 +314,10 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				long totalRecord = rs.getLong(1);
+				int pageSize = page.getPageSize();
+				int totalPage = (int)(totalRecord  +  pageSize  - 1) / pageSize;  
 				page.setTotalSize(totalRecord);
+				page.setTotalPage(totalPage);
 			}
 		} finally {
 			if (rs != null)

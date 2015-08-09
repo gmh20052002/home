@@ -10,7 +10,7 @@ public class Page<T> implements Serializable {
 	private int pageIndex;
 	private int pageSize;
 	private long totalSize;
-	private int totalPage;
+	private int totalPage = -1;
 
 	public List<T> getDatas() {
 		return datas;

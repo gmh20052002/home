@@ -10,43 +10,25 @@
 	<sql id="Base_Column_List">
 		ID, NAME, PARENT_ID, REMARK
 	</sql>
-	<select id="countByCondition" resultMap="BaseResultMap"
-		parameterType="com.gmh.wzz.api.entity.WzzBusinessClassEntity">
-		select
-		1
-		from WZZ_BUSINESS_CLASS
-		<where>
-			<if test="id != null">
-				AND ID = #{id,jdbcType=VARCHAR},
-			</if>
-			<if test="name != null">
-				AND NAME like '%${name}%',
-			</if>
-			<if test="parentId != null">
-				AND PARENT_ID = #{parentId,jdbcType=VARCHAR},
-			</if>
-			<if test="remark != null">
-				AND REMARK like '%${remark}%',
-			</if>
-		</where>
-	</select>
 	<select id="selectByCondition" resultMap="BaseResultMap"
 		parameterType="com.gmh.wzz.api.entity.WzzBusinessClassEntity">
 		select
 		<include refid="Base_Column_List" />
 		from WZZ_BUSINESS_CLASS
 		<where>
-			<if test="id != null">
-				AND ID = #{id,jdbcType=VARCHAR},
-			</if>
-			<if test="name != null">
-				AND NAME like '%${name}%',
-			</if>
-			<if test="parentId != null">
-				AND PARENT_ID = #{parentId,jdbcType=VARCHAR},
-			</if>
-			<if test="remark != null">
-				AND REMARK like '%${remark}%',
+			<if test="condition != null">
+				<if test="condition.id != null">
+					AND ID = #{condition.id,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.name != null">
+					AND NAME like '%${condition.name}%'
+				</if>
+				<if test="condition.parentId != null">
+					AND PARENT_ID = #{condition.parentId,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.remark != null">
+					AND REMARK like '%${condition.remark}%'
+				</if>
 			</if>
 		</where>
 	</select>

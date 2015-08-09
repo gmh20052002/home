@@ -19,11 +19,6 @@
     </dependency>
     <dependency>
     	<groupId>com.gmh.wzz</groupId>
-    	<artifactId>wzz-api</artifactId>
-    	<version>${project.version}</version>
-    </dependency>
-    <dependency>
-    	<groupId>com.gmh.wzz</groupId>
     	<artifactId>wzz-core</artifactId>
     	<version>${project.version}</version>
     </dependency>

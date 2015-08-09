@@ -4,10 +4,10 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="wzz-api-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/wzz-api/wzz-api">
+        <dependent-module archiveName="wzz-core-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/wzz-core/wzz-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="wzz-core-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/wzz-core/wzz-core">
+        <dependent-module archiveName="wzz-api-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/wzz-api/wzz-api">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="wzz-gw"/>
