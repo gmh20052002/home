@@ -8,16 +8,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
+import com.gmh.wzz.api.entity.Sort;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
 import com.gmh.wzz.api.service.WzzService;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring-mybatis.xml" })
 public class WzzServiceImplTest {
-    @Autowired
-    ApplicationContext ctx;
+	@Autowired
+	ApplicationContext ctx;
 
 	@Before
 	public void setUp() throws Exception {
@@ -25,13 +26,16 @@ public class WzzServiceImplTest {
 
 	@Test
 	public void testFindWzzBusinessClass() {
-		
-		WzzService wzzService = (WzzService)ctx.getBean("wzzService");
+
+		WzzService wzzService = (WzzService) ctx.getBean("wzzService");
 		try {
 			WzzBusinessClassEntity condition = new WzzBusinessClassEntity();
-//			condition.setName("xxx");
-			Page<WzzBusinessClassEntity> results = wzzService.findWzzBusinessClass(condition, 1, 10);
-			
+			// condition.setName("xxx");
+			Order order = new Order("name", Sort.DESC);
+			order.setOrderBy("remark", Sort.DESC);
+			Page<WzzBusinessClassEntity> results = wzzService
+					.findWzzBusinessClass(condition, order, 1, 10);
+
 			System.out.println(results);
 		} catch (Exception e) {
 			e.printStackTrace();

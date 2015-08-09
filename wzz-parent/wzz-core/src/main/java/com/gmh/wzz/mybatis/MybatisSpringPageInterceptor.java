@@ -27,6 +27,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 
 @Intercepts({
@@ -44,6 +45,8 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 	protected String databaseType;// 数据库类型，不同的数据库有不同的分页方法
 
 	protected ThreadLocal<Page<?>> pageThreadLocal = new ThreadLocal<Page<?>>();
+
+	protected ThreadLocal<Order> orderThreadLocal = new ThreadLocal<Order>();
 
 	public String getDatabaseType() {
 		return databaseType;
@@ -77,15 +80,19 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 	public Object intercept(Invocation invocation) throws Throwable {
 		if (invocation.getTarget() instanceof StatementHandler) { // 控制SQL和查询总数的地方
 			Page page = pageThreadLocal.get();
-			if (page == null) { // 不是分页查询
-				return invocation.proceed();
-			}
-
+			Order order = orderThreadLocal.get();
 			RoutingStatementHandler handler = (RoutingStatementHandler) invocation
 					.getTarget();
 			StatementHandler delegate = (StatementHandler) ReflectUtil
 					.getFieldValue(handler, "delegate");
 			BoundSql boundSql = delegate.getBoundSql();
+			if (page == null) { // 不是分页查询
+				if (order != null) {
+					String orderSql = buildOrderSql(order, boundSql.getSql());
+					ReflectUtil.setFieldValue(boundSql, "sql", orderSql);
+				}
+				return invocation.proceed();
+			}
 
 			Connection connection = (Connection) invocation.getArgs()[0];
 			prepareAndCheckDatabaseType(connection); // 准备数据库类型
@@ -103,6 +110,9 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 			}
 
 			String sql = boundSql.getSql();
+			if (order != null) {
+				sql = buildOrderSql(order, sql);
+			}
 			String pageSql = buildPageSql(page, sql);
 			if (log.isDebugEnabled()) {
 				log.debug("分页时, 生成分页pageSql: " + pageSql);
@@ -113,6 +123,11 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 		} else { // 查询结果的地方
 			// 获取是否有分页Page对象
 			Page<?> page = findPageObject(invocation.getArgs()[1]);
+			// 获取是否有排序Order对象
+			Order order = findOrderObject(invocation.getArgs()[1]);
+			if (order != null) {
+				orderThreadLocal.set(order);
+			}
 			if (page == null) {
 				if (log.isTraceEnabled()) {
 					log.trace("没有Page对象作为参数, 不是分页查询.");
@@ -137,6 +152,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 				return resultObj;
 			} finally {
 				pageThreadLocal.remove();
+				orderThreadLocal.remove();
 			}
 		}
 	}
@@ -148,6 +164,19 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 			for (Object val : ((Map<?, ?>) parameterObj).values()) {
 				if (val instanceof Page<?>) {
 					return (Page<?>) val;
+				}
+			}
+		}
+		return null;
+	}
+
+	protected Order findOrderObject(Object parameterObj) {
+		if (parameterObj instanceof Order) {
+			return (Order) parameterObj;
+		} else if (parameterObj instanceof Map) {
+			for (Object val : ((Map<?, ?>) parameterObj).values()) {
+				if (val instanceof Order) {
+					return (Order) val;
 				}
 			}
 		}
@@ -239,6 +268,14 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 		return sql;
 	}
 
+	protected String buildOrderSql(Order order, String sql) {
+		if(order.getOrderBy() != null && !"".equals(order.getOrderBy())){
+			return new StringBuilder(sql).append(" ORDER BY " + order.getOrderBy()).toString();
+		}else{
+			return sql;
+		}
+	}
+
 	/**
 	 * <pre>
 	 * 生成Mysql分页查询SQL
@@ -315,7 +352,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 			if (rs.next()) {
 				long totalRecord = rs.getLong(1);
 				int pageSize = page.getPageSize();
-				int totalPage = (int)(totalRecord  +  pageSize  - 1) / pageSize;  
+				int totalPage = (int) (totalRecord + pageSize - 1) / pageSize;
 				page.setTotalSize(totalRecord);
 				page.setTotalPage(totalPage);
 			}
