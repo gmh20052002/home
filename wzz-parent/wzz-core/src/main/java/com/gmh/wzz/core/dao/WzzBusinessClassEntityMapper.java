@@ -3,6 +3,7 @@ package com.gmh.wzz.core.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;

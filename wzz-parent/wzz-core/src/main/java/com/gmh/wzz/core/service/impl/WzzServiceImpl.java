@@ -2,12 +2,14 @@ package com.gmh.wzz.core.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.stereotype.Service;
+
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.gmh.wzz.core.dao.WzzBusinessClassEntityMapper;
-
+@Service
 public class WzzServiceImpl implements WzzService {
 	@Autowired
 	private WzzBusinessClassEntityMapper wzzBusinessClassEntityMapper;

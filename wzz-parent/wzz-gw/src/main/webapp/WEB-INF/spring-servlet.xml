@@ -11,6 +11,7 @@
      http://www.springframework.org/schema/tx 
      http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+	<import resource="spring-mybatis.xml"/>
 	<!-- 自动注入 -->
 	<context:component-scan base-package="com.gmh.wzz" />
 </beans>
