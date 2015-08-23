@@ -6,7 +6,10 @@ public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String orderBy = "";
-
+	public Order(){
+		
+	}
+			
 	public Order(String field, Sort sort) {
 		if (field != null) {
 			orderBy += field;

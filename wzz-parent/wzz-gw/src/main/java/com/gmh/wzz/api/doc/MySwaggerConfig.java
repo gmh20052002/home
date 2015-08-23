@@ -1,13 +1,14 @@
 package com.gmh.wzz.api.doc;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
- 
+
 import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
 import com.mangofactory.swagger.models.dto.ApiInfo;
 import com.mangofactory.swagger.plugin.EnableSwagger;
 import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
- 
+
 /**
  * 项目名称：apidoc
  *
@@ -22,9 +23,9 @@ import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
 // Loads the spring beans required by the framework
 public class MySwaggerConfig
 {
- 
+
     private SpringSwaggerConfig springSwaggerConfig;
- 
+
     /**
      * Required to autowire SpringSwaggerConfig
      */
@@ -33,7 +34,7 @@ public class MySwaggerConfig
     {
         this.springSwaggerConfig = springSwaggerConfig;
     }
- 
+
     /**
      * Every SwaggerSpringMvcPlugin bean is picked up by the swagger-mvc
      * framework - allowing for multiple swagger groups i.e. same code base
@@ -42,18 +43,19 @@ public class MySwaggerConfig
     @Bean
     public SwaggerSpringMvcPlugin customImplementation()
     {
-        return new SwaggerSpringMvcPlugin(this.springSwaggerConfig).apiInfo(apiInfo()).includePatterns(".*?");
+        return new SwaggerSpringMvcPlugin(this.springSwaggerConfig).apiInfo(apiInfo()).includePatterns(
+                ".*?");
     }
- 
+
     private ApiInfo apiInfo()
     {
         ApiInfo apiInfo = new ApiInfo(
-                "My Apps API Title", 
-                "My Apps API Description",
+                "网蜘蛛系统REST API接口", 
+                "各个controller下对应相应业务接口",
                 "My Apps API terms of service", 
-                "My Apps API Contact Email", 
-                "My Apps API Licence Type",
-                "My Apps API License URL");
+                "郭明华",
+                null,
+                null);
         return apiInfo;
     }
 }

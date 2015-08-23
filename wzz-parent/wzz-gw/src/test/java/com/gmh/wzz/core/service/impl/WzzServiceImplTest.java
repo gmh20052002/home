@@ -15,7 +15,7 @@ import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
 import com.gmh.wzz.api.service.WzzService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:spring-mybatis.xml" })
+@ContextConfiguration(locations = { "classpath:spring-servlet.xml" })
 public class WzzServiceImplTest {
 	@Autowired
 	ApplicationContext ctx;

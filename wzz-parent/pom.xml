@@ -13,7 +13,7 @@
 	</modules>
 	<properties>
 		<!-- spring版本号 -->
-		<spring.version>3.2.8.RELEASE</spring.version>
+		<spring.version>3.2.9.RELEASE</spring.version>
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.2.6</mybatis.version>
 		<!-- log4j日志文件管理包版本 -->
@@ -214,6 +214,11 @@
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
 				<version>2.4.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>5.2.1.Final</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

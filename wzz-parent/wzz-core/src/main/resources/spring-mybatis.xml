@@ -69,6 +69,4 @@
 	</bean>
 
 	<bean name="wzzService" class="com.gmh.wzz.core.service.impl.WzzServiceImpl" />
-	
-	<bean name="swaggerConfig" class="com.gmh.wzz.api.doc.MySwaggerConfig"/>
 </beans>

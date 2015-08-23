@@ -7,9 +7,9 @@ public class Page<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<T> datas;
-	private int pageIndex;
-	private int pageSize;
-	private long totalSize;
+	private int pageIndex = 0;
+	private int pageSize = 10;
+	private long totalSize = 0;
 	private int totalPage = -1;
 
 	public List<T> getDatas() {
@@ -50,5 +50,12 @@ public class Page<T> implements Serializable {
 
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
+	}
+
+	@Override
+	public String toString() {
+		return "Page [datas=" + datas + ", pageIndex=" + pageIndex
+				+ ", pageSize=" + pageSize + ", totalSize=" + totalSize
+				+ ", totalPage=" + totalPage + "]";
 	}
 }
