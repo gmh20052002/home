@@ -1,5 +1,11 @@
 package com.gmh.wzz.core.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.gmh.wzz.api.entity.Order;
+import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
 
 public interface WzzWifiShopEntityMapper {
@@ -14,4 +20,8 @@ public interface WzzWifiShopEntityMapper {
     int updateByPrimaryKeySelective(WzzWifiShopEntity record);
 
     int updateByPrimaryKey(WzzWifiShopEntity record);
+
+	List<WzzWifiShopEntity> selectByCondition(
+			@Param("condition") WzzWifiShopEntity condition,
+			@Param("order") Order order, Page<WzzWifiShopEntity> page);
 }

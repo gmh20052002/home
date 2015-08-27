@@ -2,6 +2,7 @@ package com.gmh.wzz.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,9 +37,49 @@ public class WzzBusinessClassController {
 
 	@RequestMapping(value="/v1/businessClass",method = RequestMethod.POST)
 	@ApiOperation(value = "新增业务分类", httpMethod = "POST", response = WzzBusinessClassEntity.class)
-	public @ResponseBody WzzBusinessClassEntity addBusinessClasses(WzzBusinessClassEntity condition) {
+	public @ResponseBody WzzBusinessClassEntity addBusinessClasses(WzzBusinessClassEntity data) {
 		WzzBusinessClassEntity result = null;
 		try {
+			wzzService.insertWzzBusinessClass(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@RequestMapping(value="/v1/businessClass/{id}",method = RequestMethod.GET)
+	@ApiOperation(value = "根据id获取业务分类", httpMethod = "GET", response = WzzBusinessClassEntity.class)
+	public @ResponseBody WzzBusinessClassEntity getWzzBusinessClassById(@PathVariable String id)
+			throws Exception {
+		WzzBusinessClassEntity result = null;
+		try {
+			result = wzzService.getWzzBusinessClassById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@RequestMapping(value="/v1/businessClass",method = RequestMethod.PUT)
+	@ApiOperation(value = "修改业务分类", httpMethod = "PUT", response = WzzBusinessClassEntity.class)
+	public WzzBusinessClassEntity updateWzzBusinessClass(
+			WzzBusinessClassEntity data) throws Exception {
+		WzzBusinessClassEntity result = null;
+		try {
+			result = wzzService.updateWzzBusinessClass(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@RequestMapping(value="/v1/businessClass",method = RequestMethod.DELETE)
+	@ApiOperation(value = "删除业务分类", httpMethod = "DELETE", response = WzzBusinessClassEntity.class)
+	public WzzBusinessClassEntity deleteWzzBusinessClass(
+			WzzBusinessClassEntity data) throws Exception {
+		WzzBusinessClassEntity result = null;
+		try {
+			result = wzzService.deleteWzzBusinessClass(data);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

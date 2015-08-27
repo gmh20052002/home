@@ -1,199 +1,255 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gmh.wzz.core.dao.WzzWifiShopEntityMapper" >
-  <resultMap id="BaseResultMap" type="com.gmh.wzz.api.entity.WzzWifiShopEntity" >
-    <id column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
-    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
-    <result column="CLASS_ID" property="classId" jdbcType="VARCHAR" />
-    <result column="WORK_TEL" property="workTel" jdbcType="VARCHAR" />
-    <result column="OVER_USER" property="overUser" jdbcType="VARCHAR" />
-    <result column="MOBILE_TEL" property="mobileTel" jdbcType="VARCHAR" />
-    <result column="WIFI" property="wifi" jdbcType="VARCHAR" />
-    <result column="WIFI_PASSWORD" property="wifiPassword" jdbcType="VARCHAR" />
-    <result column="FLOOR" property="floor" jdbcType="VARCHAR" />
-    <result column="WIFI_XY" property="wifiXy" jdbcType="VARCHAR" />
-    <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
-    <result column="CITY" property="city" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    ID, NAME, ADDRESS, REMARK, CLASS_ID, WORK_TEL, OVER_USER, MOBILE_TEL, WIFI, WIFI_PASSWORD, 
-    FLOOR, WIFI_XY, PROVINCE, CITY
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from WZZ_WIFI_SHOP
-    where ID = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from WZZ_WIFI_SHOP
-    where ID = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity" >
-    insert into WZZ_WIFI_SHOP (ID, NAME, ADDRESS, 
-      REMARK, CLASS_ID, WORK_TEL, 
-      OVER_USER, MOBILE_TEL, WIFI, 
-      WIFI_PASSWORD, FLOOR, WIFI_XY, 
-      PROVINCE, CITY)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{workTel,jdbcType=VARCHAR}, 
-      #{overUser,jdbcType=VARCHAR}, #{mobileTel,jdbcType=VARCHAR}, #{wifi,jdbcType=VARCHAR}, 
-      #{wifiPassword,jdbcType=VARCHAR}, #{floor,jdbcType=VARCHAR}, #{wifiXy,jdbcType=VARCHAR}, 
-      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity" >
-    insert into WZZ_WIFI_SHOP
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        ID,
-      </if>
-      <if test="name != null" >
-        NAME,
-      </if>
-      <if test="address != null" >
-        ADDRESS,
-      </if>
-      <if test="remark != null" >
-        REMARK,
-      </if>
-      <if test="classId != null" >
-        CLASS_ID,
-      </if>
-      <if test="workTel != null" >
-        WORK_TEL,
-      </if>
-      <if test="overUser != null" >
-        OVER_USER,
-      </if>
-      <if test="mobileTel != null" >
-        MOBILE_TEL,
-      </if>
-      <if test="wifi != null" >
-        WIFI,
-      </if>
-      <if test="wifiPassword != null" >
-        WIFI_PASSWORD,
-      </if>
-      <if test="floor != null" >
-        FLOOR,
-      </if>
-      <if test="wifiXy != null" >
-        WIFI_XY,
-      </if>
-      <if test="province != null" >
-        PROVINCE,
-      </if>
-      <if test="city != null" >
-        CITY,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="classId != null" >
-        #{classId,jdbcType=VARCHAR},
-      </if>
-      <if test="workTel != null" >
-        #{workTel,jdbcType=VARCHAR},
-      </if>
-      <if test="overUser != null" >
-        #{overUser,jdbcType=VARCHAR},
-      </if>
-      <if test="mobileTel != null" >
-        #{mobileTel,jdbcType=VARCHAR},
-      </if>
-      <if test="wifi != null" >
-        #{wifi,jdbcType=VARCHAR},
-      </if>
-      <if test="wifiPassword != null" >
-        #{wifiPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="floor != null" >
-        #{floor,jdbcType=VARCHAR},
-      </if>
-      <if test="wifiXy != null" >
-        #{wifiXy,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null" >
-        #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null" >
-        #{city,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity" >
-    update WZZ_WIFI_SHOP
-    <set >
-      <if test="name != null" >
-        NAME = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        ADDRESS = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        REMARK = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="classId != null" >
-        CLASS_ID = #{classId,jdbcType=VARCHAR},
-      </if>
-      <if test="workTel != null" >
-        WORK_TEL = #{workTel,jdbcType=VARCHAR},
-      </if>
-      <if test="overUser != null" >
-        OVER_USER = #{overUser,jdbcType=VARCHAR},
-      </if>
-      <if test="mobileTel != null" >
-        MOBILE_TEL = #{mobileTel,jdbcType=VARCHAR},
-      </if>
-      <if test="wifi != null" >
-        WIFI = #{wifi,jdbcType=VARCHAR},
-      </if>
-      <if test="wifiPassword != null" >
-        WIFI_PASSWORD = #{wifiPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="floor != null" >
-        FLOOR = #{floor,jdbcType=VARCHAR},
-      </if>
-      <if test="wifiXy != null" >
-        WIFI_XY = #{wifiXy,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null" >
-        PROVINCE = #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null" >
-        CITY = #{city,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity" >
-    update WZZ_WIFI_SHOP
-    set NAME = #{name,jdbcType=VARCHAR},
-      ADDRESS = #{address,jdbcType=VARCHAR},
-      REMARK = #{remark,jdbcType=VARCHAR},
-      CLASS_ID = #{classId,jdbcType=VARCHAR},
-      WORK_TEL = #{workTel,jdbcType=VARCHAR},
-      OVER_USER = #{overUser,jdbcType=VARCHAR},
-      MOBILE_TEL = #{mobileTel,jdbcType=VARCHAR},
-      WIFI = #{wifi,jdbcType=VARCHAR},
-      WIFI_PASSWORD = #{wifiPassword,jdbcType=VARCHAR},
-      FLOOR = #{floor,jdbcType=VARCHAR},
-      WIFI_XY = #{wifiXy,jdbcType=VARCHAR},
-      PROVINCE = #{province,jdbcType=VARCHAR},
-      CITY = #{city,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
+<mapper namespace="com.gmh.wzz.core.dao.WzzWifiShopEntityMapper">
+	<resultMap id="BaseResultMap" type="com.gmh.wzz.api.entity.WzzWifiShopEntity">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="CLASS_ID" property="classId" jdbcType="VARCHAR" />
+		<result column="WORK_TEL" property="workTel" jdbcType="VARCHAR" />
+		<result column="OVER_USER" property="overUser" jdbcType="VARCHAR" />
+		<result column="MOBILE_TEL" property="mobileTel" jdbcType="VARCHAR" />
+		<result column="WIFI" property="wifi" jdbcType="VARCHAR" />
+		<result column="WIFI_PASSWORD" property="wifiPassword"
+			jdbcType="VARCHAR" />
+		<result column="FLOOR" property="floor" jdbcType="VARCHAR" />
+		<result column="WIFI_XY" property="wifiXy" jdbcType="VARCHAR" />
+		<result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+		<result column="CITY" property="city" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, NAME, ADDRESS, REMARK, CLASS_ID, WORK_TEL, OVER_USER, MOBILE_TEL,
+		WIFI, WIFI_PASSWORD,
+		FLOOR, WIFI_XY, PROVINCE, CITY
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from WZZ_WIFI_SHOP
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from WZZ_WIFI_SHOP
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
+		select
+		<include refid="Base_Column_List" />
+		from WZZ_WIFI_SHOP
+		<where>
+			<if test="condition != null">
+				<if test="condition.id != null">
+					AND ID = #{condition.id,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.address != null">
+					AND ADDRESS like '%${condition.address}%'
+				</if>
+				<if test="condition.remark != null">
+					AND REMARK like '%${condition.remark}%'
+				</if>
+				<if test="condition.classId != null">
+					AND CLASS_ID = #{condition.classId,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.workTel != null">
+					AND WORK_TEL like '%${condition.workTel}%'
+				</if>
+				<if test="condition.overUser != null">
+					AND OVER_USER like '%${condition.overUser}%'
+				</if>
+				<if test="condition.mobileTel != null">
+					AND MOBILE_TEL like '%${condition.mobileTel}%'
+				</if>
+				<if test="condition.wifi != null">
+					AND WIFI = #{condition.wifi,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.wifiPassword != null">
+					AND WIFI_PASSWORD = #{condition.wifiPassword,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.floor != null">
+					AND FLOOR = #{condition.floor,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.wifiXy != null">
+					AND WIFI_XY = #{condition.wifiXy,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.province != null">
+					AND PROVINCE = #{condition.province,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.city != null">
+					AND CITY = #{condition.city,jdbcType=VARCHAR}
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
+		insert into WZZ_WIFI_SHOP (ID, NAME, ADDRESS,
+		REMARK, CLASS_ID, WORK_TEL,
+		OVER_USER, MOBILE_TEL, WIFI,
+		WIFI_PASSWORD, FLOOR, WIFI_XY,
+		PROVINCE, CITY)
+		values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{workTel,jdbcType=VARCHAR},
+		#{overUser,jdbcType=VARCHAR}, #{mobileTel,jdbcType=VARCHAR},
+		#{wifi,jdbcType=VARCHAR},
+		#{wifiPassword,jdbcType=VARCHAR}, #{floor,jdbcType=VARCHAR}, #{wifiXy,jdbcType=VARCHAR},
+		#{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
+		insert into WZZ_WIFI_SHOP
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="classId != null">
+				CLASS_ID,
+			</if>
+			<if test="workTel != null">
+				WORK_TEL,
+			</if>
+			<if test="overUser != null">
+				OVER_USER,
+			</if>
+			<if test="mobileTel != null">
+				MOBILE_TEL,
+			</if>
+			<if test="wifi != null">
+				WIFI,
+			</if>
+			<if test="wifiPassword != null">
+				WIFI_PASSWORD,
+			</if>
+			<if test="floor != null">
+				FLOOR,
+			</if>
+			<if test="wifiXy != null">
+				WIFI_XY,
+			</if>
+			<if test="province != null">
+				PROVINCE,
+			</if>
+			<if test="city != null">
+				CITY,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="classId != null">
+				#{classId,jdbcType=VARCHAR},
+			</if>
+			<if test="workTel != null">
+				#{workTel,jdbcType=VARCHAR},
+			</if>
+			<if test="overUser != null">
+				#{overUser,jdbcType=VARCHAR},
+			</if>
+			<if test="mobileTel != null">
+				#{mobileTel,jdbcType=VARCHAR},
+			</if>
+			<if test="wifi != null">
+				#{wifi,jdbcType=VARCHAR},
+			</if>
+			<if test="wifiPassword != null">
+				#{wifiPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="floor != null">
+				#{floor,jdbcType=VARCHAR},
+			</if>
+			<if test="wifiXy != null">
+				#{wifiXy,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
+		update WZZ_WIFI_SHOP
+		<set>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="classId != null">
+				CLASS_ID = #{classId,jdbcType=VARCHAR},
+			</if>
+			<if test="workTel != null">
+				WORK_TEL = #{workTel,jdbcType=VARCHAR},
+			</if>
+			<if test="overUser != null">
+				OVER_USER = #{overUser,jdbcType=VARCHAR},
+			</if>
+			<if test="mobileTel != null">
+				MOBILE_TEL = #{mobileTel,jdbcType=VARCHAR},
+			</if>
+			<if test="wifi != null">
+				WIFI = #{wifi,jdbcType=VARCHAR},
+			</if>
+			<if test="wifiPassword != null">
+				WIFI_PASSWORD = #{wifiPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="floor != null">
+				FLOOR = #{floor,jdbcType=VARCHAR},
+			</if>
+			<if test="wifiXy != null">
+				WIFI_XY = #{wifiXy,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				PROVINCE = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				CITY = #{city,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
+		update WZZ_WIFI_SHOP
+		set NAME = #{name,jdbcType=VARCHAR},
+		ADDRESS = #{address,jdbcType=VARCHAR},
+		REMARK = #{remark,jdbcType=VARCHAR},
+		CLASS_ID = #{classId,jdbcType=VARCHAR},
+		WORK_TEL = #{workTel,jdbcType=VARCHAR},
+		OVER_USER = #{overUser,jdbcType=VARCHAR},
+		MOBILE_TEL = #{mobileTel,jdbcType=VARCHAR},
+		WIFI = #{wifi,jdbcType=VARCHAR},
+		WIFI_PASSWORD = #{wifiPassword,jdbcType=VARCHAR},
+		FLOOR = #{floor,jdbcType=VARCHAR},
+		WIFI_XY = #{wifiXy,jdbcType=VARCHAR},
+		PROVINCE = #{province,jdbcType=VARCHAR},
+		CITY = #{city,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
 </mapper>

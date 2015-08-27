@@ -1,9 +1,6 @@
 package com.gmh.wzz.api.entity;
 
-import java.io.Serializable;
-
-public class WzzWifiShopEntity implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class WzzWifiShopEntity {
     private String id;
 
     private String name;

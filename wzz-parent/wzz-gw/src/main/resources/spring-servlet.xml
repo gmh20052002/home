@@ -10,6 +10,6 @@
      http://www.springframework.org/schema/aop/spring-aop.xsd    
      http://www.springframework.org/schema/tx 
      http://www.springframework.org/schema/tx/spring-tx.xsd">
-	<import resource="classpath:spring-mvc.xml"/>
+	<!-- <import resource="classpath:spring-mvc.xml"/> -->
 	<import resource="classpath:spring-mybatis.xml"/>
 </beans>

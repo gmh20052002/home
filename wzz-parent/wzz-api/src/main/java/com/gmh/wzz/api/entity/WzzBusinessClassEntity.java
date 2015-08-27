@@ -1,11 +1,7 @@
 package com.gmh.wzz.api.entity;
 
-import java.io.Serializable;
-
-public class WzzBusinessClassEntity implements Serializable{
-	private static final long serialVersionUID = 1L;
-
-	private String id;
+public class WzzBusinessClassEntity {
+    private String id;
 
     private String name;
 

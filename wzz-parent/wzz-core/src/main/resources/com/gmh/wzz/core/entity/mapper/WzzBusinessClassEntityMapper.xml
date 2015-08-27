@@ -40,16 +40,13 @@
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from
-		WZZ_BUSINESS_CLASS
+		delete from WZZ_BUSINESS_CLASS
 		where ID = #{id,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzBusinessClassEntity">
-		insert into WZZ_BUSINESS_CLASS
-		(ID, NAME, PARENT_ID,
+		insert into WZZ_BUSINESS_CLASS (ID, NAME, PARENT_ID,
 		REMARK)
-		values (#{id,jdbcType=VARCHAR},
-		#{name,jdbcType=VARCHAR},
+		values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
 		#{parentId,jdbcType=VARCHAR},
 		#{remark,jdbcType=VARCHAR})
 	</insert>
@@ -100,13 +97,10 @@
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzBusinessClassEntity">
-		update
-		WZZ_BUSINESS_CLASS
+		update WZZ_BUSINESS_CLASS
 		set NAME = #{name,jdbcType=VARCHAR},
-		PARENT_ID =
-		#{parentId,jdbcType=VARCHAR},
+		PARENT_ID = #{parentId,jdbcType=VARCHAR},
 		REMARK = #{remark,jdbcType=VARCHAR}
-		where
-		ID = #{id,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
 	</update>
 </mapper>
