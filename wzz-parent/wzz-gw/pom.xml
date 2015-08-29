@@ -24,6 +24,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>wzz-gw</finalName>
+    <finalName>gateway</finalName>
   </build>
 </project>

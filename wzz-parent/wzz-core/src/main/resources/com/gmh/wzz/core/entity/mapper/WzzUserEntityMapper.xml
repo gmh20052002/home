@@ -19,13 +19,16 @@
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from WZZ_USER
+		delete from
+		WZZ_USER
 		where ID = #{id,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
-		insert into WZZ_USER (ID, USER_NAME, IMEI,
+		insert into WZZ_USER (ID,
+		USER_NAME, IMEI,
 		USER_CNAME, REMARK)
-		values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+		values (#{id,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
 		#{imei,jdbcType=VARCHAR},
 		#{userCname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
 	</insert>
@@ -87,9 +90,37 @@
 	<update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
 		update WZZ_USER
 		set USER_NAME = #{userName,jdbcType=VARCHAR},
-		IMEI = #{imei,jdbcType=VARCHAR},
+		IMEI =
+		#{imei,jdbcType=VARCHAR},
 		USER_CNAME = #{userCname,jdbcType=VARCHAR},
 		REMARK = #{remark,jdbcType=VARCHAR}
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
+
+	<select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
+		select
+		<include refid="Base_Column_List" />
+		from WZZ_USER
+		<where>
+			<if test="condition != null">
+				<if test="condition.id != null">
+					AND ID = #{condition.id,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.userName != null">
+					AND USER_NAME like '%${condition.userName}%'
+				</if>
+				<if test="condition.remark != null">
+					AND REMARK like '%${condition.remark}%'
+				</if>
+				<if test="condition.imei != null">
+					AND IMEI = #{condition.imei,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.userCname != null">
+					AND USER_CNAME like '%${condition.userCname}%'
+				</if>
+			</if>
+		</where>
+	</select>
+
 </mapper>

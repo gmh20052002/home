@@ -14,6 +14,7 @@ import com.gmh.wzz.api.entity.WzzWifiShopEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopPicEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.gmh.wzz.core.dao.WzzBusinessClassEntityMapper;
+import com.gmh.wzz.core.dao.WzzUserEntityMapper;
 import com.gmh.wzz.core.dao.WzzWifiShopEntityMapper;
 @Service
 public class WzzServiceImpl implements WzzService {
@@ -21,6 +22,8 @@ public class WzzServiceImpl implements WzzService {
 	private WzzBusinessClassEntityMapper wzzBusinessClassEntityMapper;
 	@Autowired
 	private WzzWifiShopEntityMapper wzzWifiShopEntityMapper;
+	@Autowired
+	private WzzUserEntityMapper wzzUserEntityMapper;
 
 	public WzzBusinessClassEntityMapper getWzzBusinessClassEntityMapper() {
 		return wzzBusinessClassEntityMapper;
@@ -38,6 +41,14 @@ public class WzzServiceImpl implements WzzService {
 	public void setWzzWifiShopEntityMapper(
 			WzzWifiShopEntityMapper wzzWifiShopEntityMapper) {
 		this.wzzWifiShopEntityMapper = wzzWifiShopEntityMapper;
+	}
+
+	public WzzUserEntityMapper getWzzUserEntityMapper() {
+		return wzzUserEntityMapper;
+	}
+
+	public void setWzzUserEntityMapper(WzzUserEntityMapper wzzUserEntityMapper) {
+		this.wzzUserEntityMapper = wzzUserEntityMapper;
 	}
 
 	@Override
@@ -129,44 +140,48 @@ public class WzzServiceImpl implements WzzService {
 	@Override
 	public Page<WzzUserEntity> findWzzUser(WzzUserEntity condition,
 			Order order, int pageIndex, int pageSize) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Page<WzzUserEntity> page = new Page<WzzUserEntity>();
+		page.setPageIndex(pageIndex);
+		page.setPageSize(pageSize);
+		wzzUserEntityMapper.selectByCondition(condition, order, page);
+		return page;
 	}
 
 	@Override
 	public WzzUserEntity getWzzUserById(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return wzzUserEntityMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
-	public WzzUserEntity insertWzzUser(WzzUserEntity data) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public WzzUserEntity insertWzzUser(WzzUserEntity data)
+			throws Exception {
+		Assert.notNull(data, "新增对象[WzzUserEntity]不能为空");
+		if(data.getId() == null){
+			data.setId(UUID.randomUUID().toString());
+		}
+		wzzUserEntityMapper.insert(data);
+		return data;
 	}
 
 	@Override
-	public WzzUserEntity updateWzzUser(WzzUserEntity data) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public WzzUserEntity updateWzzUser(WzzUserEntity data)
+			throws Exception {
+		Assert.notNull(data, "修改对象[WzzUserEntity]不能为空");
+		wzzUserEntityMapper.updateByPrimaryKeySelective(data);
+		return data;
 	}
 
 	@Override
-	public WzzUserEntity deleteWzzUser(WzzUserEntity data) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public WzzUserEntity deleteWzzUser(WzzUserEntity data)
+			throws Exception {
+		Assert.notNull(data, "删除对象[WzzUserEntity]不能为空");
+		wzzUserEntityMapper.deleteByPrimaryKey(data.getId());
+		return data;
 	}
 
 	@Override
 	public Page<WzzWifiShopPicEntity> findWzzWifiShopPic(
-			WzzWifiShopPicEntity condition, Order order, int pageIndex,
-			int pageSize) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public WzzWifiShopPicEntity gettWzzWifiShopById(String id) throws Exception {
+			WzzWifiShopPicEntity condition) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

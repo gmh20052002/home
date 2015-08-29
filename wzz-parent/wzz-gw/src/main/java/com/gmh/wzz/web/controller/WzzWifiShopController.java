@@ -14,7 +14,7 @@ import com.gmh.wzz.api.service.WzzService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
-@Api(value = "WzzWifiShopController", description = "WIFI店铺信息的CURD操作")
+@Api(value = "wzz-wifishop-api", description = "WIFI店铺信息的CURD操作")
 @Controller
 public class WzzWifiShopController {
 	@Autowired
@@ -23,10 +23,12 @@ public class WzzWifiShopController {
 	@RequestMapping(value = "/v1/wifiShop", method = RequestMethod.GET)
 	@ApiOperation(value = "查询WIFI店铺", httpMethod = "GET", response = Page.class)
 	public @ResponseBody Page<WzzWifiShopEntity> findWifiShops(
-			WzzWifiShopEntity condition, Order order, int pageIndex,
-			int pageSize) {
+			WzzWifiShopEntity condition, Order order, Integer pageIndex,
+			Integer pageSize) {
 		Page<WzzWifiShopEntity> results = null;
 		try {
+			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
+			pageSize = pageSize == null ? 10 : pageIndex;
 			results = wzzService.findWzzWifiShop(condition, order, pageIndex,
 					pageSize);
 		} catch (Exception e) {

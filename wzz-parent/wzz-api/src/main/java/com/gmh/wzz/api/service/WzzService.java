@@ -44,7 +44,7 @@ public interface WzzService {
 	/*
 	 * ==========================================================================
 	 */
-	
+
 	public Page<WzzUserEntity> findWzzUser(WzzUserEntity condition,
 			Order order, int pageIndex, int pageSize) throws Exception;
 
@@ -55,21 +55,20 @@ public interface WzzService {
 	public WzzUserEntity updateWzzUser(WzzUserEntity data) throws Exception;
 
 	public WzzUserEntity deleteWzzUser(WzzUserEntity data) throws Exception;
-	
-
 
 	/*
 	 * ==========================================================================
 	 */
-	
-	public Page<WzzWifiShopPicEntity> findWzzWifiShopPic(WzzWifiShopPicEntity condition,
-			Order order, int pageIndex, int pageSize) throws Exception;
 
-	public WzzWifiShopPicEntity gettWzzWifiShopById(String id) throws Exception;
+	public Page<WzzWifiShopPicEntity> findWzzWifiShopPic(
+			WzzWifiShopPicEntity condition) throws Exception;
 
-	public WzzWifiShopPicEntity insertWzzWifiShopPic(WzzWifiShopPicEntity data) throws Exception;
+	public WzzWifiShopPicEntity insertWzzWifiShopPic(WzzWifiShopPicEntity data)
+			throws Exception;
 
-	public WzzWifiShopPicEntity updateWzzWifiShopPic(WzzWifiShopPicEntity data) throws Exception;
+	public WzzWifiShopPicEntity updateWzzWifiShopPic(WzzWifiShopPicEntity data)
+			throws Exception;
 
-	public WzzWifiShopPicEntity deleteWzzWifiShopPic(WzzWifiShopPicEntity data) throws Exception;
+	public WzzWifiShopPicEntity deleteWzzWifiShopPic(WzzWifiShopPicEntity data)
+			throws Exception;
 }
