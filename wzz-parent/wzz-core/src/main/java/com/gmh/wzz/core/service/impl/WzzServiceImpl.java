@@ -9,6 +9,9 @@ import org.springframework.util.Assert;
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
+import com.gmh.wzz.api.entity.WzzUserEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopPicEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.gmh.wzz.core.dao.WzzBusinessClassEntityMapper;
 import com.gmh.wzz.core.dao.WzzWifiShopEntityMapper;
@@ -79,6 +82,114 @@ public class WzzServiceImpl implements WzzService {
 		Assert.notNull(data, "删除对象[WzzBusinessClassEntity]不能为空");
 		wzzBusinessClassEntityMapper.deleteByPrimaryKey(data.getId());
 		return data;
+	}
+
+	@Override
+	public Page<WzzWifiShopEntity> findWzzWifiShop(WzzWifiShopEntity condition,
+			Order order, int pageIndex, int pageSize) throws Exception {
+		Page<WzzWifiShopEntity> page = new Page<WzzWifiShopEntity>();
+		page.setPageIndex(pageIndex);
+		page.setPageSize(pageSize);
+		wzzWifiShopEntityMapper.selectByCondition(condition, order, page);
+		return page;
+	}
+
+	@Override
+	public WzzWifiShopEntity getWzzWifiShopById(String id) throws Exception {
+		return wzzWifiShopEntityMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public WzzWifiShopEntity insertWzzWifiShop(WzzWifiShopEntity data)
+			throws Exception {
+		Assert.notNull(data, "新增对象[WzzWifiShopEntity]不能为空");
+		if(data.getId() == null){
+			data.setId(UUID.randomUUID().toString());
+		}
+		wzzWifiShopEntityMapper.insert(data);
+		return data;
+	}
+
+	@Override
+	public WzzWifiShopEntity updateWzzWifiShop(WzzWifiShopEntity data)
+			throws Exception {
+		Assert.notNull(data, "修改对象[WzzWifiShopEntity]不能为空");
+		wzzWifiShopEntityMapper.updateByPrimaryKeySelective(data);
+		return data;
+	}
+
+	@Override
+	public WzzWifiShopEntity deleteWzzWifiShop(WzzWifiShopEntity data)
+			throws Exception {
+		Assert.notNull(data, "删除对象[WzzWifiShopEntity]不能为空");
+		wzzWifiShopEntityMapper.deleteByPrimaryKey(data.getId());
+		return data;
+	}
+
+	@Override
+	public Page<WzzUserEntity> findWzzUser(WzzUserEntity condition,
+			Order order, int pageIndex, int pageSize) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WzzUserEntity getWzzUserById(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WzzUserEntity insertWzzUser(WzzUserEntity data) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WzzUserEntity updateWzzUser(WzzUserEntity data) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WzzUserEntity deleteWzzUser(WzzUserEntity data) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<WzzWifiShopPicEntity> findWzzWifiShopPic(
+			WzzWifiShopPicEntity condition, Order order, int pageIndex,
+			int pageSize) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WzzWifiShopPicEntity gettWzzWifiShopById(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WzzWifiShopPicEntity insertWzzWifiShopPic(WzzWifiShopPicEntity data)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WzzWifiShopPicEntity updateWzzWifiShopPic(WzzWifiShopPicEntity data)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WzzWifiShopPicEntity deleteWzzWifiShopPic(WzzWifiShopPicEntity data)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
