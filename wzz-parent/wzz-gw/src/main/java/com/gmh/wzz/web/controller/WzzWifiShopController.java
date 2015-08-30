@@ -2,9 +2,11 @@ package com.gmh.wzz.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gmh.wzz.api.entity.Order;
@@ -23,8 +25,8 @@ public class WzzWifiShopController {
 	@RequestMapping(value = "/v1/wifiShop", method = RequestMethod.GET)
 	@ApiOperation(value = "查询WIFI店铺", httpMethod = "GET", response = Page.class)
 	public @ResponseBody Page<WzzWifiShopEntity> findWifiShops(
-			WzzWifiShopEntity condition, Order order, Integer pageIndex,
-			Integer pageSize) {
+			@ModelAttribute WzzWifiShopEntity condition, @ModelAttribute Order order, @RequestParam(defaultValue="1") Integer pageIndex,
+			@RequestParam(defaultValue="10")Integer pageSize) {
 		Page<WzzWifiShopEntity> results = null;
 		try {
 			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
