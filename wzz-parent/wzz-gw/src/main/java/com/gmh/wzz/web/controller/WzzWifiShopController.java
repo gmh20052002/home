@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,7 @@ public class WzzWifiShopController {
 	@Autowired
 	WzzService wzzService;
 
-	@RequestMapping(value = "/v1/wifiShop", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/WifiShop", method = RequestMethod.GET)
 	@ApiOperation(value = "查询WIFI店铺", httpMethod = "GET", response = Page.class)
 	public @ResponseBody Page<WzzWifiShopEntity> findWifiShops(
 			@ModelAttribute WzzWifiShopEntity condition, @ModelAttribute Order order, @RequestParam(defaultValue="1") Integer pageIndex,
@@ -41,7 +42,7 @@ public class WzzWifiShopController {
 
 	@RequestMapping(value = "/v1/WifiShop", method = RequestMethod.POST)
 	@ApiOperation(value = "新增WIFI店铺", httpMethod = "POST", response = WzzWifiShopEntity.class)
-	public @ResponseBody WzzWifiShopEntity addWifiShopes(WzzWifiShopEntity data) {
+	public @ResponseBody WzzWifiShopEntity addWifiShopes(@RequestBody WzzWifiShopEntity data) {
 		WzzWifiShopEntity result = null;
 		try {
 			wzzService.insertWzzWifiShop(data);
@@ -66,7 +67,7 @@ public class WzzWifiShopController {
 
 	@RequestMapping(value = "/v1/WifiShop", method = RequestMethod.PUT)
 	@ApiOperation(value = "修改WIFI店铺", httpMethod = "PUT", response = WzzWifiShopEntity.class)
-	public WzzWifiShopEntity updateWzzWifiShop(WzzWifiShopEntity data)
+	public WzzWifiShopEntity updateWzzWifiShop(@RequestBody WzzWifiShopEntity data)
 			throws Exception {
 		WzzWifiShopEntity result = null;
 		try {
@@ -79,7 +80,7 @@ public class WzzWifiShopController {
 
 	@RequestMapping(value = "/v1/WifiShop", method = RequestMethod.DELETE)
 	@ApiOperation(value = "删除WIFI店铺", httpMethod = "DELETE", response = WzzWifiShopEntity.class)
-	public WzzWifiShopEntity deleteWzzWifiShop(WzzWifiShopEntity data)
+	public WzzWifiShopEntity deleteWzzWifiShop(@RequestBody WzzWifiShopEntity data)
 			throws Exception {
 		WzzWifiShopEntity result = null;
 		try {

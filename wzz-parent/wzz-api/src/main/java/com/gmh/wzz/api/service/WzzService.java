@@ -61,14 +61,23 @@ public interface WzzService {
 	 */
 
 	public Page<WzzWifiShopPicEntity> findWzzWifiShopPic(
-			WzzWifiShopPicEntity condition) throws Exception;
+			WzzWifiShopPicEntity condition, Order order, int pageIndex,
+			int pageSize) throws Exception;
 
 	public WzzWifiShopPicEntity insertWzzWifiShopPic(WzzWifiShopPicEntity data)
 			throws Exception;
 
-	public WzzWifiShopPicEntity updateWzzWifiShopPic(WzzWifiShopPicEntity data)
-			throws Exception;
-
 	public WzzWifiShopPicEntity deleteWzzWifiShopPic(WzzWifiShopPicEntity data)
 			throws Exception;
+	
+	/*
+	 * =============================================================================
+	 */
+
+	public String getWzz_ftp_url();
+
+	public String getWzz_ftp_userName();
+
+	public String getWzz_ftp_password();
+	public String getWzz_ftp_tmpfile_path();
 }

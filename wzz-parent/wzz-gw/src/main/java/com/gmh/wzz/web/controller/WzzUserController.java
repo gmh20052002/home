@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +43,7 @@ public class WzzUserController {
 
 	@RequestMapping(value = "/v1/User", method = RequestMethod.POST)
 	@ApiOperation(value = "新增用户信息", httpMethod = "POST", response = WzzUserEntity.class)
-	public @ResponseBody WzzUserEntity addUseres(WzzUserEntity data) {
+	public @ResponseBody WzzUserEntity addUseres(@RequestBody WzzUserEntity data) {
 		WzzUserEntity result = null;
 		try {
 			wzzService.insertWzzUser(data);
@@ -67,7 +68,7 @@ public class WzzUserController {
 
 	@RequestMapping(value = "/v1/User", method = RequestMethod.PUT)
 	@ApiOperation(value = "修改用户信息", httpMethod = "PUT", response = WzzUserEntity.class)
-	public WzzUserEntity updateWzzUser(WzzUserEntity data)
+	public WzzUserEntity updateWzzUser(@RequestBody WzzUserEntity data)
 			throws Exception {
 		WzzUserEntity result = null;
 		try {
@@ -80,7 +81,7 @@ public class WzzUserController {
 
 	@RequestMapping(value = "/v1/User", method = RequestMethod.DELETE)
 	@ApiOperation(value = "删除用户信息", httpMethod = "DELETE", response = WzzUserEntity.class)
-	public WzzUserEntity deleteWzzUser(WzzUserEntity data)
+	public WzzUserEntity deleteWzzUser(@RequestBody WzzUserEntity data)
 			throws Exception {
 		WzzUserEntity result = null;
 		try {

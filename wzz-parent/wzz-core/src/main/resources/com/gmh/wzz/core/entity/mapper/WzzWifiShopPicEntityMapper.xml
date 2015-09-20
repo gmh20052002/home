@@ -5,6 +5,9 @@
 		<result column="SHOP_ID" property="shopId" jdbcType="VARCHAR" />
 		<result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
 	</resultMap>
+	<sql id="Base_Column_List">
+		SHOP_ID, PIC_URL
+	</sql>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopPicEntity">
 		insert into WZZ_WIFI_SHOP_PIC (SHOP_ID, PIC_URL)
 		values (#{shopId,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR})
@@ -28,4 +31,26 @@
 			</if>
 		</trim>
 	</insert>
+	
+	<delete id="deleteByShopId" parameterType="java.lang.String">
+		delete from WZZ_WIFI_SHOP_PIC
+		where SHOP_ID = #{shopId,jdbcType=VARCHAR}
+	</delete>
+	
+	<select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="com.gmh.wzz.api.entity.WzzWifiShopPicEntity">
+		select
+		<include refid="Base_Column_List" />
+		from WZZ_WIFI_SHOP_PIC
+		<where>
+			<if test="condition != null">
+				<if test="condition.shopId != null">
+					AND SHOP_ID = #{condition.shopId,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.picUrl != null">
+					AND PIC_URL like '%${condition.picUrl}%'
+				</if>
+			</if>
+		</where>
+	</select>
 </mapper>

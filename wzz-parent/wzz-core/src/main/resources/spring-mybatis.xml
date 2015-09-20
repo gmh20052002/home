@@ -67,6 +67,11 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
-	<bean name="wzzService" class="com.gmh.wzz.core.service.impl.WzzServiceImpl" />
+	
+	<bean name="wzzService" class="com.gmh.wzz.core.service.impl.WzzServiceImpl" >
+		<property name="wzz_ftp_url" value="${wzz.ftp.url}"/>
+		<property name="wzz_ftp_userName" value="${wzz.ftp.userName}"/>
+		<property name="wzz_ftp_password" value="${wzz.ftp.password}"/>
+		<property name="wzz_ftp_tmpfile_path" value="${wzz.ftp.tmpfile.path}"/>
+	</bean>
 </beans>
