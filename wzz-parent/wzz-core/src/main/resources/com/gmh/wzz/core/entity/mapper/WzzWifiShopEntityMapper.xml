@@ -6,7 +6,8 @@
 		<result column="NAME" property="name" jdbcType="VARCHAR" />
 		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
 		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
-		<result column="CLASS_ID" property="classId" jdbcType="VARCHAR" />
+		<result column="CLASS_TYPE1" property="classType1" jdbcType="VARCHAR" />
+		<result column="CLASS_TYPE2" property="classType2" jdbcType="VARCHAR" />
 		<result column="WORK_TEL" property="workTel" jdbcType="VARCHAR" />
 		<result column="OVER_USER" property="overUser" jdbcType="VARCHAR" />
 		<result column="MOBILE_TEL" property="mobileTel" jdbcType="VARCHAR" />
@@ -19,9 +20,11 @@
 		<result column="CITY" property="city" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID, NAME, ADDRESS, REMARK, CLASS_ID, WORK_TEL, OVER_USER, MOBILE_TEL,
+		ID, NAME, ADDRESS, REMARK, CLASS_TYPE1, CLASS_TYPE2,
+		WORK_TEL, OVER_USER, MOBILE_TEL,
 		WIFI, WIFI_PASSWORD,
-		FLOOR, WIFI_XY, PROVINCE, CITY
+		FLOOR, WIFI_XY,
+		PROVINCE, CITY
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -31,10 +34,11 @@
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from WZZ_WIFI_SHOP
+		delete from
+		WZZ_WIFI_SHOP
 		where ID = #{id,jdbcType=VARCHAR}
 	</delete>
-	
+
 	<select id="selectByCondition" resultMap="BaseResultMap"
 		parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
 		select
@@ -51,8 +55,13 @@
 				<if test="condition.remark != null">
 					AND REMARK like '%${condition.remark}%'
 				</if>
-				<if test="condition.classId != null">
-					AND CLASS_ID = #{condition.classId,jdbcType=VARCHAR}
+				<if test="condition.classType1 != null">
+					AND CLASS_TYPE1 =
+					#{condition.classType1,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.classType2 != null">
+					AND CLASS_TYPE2 =
+					#{condition.classType2,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.workTel != null">
 					AND WORK_TEL like '%${condition.workTel}%'
@@ -67,7 +76,8 @@
 					AND WIFI = #{condition.wifi,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.wifiPassword != null">
-					AND WIFI_PASSWORD = #{condition.wifiPassword,jdbcType=VARCHAR}
+					AND WIFI_PASSWORD =
+					#{condition.wifiPassword,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.floor != null">
 					AND FLOOR = #{condition.floor,jdbcType=VARCHAR}
@@ -84,20 +94,28 @@
 			</if>
 		</where>
 	</select>
-	
+
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
-		insert into WZZ_WIFI_SHOP (ID, NAME, ADDRESS,
-		REMARK, CLASS_ID, WORK_TEL,
-		OVER_USER, MOBILE_TEL, WIFI,
+		insert into WZZ_WIFI_SHOP (ID,
+		NAME, ADDRESS,
+		REMARK, CLASS_TYPE1, CLASS_TYPE2, WORK_TEL,
+		OVER_USER,
+		MOBILE_TEL, WIFI,
 		WIFI_PASSWORD, FLOOR, WIFI_XY,
 		PROVINCE, CITY)
-		values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		values
+		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
 		#{address,jdbcType=VARCHAR},
-		#{remark,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{workTel,jdbcType=VARCHAR},
-		#{overUser,jdbcType=VARCHAR}, #{mobileTel,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{classType1,jdbcType=VARCHAR}, #{classType2,jdbcType=VARCHAR},
+		#{workTel,jdbcType=VARCHAR},
+		#{overUser,jdbcType=VARCHAR},
+		#{mobileTel,jdbcType=VARCHAR},
 		#{wifi,jdbcType=VARCHAR},
-		#{wifiPassword,jdbcType=VARCHAR}, #{floor,jdbcType=VARCHAR}, #{wifiXy,jdbcType=VARCHAR},
-		#{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR})
+		#{wifiPassword,jdbcType=VARCHAR}, #{floor,jdbcType=VARCHAR},
+		#{wifiXy,jdbcType=VARCHAR},
+		#{province,jdbcType=VARCHAR},
+		#{city,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
 		insert into WZZ_WIFI_SHOP
@@ -114,8 +132,11 @@
 			<if test="remark != null">
 				REMARK,
 			</if>
-			<if test="classId != null">
-				CLASS_ID,
+			<if test="classType1 != null">
+				CLASS_TYPE1,
+			</if>
+			<if test="classType2 != null">
+				CLASS_TYPE2,
 			</if>
 			<if test="workTel != null">
 				WORK_TEL,
@@ -158,8 +179,11 @@
 			<if test="remark != null">
 				#{remark,jdbcType=VARCHAR},
 			</if>
-			<if test="classId != null">
-				#{classId,jdbcType=VARCHAR},
+			<if test="classType1 != null">
+				#{classType1,jdbcType=VARCHAR},
+			</if>
+			<if test="classType2 != null">
+				#{classType2,jdbcType=VARCHAR},
 			</if>
 			<if test="workTel != null">
 				#{workTel,jdbcType=VARCHAR},
@@ -202,8 +226,11 @@
 			<if test="remark != null">
 				REMARK = #{remark,jdbcType=VARCHAR},
 			</if>
-			<if test="classId != null">
-				CLASS_ID = #{classId,jdbcType=VARCHAR},
+			<if test="classType1 != null">
+				CLASS_TYPE1 = #{classType1,jdbcType=VARCHAR},
+			</if>
+			<if test="classType2 != null">
+				CLASS_TYPE2 = #{classType2,jdbcType=VARCHAR},
 			</if>
 			<if test="workTel != null">
 				WORK_TEL = #{workTel,jdbcType=VARCHAR},
@@ -236,20 +263,27 @@
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
-		update WZZ_WIFI_SHOP
+		update
+		WZZ_WIFI_SHOP
 		set NAME = #{name,jdbcType=VARCHAR},
-		ADDRESS = #{address,jdbcType=VARCHAR},
+		ADDRESS =
+		#{address,jdbcType=VARCHAR},
 		REMARK = #{remark,jdbcType=VARCHAR},
-		CLASS_ID = #{classId,jdbcType=VARCHAR},
+		CLASS_TYPE1 = #{classType1,jdbcType=VARCHAR},
+		CLASS_TYPE2 =
+		#{classType2,jdbcType=VARCHAR},
 		WORK_TEL = #{workTel,jdbcType=VARCHAR},
 		OVER_USER = #{overUser,jdbcType=VARCHAR},
-		MOBILE_TEL = #{mobileTel,jdbcType=VARCHAR},
+		MOBILE_TEL =
+		#{mobileTel,jdbcType=VARCHAR},
 		WIFI = #{wifi,jdbcType=VARCHAR},
 		WIFI_PASSWORD = #{wifiPassword,jdbcType=VARCHAR},
-		FLOOR = #{floor,jdbcType=VARCHAR},
+		FLOOR =
+		#{floor,jdbcType=VARCHAR},
 		WIFI_XY = #{wifiXy,jdbcType=VARCHAR},
 		PROVINCE = #{province,jdbcType=VARCHAR},
-		CITY = #{city,jdbcType=VARCHAR}
+		CITY =
+		#{city,jdbcType=VARCHAR}
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
 </mapper>

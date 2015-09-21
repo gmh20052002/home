@@ -12,7 +12,9 @@ public class WzzWifiShopEntity implements Serializable {
 
     private String remark;
 
-    private String classId;
+    private String classType1;
+
+    private String classType2;
 
     private String workTel;
 
@@ -62,14 +64,6 @@ public class WzzWifiShopEntity implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public void setClassId(String classId) {
-        this.classId = classId == null ? null : classId.trim();
     }
 
     public String getWorkTel() {
@@ -143,4 +137,20 @@ public class WzzWifiShopEntity implements Serializable {
     public void setCity(String city) {
         this.city = city == null ? null : city.trim();
     }
+
+	public String getClassType1() {
+		return classType1;
+	}
+
+	public void setClassType1(String classType1) {
+		this.classType1 = classType1;
+	}
+
+	public String getClassType2() {
+		return classType2;
+	}
+
+	public void setClassType2(String classType2) {
+		this.classType2 = classType2;
+	}
 }
