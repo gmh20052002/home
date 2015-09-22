@@ -17,8 +17,8 @@ import com.gmh.wzz.api.service.WzzService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
-@Api(value = "wzz-wifishop-api", description = "WIFI店铺信息的CURD操作")
-@Controller
+//@Api(value = "wzz-wifishop-api", description = "WIFI店铺信息的CURD操作")
+//@Controller
 public class WzzWifiShopController {
 	@Autowired
 	WzzService wzzService;

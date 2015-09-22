@@ -16,8 +16,8 @@ import com.gmh.wzz.api.service.WzzService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
-@Api(value = "wzz-WifiShopPic-api", description = "WIFI店铺图片信息的CURD操作")
-@Controller
+//@Api(value = "wzz-WifiShopPic-api", description = "WIFI店铺图片信息的CURD操作")
+//@Controller
 public class WzzWifiShopPicController {
 	@Autowired
 	WzzService wzzService;

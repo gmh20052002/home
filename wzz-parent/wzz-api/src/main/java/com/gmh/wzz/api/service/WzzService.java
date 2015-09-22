@@ -80,4 +80,5 @@ public interface WzzService {
 
 	public String getWzz_ftp_password();
 	public String getWzz_ftp_tmpfile_path();
+	public int getWzz_wifi_search_scope();
 }

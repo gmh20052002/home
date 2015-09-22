@@ -34,6 +34,7 @@ public class WzzServiceImpl implements WzzService {
 	private String wzz_ftp_userName = "www";
 	private String wzz_ftp_password = "a85e0d3e6";
 	private String wzz_ftp_tmpfile_path = "/mydata/tmp";
+	private int wzz_wifi_search_scope = 500;
 
 	public WzzBusinessClassEntityMapper getWzzBusinessClassEntityMapper() {
 		return wzzBusinessClassEntityMapper;
@@ -256,6 +257,14 @@ public class WzzServiceImpl implements WzzService {
 
 	public void setWzz_ftp_tmpfile_path(String wzz_ftp_tmpfile_path) {
 		this.wzz_ftp_tmpfile_path = wzz_ftp_tmpfile_path;
+	}
+
+	public int getWzz_wifi_search_scope() {
+		return wzz_wifi_search_scope;
+	}
+
+	public void setWzz_wifi_search_scope(int wzz_wifi_search_scope) {
+		this.wzz_wifi_search_scope = wzz_wifi_search_scope;
 	}
 
 }

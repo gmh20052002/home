@@ -15,16 +15,21 @@
 		<result column="WIFI_PASSWORD" property="wifiPassword"
 			jdbcType="VARCHAR" />
 		<result column="FLOOR" property="floor" jdbcType="VARCHAR" />
-		<result column="WIFI_XY" property="wifiXy" jdbcType="VARCHAR" />
+		<result column="WIFI_X" property="wifiX" jdbcType="VARCHAR" />
+		<result column="WIFI_Y" property="wifiY" jdbcType="VARCHAR" />
 		<result column="PROVINCE" property="province" jdbcType="VARCHAR" />
 		<result column="CITY" property="city" jdbcType="VARCHAR" />
+		<result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		ID, NAME, ADDRESS, REMARK, CLASS_TYPE1, CLASS_TYPE2,
 		WORK_TEL, OVER_USER, MOBILE_TEL,
 		WIFI, WIFI_PASSWORD,
-		FLOOR, WIFI_XY,
-		PROVINCE, CITY
+		FLOOR, WIFI_X,
+		WIFI_Y,
+		PROVINCE, CITY, PIC_URL, CREATE_TIME, UPDATE_TIME
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -82,8 +87,11 @@
 				<if test="condition.floor != null">
 					AND FLOOR = #{condition.floor,jdbcType=VARCHAR}
 				</if>
-				<if test="condition.wifiXy != null">
-					AND WIFI_XY = #{condition.wifiXy,jdbcType=VARCHAR}
+				<if test="condition.wifiX != null">
+					AND WIFI_X = #{condition.wifiX,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.wifiY != null">
+					AND WIFI_Y = #{condition.wifiY,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.province != null">
 					AND PROVINCE = #{condition.province,jdbcType=VARCHAR}
@@ -91,18 +99,26 @@
 				<if test="condition.city != null">
 					AND CITY = #{condition.city,jdbcType=VARCHAR}
 				</if>
+				<if test="condition.wifiXMin != null">
+					AND WIFI_X &gt;= #{condition.wifiXMin,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.wifiYMin != null">
+					AND WIFI_Y &gt;= #{condition.wifiYMin,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.wifiXMax != null">
+					AND WIFI_X &lt;= #{condition.wifiXMax,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.wifiYMax != null">
+					AND WIFI_Y &lt;= #{condition.wifiYMax,jdbcType=VARCHAR}
+				</if>
 			</if>
 		</where>
 	</select>
 
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
-		insert into WZZ_WIFI_SHOP (ID,
-		NAME, ADDRESS,
-		REMARK, CLASS_TYPE1, CLASS_TYPE2, WORK_TEL,
-		OVER_USER,
-		MOBILE_TEL, WIFI,
-		WIFI_PASSWORD, FLOOR, WIFI_XY,
-		PROVINCE, CITY)
+		insert into WZZ_WIFI_SHOP (
+		<include refid="Base_Column_List" />
+		)
 		values
 		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
 		#{address,jdbcType=VARCHAR},
@@ -113,9 +129,13 @@
 		#{mobileTel,jdbcType=VARCHAR},
 		#{wifi,jdbcType=VARCHAR},
 		#{wifiPassword,jdbcType=VARCHAR}, #{floor,jdbcType=VARCHAR},
-		#{wifiXy,jdbcType=VARCHAR},
+		#{wifiX,jdbcType=VARCHAR},
+		#{wifiY,jdbcType=VARCHAR},
 		#{province,jdbcType=VARCHAR},
-		#{city,jdbcType=VARCHAR})
+		#{city,jdbcType=VARCHAR},
+		#{picUrl,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP})
 	</insert>
 	<insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
 		insert into WZZ_WIFI_SHOP
@@ -156,14 +176,26 @@
 			<if test="floor != null">
 				FLOOR,
 			</if>
-			<if test="wifiXy != null">
-				WIFI_XY,
+			<if test="wifiX != null">
+				WIFI_X,
+			</if>
+			<if test="wifiY != null">
+				WIFI_Y,
 			</if>
 			<if test="province != null">
 				PROVINCE,
 			</if>
 			<if test="city != null">
 				CITY,
+			</if>
+			<if test="picUrl != null">
+				PIC_URL,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -203,14 +235,26 @@
 			<if test="floor != null">
 				#{floor,jdbcType=VARCHAR},
 			</if>
-			<if test="wifiXy != null">
-				#{wifiXy,jdbcType=VARCHAR},
+			<if test="wifiX != null">
+				#{wifiX,jdbcType=VARCHAR},
+			</if>
+			<if test="wifiY != null">
+				#{wifiY,jdbcType=VARCHAR},
 			</if>
 			<if test="province != null">
 				#{province,jdbcType=VARCHAR},
 			</if>
 			<if test="city != null">
 				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="picUrl != null">
+				#{picUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
 			</if>
 		</trim>
 	</insert>
@@ -250,14 +294,26 @@
 			<if test="floor != null">
 				FLOOR = #{floor,jdbcType=VARCHAR},
 			</if>
-			<if test="wifiXy != null">
-				WIFI_XY = #{wifiXy,jdbcType=VARCHAR},
+			<if test="wifiX != null">
+				WIFI_X = #{wifiX,jdbcType=VARCHAR},
+			</if>
+			<if test="wifiY != null">
+				WIFI_Y = #{wifiY,jdbcType=VARCHAR},
 			</if>
 			<if test="province != null">
 				PROVINCE = #{province,jdbcType=VARCHAR},
 			</if>
 			<if test="city != null">
 				CITY = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="picUrl != null">
+				PIC_URL = #{picUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
 			</if>
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
@@ -280,10 +336,16 @@
 		WIFI_PASSWORD = #{wifiPassword,jdbcType=VARCHAR},
 		FLOOR =
 		#{floor,jdbcType=VARCHAR},
-		WIFI_XY = #{wifiXy,jdbcType=VARCHAR},
+		WIFI_X = #{wifiX,jdbcType=VARCHAR},
+		WIFI_Y =
+		#{wifiY,jdbcType=VARCHAR},
 		PROVINCE = #{province,jdbcType=VARCHAR},
 		CITY =
-		#{city,jdbcType=VARCHAR}
+		#{city,jdbcType=VARCHAR},
+		PIC_URL = #{picUrl,jdbcType=VARCHAR},
+		CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{updateTime,jdbcType=TIMESTAMP}
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
 </mapper>

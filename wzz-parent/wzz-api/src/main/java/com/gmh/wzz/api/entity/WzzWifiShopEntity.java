@@ -1,11 +1,18 @@
 package com.gmh.wzz.api.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class WzzWifiShopEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 主键
+	 */
     private String id;
 
+    /**
+     * 店铺名称
+     */
     private String name;
 
     private String address;
@@ -28,11 +35,24 @@ public class WzzWifiShopEntity implements Serializable {
 
     private String floor;
 
-    private String wifiXy;
+    private String wifiX;
+
+    private String wifiY;
 
     private String province;
 
     private String city;
+    
+    private String picUrl;
+    
+    private Date createTime;
+    
+    private Date updateTime;
+    
+    private Integer wifiXMin = 0;
+    private Integer wifiXMax = 0;
+    private Integer wifiYMin = 0;
+    private Integer wifiYMax = 0;
 
     public String getId() {
         return id;
@@ -114,14 +134,6 @@ public class WzzWifiShopEntity implements Serializable {
         this.floor = floor == null ? null : floor.trim();
     }
 
-    public String getWifiXy() {
-        return wifiXy;
-    }
-
-    public void setWifiXy(String wifiXy) {
-        this.wifiXy = wifiXy == null ? null : wifiXy.trim();
-    }
-
     public String getProvince() {
         return province;
     }
@@ -152,5 +164,77 @@ public class WzzWifiShopEntity implements Serializable {
 
 	public void setClassType2(String classType2) {
 		this.classType2 = classType2;
+	}
+
+	public String getPicUrl() {
+		return picUrl;
+	}
+
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public String getWifiX() {
+		return wifiX;
+	}
+
+	public void setWifiX(String wifiX) {
+		this.wifiX = wifiX;
+	}
+
+	public String getWifiY() {
+		return wifiY;
+	}
+
+	public void setWifiY(String wifiY) {
+		this.wifiY = wifiY;
+	}
+
+	public Integer getWifiXMin() {
+		return wifiXMin;
+	}
+
+	public void setWifiXMin(Integer wifiXMin) {
+		this.wifiXMin = wifiXMin;
+	}
+
+	public Integer getWifiXMax() {
+		return wifiXMax;
+	}
+
+	public void setWifiXMax(Integer wifiXMax) {
+		this.wifiXMax = wifiXMax;
+	}
+
+	public Integer getWifiYMin() {
+		return wifiYMin;
+	}
+
+	public void setWifiYMin(Integer wifiYMin) {
+		this.wifiYMin = wifiYMin;
+	}
+
+	public Integer getWifiYMax() {
+		return wifiYMax;
+	}
+
+	public void setWifiYMax(Integer wifiYMax) {
+		this.wifiYMax = wifiYMax;
 	}
 }

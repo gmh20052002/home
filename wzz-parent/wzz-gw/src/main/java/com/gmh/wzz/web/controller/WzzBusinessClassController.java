@@ -18,7 +18,7 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 //@Api(value = "wzz-businessClass-api", description = "有关于业务分类的CURD操作")
-@Controller
+//@Controller
 public class WzzBusinessClassController {
 	@Autowired
 	WzzService wzzService;
