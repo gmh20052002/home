@@ -3,50 +3,67 @@ package com.gmh.wzz.api.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value="WzzWifiShopEntity-wifi商铺实体对象")
 public class WzzWifiShopEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	/**
-	 * 主键
-	 */
+	@ApiModelProperty(value="主键，必填",required=true)
     private String id;
 
-    /**
-     * 店铺名称
-     */
+	@ApiModelProperty(value="店铺名称，必填",required=true)
     private String name;
 
+	@ApiModelProperty(value="店铺地址")
     private String address;
 
+	@ApiModelProperty(value="店铺描述")
     private String remark;
 
+	@ApiModelProperty(value="一级分类",required=true)
     private String classType1;
 
+	@ApiModelProperty(value="二级分类")
     private String classType2;
 
+	@ApiModelProperty(value="工作电话")
     private String workTel;
 
+	@ApiModelProperty(value="拥有者")
     private String overUser;
 
+	@ApiModelProperty(value="手机")
     private String mobileTel;
 
+	@ApiModelProperty(value="WIFI唯一标识BSSID，必填",required=true)
     private String wifi;
 
+	@ApiModelProperty(value="WIFI密码，必填",required=true)
     private String wifiPassword;
 
+	@ApiModelProperty(value="楼层")
     private String floor;
 
+	@ApiModelProperty(value="WIFI坐标X")
     private String wifiX;
 
+	@ApiModelProperty(value="WIFI坐标Y")
     private String wifiY;
 
+	@ApiModelProperty(value="省")
     private String province;
 
+	@ApiModelProperty(value="市")
     private String city;
-    
+
+	@ApiModelProperty(value="图片地址，多个用逗号分隔")
     private String picUrl;
-    
+
+	@ApiModelProperty(value="注册时间")
     private Date createTime;
-    
+
+	@ApiModelProperty(value="更新时间")
     private Date updateTime;
     
     private Integer wifiXMin = 0;

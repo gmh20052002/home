@@ -14,20 +14,21 @@ import com.gmh.wzz.api.entity.WzzWifiShopEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 
-@Api(value = "Wzz-Rest-Controller-V1", description = "网蜘蛛Rest接口V1版本")
-@Controller
+@Api(value = "Wzz-Rest-Controller-V1", description = "网蜘蛛Rest接口V1版本",position=1)
+@Controller()
 public class WzzV1RestController {
 
 	@Autowired
 	WzzService wzzService;
 
 	@RequestMapping(value = "/v1/findWifiShopsByType", method = RequestMethod.GET)
-	@ApiOperation(value = "根据类别分页查询WIFI店铺", httpMethod = "GET", response = Page.class)
+	@ApiOperation(value = "根据类别分页查询WIFI商铺", httpMethod = "GET", response = Page.class)
 	public @ResponseBody Page<WzzWifiShopEntity> findWifiShopsByType(
-			@RequestParam(defaultValue = "") String classType1,
-			@RequestParam(defaultValue = "1") Integer pageIndex,
-			@RequestParam(defaultValue = "10") Integer pageSize) {
+			@RequestParam(defaultValue = "", required = true) @ApiParam(required = true, value = "业务大类，值以注册wifi商铺时传入为准") String classType1,
+			@RequestParam(defaultValue = "1") @ApiParam(defaultValue = "1", value = "分页参数，当前页码") Integer pageIndex,
+			@RequestParam(defaultValue = "10") @ApiParam(defaultValue = "10", value = "分页参数，每页最大记录数") Integer pageSize) {
 		Page<WzzWifiShopEntity> results = null;
 		try {
 			WzzWifiShopEntity condition = new WzzWifiShopEntity();
@@ -44,12 +45,12 @@ public class WzzV1RestController {
 	}
 
 	@RequestMapping(value = "/v1/findWifiShopsByXY", method = RequestMethod.GET)
-	@ApiOperation(value = "附近的WIFI店铺", httpMethod = "GET", response = Page.class)
+	@ApiOperation(value = "附近的WIFI商铺，默认搜索范围500", httpMethod = "GET", response = Page.class)
 	public @ResponseBody Page<WzzWifiShopEntity> findWifiShopsByXY(
-			@RequestParam(defaultValue = "0",required=true) Integer wifiX,
-			@RequestParam(defaultValue = "0",required=true) Integer wifiY,
-			@RequestParam(defaultValue = "1") Integer pageIndex,
-			@RequestParam(defaultValue = "10") Integer pageSize) {
+			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标X轴的值") Integer wifiX,
+			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标Y轴的值") Integer wifiY,
+			@RequestParam(defaultValue = "1") @ApiParam(value = "分页参数，当前页码") Integer pageIndex,
+			@RequestParam(defaultValue = "10") @ApiParam(value = "分页参数，每页最大记录数") Integer pageSize) {
 		Page<WzzWifiShopEntity> results = null;
 		try {
 			WzzWifiShopEntity condition = new WzzWifiShopEntity();
@@ -70,8 +71,9 @@ public class WzzV1RestController {
 	}
 
 	@RequestMapping(value = "/v1/getWifiShopById", method = RequestMethod.GET)
-	@ApiOperation(value = "根据ID查询WIFI店铺", httpMethod = "GET", response = WzzWifiShopEntity.class)
-	public @ResponseBody WzzWifiShopEntity getWifiShopById(@RequestParam String shopId) {
+	@ApiOperation(value = "根据ID查询WIFI商铺", httpMethod = "GET", response = WzzWifiShopEntity.class)
+	public @ResponseBody WzzWifiShopEntity getWifiShopById(
+			@RequestParam(required = true) @ApiParam(value = "wifi商铺ID") String shopId) {
 		WzzWifiShopEntity results = null;
 		try {
 			results = wzzService.getWzzWifiShopById(shopId);
@@ -81,14 +83,15 @@ public class WzzV1RestController {
 		return results;
 	}
 
-	@RequestMapping(value = "/v1/getWifiShopByWifiSSID", method = RequestMethod.GET)
-	@ApiOperation(value = "根据WIFI标识查询WIFI店铺，可以判断wifi是否开通店铺", httpMethod = "GET", response = WzzWifiShopEntity.class)
-	public @ResponseBody WzzWifiShopEntity getWifiShopByWifiSSID(@RequestParam String wifiSSId) {
+	@RequestMapping(value = "/v1/getWifiShopByWifiBSSID", method = RequestMethod.GET)
+	@ApiOperation(value = "根据WIFI BSSID查询WIFI商铺，可以判断wifi是否开通商铺", httpMethod = "GET", response = WzzWifiShopEntity.class)
+	public @ResponseBody WzzWifiShopEntity getWifiShopByWifiSSID(
+			@RequestParam @ApiParam(value = "wifi地址BSSID") String wifiBSSId) {
 		WzzWifiShopEntity results = null;
 		Page<WzzWifiShopEntity> list = null;
 		try {
 			WzzWifiShopEntity condition = new WzzWifiShopEntity();
-			condition.setWifi(wifiSSId);
+			condition.setWifi(wifiBSSId);
 			Order order = new Order();
 			list = wzzService.findWzzWifiShop(condition, order, 1, 1);
 			if (list != null && list.getDatas() != null) {
@@ -99,10 +102,11 @@ public class WzzV1RestController {
 		}
 		return results;
 	}
-	
+
 	@RequestMapping(value = "/v1/WifiShop", method = RequestMethod.POST)
-	@ApiOperation(value = "新增WIFI店铺", httpMethod = "POST", response = WzzWifiShopEntity.class)
-	public @ResponseBody WzzWifiShopEntity addWifiShopes(@RequestBody WzzWifiShopEntity data) {
+	@ApiOperation(value = "新增WIFI商铺", httpMethod = "POST", response = WzzWifiShopEntity.class)
+	public @ResponseBody WzzWifiShopEntity addWifiShopes(
+			@RequestBody @ApiParam(value = "wifi商铺实体对象") WzzWifiShopEntity data) {
 		WzzWifiShopEntity result = null;
 		try {
 			wzzService.insertWzzWifiShop(data);
@@ -111,10 +115,11 @@ public class WzzV1RestController {
 		}
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/v1/WifiShop", method = RequestMethod.PUT)
-	@ApiOperation(value = "修改WIFI店铺", httpMethod = "PUT", response = WzzWifiShopEntity.class)
-	public WzzWifiShopEntity updateWzzWifiShop(@RequestBody WzzWifiShopEntity data)
+	@ApiOperation(value = "修改WIFI商铺", httpMethod = "PUT", response = WzzWifiShopEntity.class)
+	public WzzWifiShopEntity updateWzzWifiShop(
+			@RequestBody @ApiParam(value = "wifi商铺实体对象") WzzWifiShopEntity data)
 			throws Exception {
 		WzzWifiShopEntity result = null;
 		try {
