@@ -36,6 +36,14 @@ public class WzzServiceImpl implements WzzService {
 	private String wzz_ftp_tmpfile_path = "/mydata/tmp";
 	private int wzz_wifi_search_scope = 500;
 
+	private String SMSServerHost;
+	private String SMSServerPort;
+	private String SMSServerUserName;
+	private String SMSServerPassword;
+	private String SMSServerAppId;
+	private String SMSServerTempleteId;
+	private String SMSServerTimeout;
+
 	public WzzBusinessClassEntityMapper getWzzBusinessClassEntityMapper() {
 		return wzzBusinessClassEntityMapper;
 	}
@@ -265,6 +273,62 @@ public class WzzServiceImpl implements WzzService {
 
 	public void setWzz_wifi_search_scope(int wzz_wifi_search_scope) {
 		this.wzz_wifi_search_scope = wzz_wifi_search_scope;
+	}
+
+	public String getSMSServerHost() {
+		return SMSServerHost;
+	}
+
+	public void setSMSServerHost(String SMSServerHost) {
+		this.SMSServerHost = SMSServerHost;
+	}
+
+	public String getSMSServerPort() {
+		return SMSServerPort;
+	}
+
+	public void setSMSServerPort(String SMSServerPort) {
+		this.SMSServerPort = SMSServerPort;
+	}
+
+	public String getSMSServerUserName() {
+		return SMSServerUserName;
+	}
+
+	public void setSMSServerUserName(String SMSServerUserName) {
+		this.SMSServerUserName = SMSServerUserName;
+	}
+
+	public String getSMSServerPassword() {
+		return SMSServerPassword;
+	}
+
+	public void setSMSServerPassword(String SMSServerPassword) {
+		this.SMSServerPassword = SMSServerPassword;
+	}
+
+	public String getSMSServerAppId() {
+		return SMSServerAppId;
+	}
+
+	public void setSMSServerAppId(String SMSServerAppId) {
+		this.SMSServerAppId = SMSServerAppId;
+	}
+
+	public String getSMSServerTempleteId() {
+		return SMSServerTempleteId;
+	}
+
+	public void setSMSServerTempleteId(String SMSServerTempleteId) {
+		this.SMSServerTempleteId = SMSServerTempleteId;
+	}
+
+	public String getSMSServerTimeout() {
+		return SMSServerTimeout;
+	}
+
+	public void setSMSServerTimeout(String sMSServerTimeout) {
+		SMSServerTimeout = sMSServerTimeout;
 	}
 
 }

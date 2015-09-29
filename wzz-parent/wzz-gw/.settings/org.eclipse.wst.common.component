@@ -10,7 +10,7 @@
         <dependent-module archiveName="wzz-api-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/wzz-api/wzz-api">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="wzz-gw"/>
         <property name="java-output-path" value="/wzz-gw/target/classes"/>
+        <property name="context-root" value="gateway"/>
     </wb-module>
 </project-modules>
