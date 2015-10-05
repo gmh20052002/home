@@ -1,15 +1,24 @@
 package com.gmh.wzz.web.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cloopen.rest.sdk.CCPRestSmsSDK;
 import com.gmh.wzz.api.entity.MessageCode;
@@ -217,6 +226,57 @@ public class WzzV1RestController {
 					+ result.get("statusMsg"));
 		}
 		return ret;
+	}
+
+	@RequestMapping(value = "/v1/UploadFiles", method = RequestMethod.POST)
+	@ApiOperation(value = "文件上传", httpMethod = "POST", response = String.class)
+	public @ResponseBody String uploadFile(HttpServletRequest request,
+			@RequestParam(required = false) @ApiParam(value = "省份代码") String province,
+			@RequestParam(required = false) @ApiParam(value = "地市代码") String city,
+			@RequestParam(value = "files", required = true) MultipartFile file) {
+		FTPClient ftpClient = new FTPClient();
+		FileInputStream fis = null;
+		String fileUrls = "";
+		try {
+			String fileName = file.getOriginalFilename();
+			String uuidFileName = UUID.randomUUID().toString()
+					.replaceAll("-", "")
+					+ fileName.substring(fileName.lastIndexOf("."));
+			ftpClient.connect(wzzService.getWzz_ftp_url());
+			ftpClient.login(wzzService.getWzz_ftp_userName(),
+					wzzService.getWzz_ftp_password());
+
+			String uploadPath = wzzService.getWzz_ftp_tmpfile_path();
+			if (!StringUtils.isEmpty(province)) {
+				uploadPath += province + "/";
+			}
+			if (!StringUtils.isEmpty(city)) {
+				uploadPath += city + "/";
+			}
+			ftpClient.makeDirectory(uploadPath);
+			// 设置上传目录
+			ftpClient.changeWorkingDirectory(uploadPath);
+			ftpClient.setBufferSize(1024);
+			ftpClient.setControlEncoding("UTF-8");
+			// 设置文件类型（二进制）
+			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+			ftpClient.storeFile(uuidFileName, file.getInputStream());
+			fileUrls = "ftp://" + wzzService.getWzz_ftp_url() + uploadPath
+					+ uuidFileName;
+			System.out.println("成功！");
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException("FTP客户端出错！", e);
+		} finally {
+			IOUtils.closeQuietly(fis);
+			try {
+				ftpClient.disconnect();
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new RuntimeException("关闭FTP连接发生异常！", e);
+			}
+		}
+		return fileUrls;
 	}
 
 	private String getRandNum(int charCount) {
