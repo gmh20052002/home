@@ -11,12 +11,16 @@ import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
 import com.gmh.wzz.api.entity.WzzUserEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopJobEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopPicEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.gmh.wzz.core.dao.WzzBusinessClassEntityMapper;
 import com.gmh.wzz.core.dao.WzzUserEntityMapper;
+import com.gmh.wzz.core.dao.WzzWifiShopDiscEntityMapper;
 import com.gmh.wzz.core.dao.WzzWifiShopEntityMapper;
+import com.gmh.wzz.core.dao.WzzWifiShopJobEntityMapper;
 import com.gmh.wzz.core.dao.WzzWifiShopPicEntityMapper;
 
 @Service
@@ -29,6 +33,10 @@ public class WzzServiceImpl implements WzzService {
 	private WzzWifiShopPicEntityMapper wzzWifiShopPicEntityMapper;
 	@Autowired
 	private WzzUserEntityMapper wzzUserEntityMapper;
+	@Autowired
+	private WzzWifiShopDiscEntityMapper wzzWifiShopDiscEntityMapper;
+	@Autowired
+	private WzzWifiShopJobEntityMapper wzzWifiShopJobEntityMapper;
 
 	private String wzz_ftp_url = "120.25.226.197";
 	private String wzz_ftp_userName = "www";
@@ -68,6 +76,129 @@ public class WzzServiceImpl implements WzzService {
 
 	public void setWzzUserEntityMapper(WzzUserEntityMapper wzzUserEntityMapper) {
 		this.wzzUserEntityMapper = wzzUserEntityMapper;
+	}
+
+	public WzzWifiShopDiscEntityMapper getWzzWifiShopDiscEntityMapper() {
+		return wzzWifiShopDiscEntityMapper;
+	}
+
+	public void setWzzWifiShopDiscEntityMapper(
+			WzzWifiShopDiscEntityMapper wzzWifiShopDiscEntityMapper) {
+		this.wzzWifiShopDiscEntityMapper = wzzWifiShopDiscEntityMapper;
+	}
+
+	public WzzWifiShopJobEntityMapper getWzzWifiShopJobEntityMapper() {
+		return wzzWifiShopJobEntityMapper;
+	}
+
+	public void setWzzWifiShopJobEntityMapper(
+			WzzWifiShopJobEntityMapper wzzWifiShopJobEntityMapper) {
+		this.wzzWifiShopJobEntityMapper = wzzWifiShopJobEntityMapper;
+	}
+
+	public WzzWifiShopPicEntityMapper getWzzWifiShopPicEntityMapper() {
+		return wzzWifiShopPicEntityMapper;
+	}
+
+	public void setWzzWifiShopPicEntityMapper(
+			WzzWifiShopPicEntityMapper wzzWifiShopPicEntityMapper) {
+		this.wzzWifiShopPicEntityMapper = wzzWifiShopPicEntityMapper;
+	}
+
+	public String getWzz_ftp_url() {
+		return wzz_ftp_url;
+	}
+
+	public void setWzz_ftp_url(String wzz_ftp_url) {
+		this.wzz_ftp_url = wzz_ftp_url;
+	}
+
+	public String getWzz_ftp_userName() {
+		return wzz_ftp_userName;
+	}
+
+	public void setWzz_ftp_userName(String wzz_ftp_userName) {
+		this.wzz_ftp_userName = wzz_ftp_userName;
+	}
+
+	public String getWzz_ftp_password() {
+		return wzz_ftp_password;
+	}
+
+	public void setWzz_ftp_password(String wzz_ftp_password) {
+		this.wzz_ftp_password = wzz_ftp_password;
+	}
+
+	public String getWzz_ftp_tmpfile_path() {
+		return wzz_ftp_tmpfile_path;
+	}
+
+	public void setWzz_ftp_tmpfile_path(String wzz_ftp_tmpfile_path) {
+		this.wzz_ftp_tmpfile_path = wzz_ftp_tmpfile_path;
+	}
+
+	public int getWzz_wifi_search_scope() {
+		return wzz_wifi_search_scope;
+	}
+
+	public void setWzz_wifi_search_scope(int wzz_wifi_search_scope) {
+		this.wzz_wifi_search_scope = wzz_wifi_search_scope;
+	}
+
+	public String getSMSServerHost() {
+		return SMSServerHost;
+	}
+
+	public void setSMSServerHost(String SMSServerHost) {
+		this.SMSServerHost = SMSServerHost;
+	}
+
+	public String getSMSServerPort() {
+		return SMSServerPort;
+	}
+
+	public void setSMSServerPort(String SMSServerPort) {
+		this.SMSServerPort = SMSServerPort;
+	}
+
+	public String getSMSServerUserName() {
+		return SMSServerUserName;
+	}
+
+	public void setSMSServerUserName(String SMSServerUserName) {
+		this.SMSServerUserName = SMSServerUserName;
+	}
+
+	public String getSMSServerPassword() {
+		return SMSServerPassword;
+	}
+
+	public void setSMSServerPassword(String SMSServerPassword) {
+		this.SMSServerPassword = SMSServerPassword;
+	}
+
+	public String getSMSServerAppId() {
+		return SMSServerAppId;
+	}
+
+	public void setSMSServerAppId(String SMSServerAppId) {
+		this.SMSServerAppId = SMSServerAppId;
+	}
+
+	public String getSMSServerTempleteId() {
+		return SMSServerTempleteId;
+	}
+
+	public void setSMSServerTempleteId(String SMSServerTempleteId) {
+		this.SMSServerTempleteId = SMSServerTempleteId;
+	}
+
+	public String getSMSServerTimeout() {
+		return SMSServerTimeout;
+	}
+
+	public void setSMSServerTimeout(String sMSServerTimeout) {
+		SMSServerTimeout = sMSServerTimeout;
 	}
 
 	@Override
@@ -226,109 +357,64 @@ public class WzzServiceImpl implements WzzService {
 		return data;
 	}
 
-	public WzzWifiShopPicEntityMapper getWzzWifiShopPicEntityMapper() {
-		return wzzWifiShopPicEntityMapper;
+	@Override
+	public Page<WzzWifiShopDiscEntity> findWzzWifiShopDisc(
+			WzzWifiShopDiscEntity condition, Order order, int pageIndex,
+			int pageSize) throws Exception {
+		Page<WzzWifiShopDiscEntity> page = new Page<WzzWifiShopDiscEntity>();
+		page.setPageIndex(pageIndex);
+		page.setPageSize(pageSize);
+		wzzWifiShopDiscEntityMapper.selectByCondition(condition, order, page);
+		return page;
 	}
 
-	public void setWzzWifiShopPicEntityMapper(
-			WzzWifiShopPicEntityMapper wzzWifiShopPicEntityMapper) {
-		this.wzzWifiShopPicEntityMapper = wzzWifiShopPicEntityMapper;
+	@Override
+	public WzzWifiShopDiscEntity insertWzzWifiShopDisc(
+			WzzWifiShopDiscEntity data) throws Exception {
+		Assert.notNull(data, "新增对象[WzzWifiShopDiscEntity]不能为空");
+		if (StringUtils.isEmpty(data.getId())) {
+			data.setId(UUID.randomUUID().toString());
+		}
+		wzzWifiShopDiscEntityMapper.insert(data);
+		return data;
 	}
 
-	public String getWzz_ftp_url() {
-		return wzz_ftp_url;
+	@Override
+	public WzzWifiShopDiscEntity deleteWzzWifiShopDisc(
+			WzzWifiShopDiscEntity data) throws Exception {
+		Assert.notNull(data, "删除对象[WzzWifiShopDiscEntity]不能为空");
+		wzzWifiShopDiscEntityMapper.deleteByShopId(data.getShopId());
+		return data;
 	}
 
-	public void setWzz_ftp_url(String wzz_ftp_url) {
-		this.wzz_ftp_url = wzz_ftp_url;
+	@Override
+	public Page<WzzWifiShopJobEntity> findWzzWifiShopJob(
+			WzzWifiShopJobEntity condition, Order order, int pageIndex,
+			int pageSize) throws Exception {
+		Page<WzzWifiShopJobEntity> page = new Page<WzzWifiShopJobEntity>();
+		page.setPageIndex(pageIndex);
+		page.setPageSize(pageSize);
+		wzzWifiShopJobEntityMapper.selectByCondition(condition, order, page);
+		return page;
 	}
 
-	public String getWzz_ftp_userName() {
-		return wzz_ftp_userName;
+	@Override
+	public WzzWifiShopJobEntity insertWzzWifiShopJob(
+			WzzWifiShopJobEntity data) throws Exception {
+		Assert.notNull(data, "新增对象[WzzWifiShopJobEntity]不能为空");
+		if (StringUtils.isEmpty(data.getId())) {
+			data.setId(UUID.randomUUID().toString());
+		}
+		wzzWifiShopJobEntityMapper.insert(data);
+		return data;
 	}
 
-	public void setWzz_ftp_userName(String wzz_ftp_userName) {
-		this.wzz_ftp_userName = wzz_ftp_userName;
-	}
-
-	public String getWzz_ftp_password() {
-		return wzz_ftp_password;
-	}
-
-	public void setWzz_ftp_password(String wzz_ftp_password) {
-		this.wzz_ftp_password = wzz_ftp_password;
-	}
-
-	public String getWzz_ftp_tmpfile_path() {
-		return wzz_ftp_tmpfile_path;
-	}
-
-	public void setWzz_ftp_tmpfile_path(String wzz_ftp_tmpfile_path) {
-		this.wzz_ftp_tmpfile_path = wzz_ftp_tmpfile_path;
-	}
-
-	public int getWzz_wifi_search_scope() {
-		return wzz_wifi_search_scope;
-	}
-
-	public void setWzz_wifi_search_scope(int wzz_wifi_search_scope) {
-		this.wzz_wifi_search_scope = wzz_wifi_search_scope;
-	}
-
-	public String getSMSServerHost() {
-		return SMSServerHost;
-	}
-
-	public void setSMSServerHost(String SMSServerHost) {
-		this.SMSServerHost = SMSServerHost;
-	}
-
-	public String getSMSServerPort() {
-		return SMSServerPort;
-	}
-
-	public void setSMSServerPort(String SMSServerPort) {
-		this.SMSServerPort = SMSServerPort;
-	}
-
-	public String getSMSServerUserName() {
-		return SMSServerUserName;
-	}
-
-	public void setSMSServerUserName(String SMSServerUserName) {
-		this.SMSServerUserName = SMSServerUserName;
-	}
-
-	public String getSMSServerPassword() {
-		return SMSServerPassword;
-	}
-
-	public void setSMSServerPassword(String SMSServerPassword) {
-		this.SMSServerPassword = SMSServerPassword;
-	}
-
-	public String getSMSServerAppId() {
-		return SMSServerAppId;
-	}
-
-	public void setSMSServerAppId(String SMSServerAppId) {
-		this.SMSServerAppId = SMSServerAppId;
-	}
-
-	public String getSMSServerTempleteId() {
-		return SMSServerTempleteId;
-	}
-
-	public void setSMSServerTempleteId(String SMSServerTempleteId) {
-		this.SMSServerTempleteId = SMSServerTempleteId;
-	}
-
-	public String getSMSServerTimeout() {
-		return SMSServerTimeout;
-	}
-
-	public void setSMSServerTimeout(String sMSServerTimeout) {
-		SMSServerTimeout = sMSServerTimeout;
+	@Override
+	public WzzWifiShopJobEntity deleteWzzWifiShopJob(
+			WzzWifiShopJobEntity data) throws Exception {
+		Assert.notNull(data, "删除对象[WzzWifiShopJobEntity]不能为空");
+		wzzWifiShopJobEntityMapper.deleteByShopId(data.getShopId());
+		return data;
 	}
 
 }

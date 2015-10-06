@@ -1,10 +1,14 @@
 package com.gmh.wzz.api.service;
 
+import java.util.List;
+
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
 import com.gmh.wzz.api.entity.WzzUserEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopJobEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopPicEntity;
 
 public interface WzzService {
@@ -69,6 +73,31 @@ public interface WzzService {
 
 	public WzzWifiShopPicEntity deleteWzzWifiShopPic(WzzWifiShopPicEntity data)
 			throws Exception;
+
+	/*
+	 * ==========================================================================
+	 */
+
+	public Page<WzzWifiShopDiscEntity> findWzzWifiShopDisc(
+			WzzWifiShopDiscEntity condition, Order order, int pageIndex,
+			int pageSize) throws Exception;
+
+	public WzzWifiShopDiscEntity insertWzzWifiShopDisc(WzzWifiShopDiscEntity data)
+			throws Exception;
+
+	public WzzWifiShopDiscEntity deleteWzzWifiShopDisc(WzzWifiShopDiscEntity data)
+			throws Exception;
+
+	public Page<WzzWifiShopJobEntity> findWzzWifiShopJob(
+			WzzWifiShopJobEntity condition, Order order, int pageIndex,
+			int pageSize) throws Exception;
+
+	public WzzWifiShopJobEntity insertWzzWifiShopJob(WzzWifiShopJobEntity data)
+			throws Exception;
+
+	public WzzWifiShopJobEntity deleteWzzWifiShopJob(WzzWifiShopJobEntity data)
+			throws Exception;
+	
 	
 	/*
 	 * =============================================================================

@@ -24,7 +24,10 @@ import com.cloopen.rest.sdk.CCPRestSmsSDK;
 import com.gmh.wzz.api.entity.MessageCode;
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
+import com.gmh.wzz.api.entity.Sort;
+import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopJobEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -127,7 +130,7 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/WifiShop", method = RequestMethod.POST)
 	@ApiOperation(value = "新增WIFI商铺", httpMethod = "POST", response = WzzWifiShopEntity.class)
-	public @ResponseBody WzzWifiShopEntity addWifiShopes(
+	public @ResponseBody WzzWifiShopEntity addWifiShop(
 			@RequestBody @ApiParam(value = "wifi商铺实体对象") WzzWifiShopEntity data) {
 		WzzWifiShopEntity result = null;
 		try {
@@ -230,10 +233,11 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/UploadFiles", method = RequestMethod.POST)
 	@ApiOperation(value = "文件上传", httpMethod = "POST", response = String.class)
-	public @ResponseBody String uploadFile(HttpServletRequest request,
+	public @ResponseBody String uploadFile(
+			HttpServletRequest request,
 			@RequestParam(required = false) @ApiParam(value = "省份代码") String province,
 			@RequestParam(required = false) @ApiParam(value = "地市代码") String city,
-			@RequestParam(value = "files", required = true) MultipartFile file) {
+			@RequestParam(value = "file", required = true) @ApiParam(value = "文件附件对象<MultipartFile>，必填") MultipartFile file) {
 		FTPClient ftpClient = new FTPClient();
 		FileInputStream fis = null;
 		String fileUrls = "";
@@ -277,6 +281,76 @@ public class WzzV1RestController {
 			}
 		}
 		return fileUrls;
+	}
+
+	@RequestMapping(value = "/v1/WifiShopDisc", method = RequestMethod.POST)
+	@ApiOperation(value = "发布WIFI商铺优惠信息", httpMethod = "POST", response = WzzWifiShopDiscEntity.class)
+	public @ResponseBody WzzWifiShopDiscEntity addWifiShopDisc(
+			@RequestBody @ApiParam(value = "wifi商铺优惠信息实体对象") WzzWifiShopDiscEntity data) {
+		WzzWifiShopDiscEntity result = null;
+		try {
+			result = wzzService.insertWzzWifiShopDisc(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/v1/wifiShopDiscs", method = RequestMethod.GET)
+	@ApiOperation(value = "查询WIFI商铺优惠信息", httpMethod = "GET", response = Page.class)
+	public @ResponseBody Page<WzzWifiShopDiscEntity> findWifiShopDiscs(
+			@RequestParam(required = true) @ApiParam(value = "wifi商铺ID") String shopId,
+			@RequestParam(defaultValue = "1") @ApiParam(value = "分页参数，当前页码") Integer pageIndex,
+			@RequestParam(defaultValue = "10") @ApiParam(value = "分页参数，每页最大记录数") Integer pageSize) {
+		Page<WzzWifiShopDiscEntity> results = null;
+		try {
+			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
+			pageSize = pageSize == null ? 10 : pageIndex;
+			Order order = new Order();
+			order.setOrderBy("START", Sort.DESC);
+			WzzWifiShopDiscEntity condition = new WzzWifiShopDiscEntity();
+			condition.setShopId(shopId);
+			results = wzzService.findWzzWifiShopDisc(condition, order,
+					pageIndex, pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return results;
+	}
+
+	@RequestMapping(value = "/v1/WifiShopJob", method = RequestMethod.POST)
+	@ApiOperation(value = "发布WIFI商铺招聘信息", httpMethod = "POST", response = WzzWifiShopJobEntity.class)
+	public @ResponseBody WzzWifiShopJobEntity addWifiShopJob(
+			@RequestBody @ApiParam(value = "wifi商铺招聘信息实体对象") WzzWifiShopJobEntity data) {
+		WzzWifiShopJobEntity result = null;
+		try {
+			result = wzzService.insertWzzWifiShopJob(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/v1/wifiShopJobs", method = RequestMethod.GET)
+	@ApiOperation(value = "查询WIFI商铺招聘信息", httpMethod = "GET", response = Page.class)
+	public @ResponseBody Page<WzzWifiShopJobEntity> findWifiShopJobs(
+			@RequestParam(required = true) @ApiParam(value = "wifi商铺ID") String shopId,
+			@RequestParam(defaultValue = "1") @ApiParam(value = "分页参数，当前页码") Integer pageIndex,
+			@RequestParam(defaultValue = "10") @ApiParam(value = "分页参数，每页最大记录数") Integer pageSize) {
+		Page<WzzWifiShopJobEntity> results = null;
+		try {
+			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
+			pageSize = pageSize == null ? 10 : pageIndex;
+			Order order = new Order();
+			order.setOrderBy("START", Sort.DESC);
+			WzzWifiShopJobEntity condition = new WzzWifiShopJobEntity();
+			condition.setShopId(shopId);
+			results = wzzService.findWzzWifiShopJob(condition, order,
+					pageIndex, pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return results;
 	}
 
 	private String getRandNum(int charCount) {

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gmh.wzz.core.dao.WzzWifiShopJobEntityMapper">
+	<resultMap id="BaseResultMap" type="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="SHOP_ID" property="shopId" jdbcType="VARCHAR" />
+		<result column="TITLE" property="title" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+		<result column="START" property="start" jdbcType="DATE" />
+		<result column="END" property="end" jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, SHOP_ID, TITLE, REMARK, PHONE, START, END
+	</sql>
+	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
+		insert into WZZ_WIFI_SHOP_JOB (ID, SHOP_ID, TITLE,
+		REMARK, PHONE, START,
+		END)
+		values (#{id,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{start,jdbcType=DATE},
+		#{end,jdbcType=DATE})
+	</insert>
+	<insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
+		insert into WZZ_WIFI_SHOP_JOB
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="shopId != null">
+				SHOP_ID,
+			</if>
+			<if test="title != null">
+				TITLE,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="phone != null">
+				PHONE,
+			</if>
+			<if test="start != null">
+				START,
+			</if>
+			<if test="end != null">
+				END,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="shopId != null">
+				#{shopId,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="start != null">
+				#{start,jdbcType=DATE},
+			</if>
+			<if test="end != null">
+				#{end,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+	
+	<delete id="deleteByShopId" parameterType="java.lang.String">
+		delete from WZZ_WIFI_SHOP_JOB
+		where SHOP_ID = #{shopId,jdbcType=VARCHAR}
+	</delete>
+
+	<select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
+		select
+		<include refid="Base_Column_List" />
+		from WZZ_WIFI_SHOP_JOB
+		<where>
+			<if test="condition != null">
+				<if test="condition.id != null">
+					AND ID = #{condition.id,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.shopId != null">
+					AND SHOP_ID = #{condition.shopId,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.title != null">
+					AND TITLE like '%${condition.title}%'
+				</if>
+				<if test="condition.remark != null">
+					AND REMARK like '%${condition.remark}%'
+				</if>
+				<if test="condition.phone != null">
+					AND PHONE = #{condition.phone,jdbcType=VARCHAR}
+				</if>
+			</if>
+		</where>
+	</select>
+</mapper>
