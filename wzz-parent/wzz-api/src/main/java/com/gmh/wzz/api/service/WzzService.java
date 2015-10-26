@@ -1,7 +1,5 @@
 package com.gmh.wzz.api.service;
 
-import java.util.List;
-
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
@@ -109,7 +107,7 @@ public interface WzzService {
 
 	public String getWzz_ftp_password();
 	public String getWzz_ftp_tmpfile_path();
-	public int getWzz_wifi_search_scope();
+	public Float getWzz_wifi_search_scope();
 	
 	public String getSMSServerHost();
 	public String getSMSServerPort();

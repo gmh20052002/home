@@ -72,18 +72,18 @@ public class WzzV1RestController {
 	@RequestMapping(value = "/v1/findWifiShopsByXY", method = RequestMethod.GET)
 	@ApiOperation(value = "附近的WIFI商铺，默认搜索范围500", httpMethod = "GET", response = Page.class)
 	public @ResponseBody Page<WzzWifiShopEntity> findWifiShopsByXY(
-			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标X轴的值") Integer wifiX,
-			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标Y轴的值") Integer wifiY,
+			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标经度的值") Float wifiLng,
+			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标纬度的值") Float wifiLat,
 			@RequestParam(defaultValue = "1") @ApiParam(value = "分页参数，当前页码") Integer pageIndex,
 			@RequestParam(defaultValue = "10") @ApiParam(value = "分页参数，每页最大记录数") Integer pageSize) {
 		Page<WzzWifiShopEntity> results = null;
 		try {
 			WzzWifiShopEntity condition = new WzzWifiShopEntity();
-			int wifiScope = wzzService.getWzz_wifi_search_scope();
-			condition.setWifiXMin(wifiX - wifiScope);
-			condition.setWifiYMin(wifiY - wifiScope);
-			condition.setWifiXMax(wifiX + wifiScope);
-			condition.setWifiYMax(wifiY + wifiScope);
+			Float wifiScope = wzzService.getWzz_wifi_search_scope();
+			condition.setWifiLngMin(wifiLng - wifiScope);
+			condition.setWifiLatMin(wifiLat - wifiScope);
+			condition.setWifiLngMax(wifiLng + wifiScope);
+			condition.setWifiLatMax(wifiLat + wifiScope);
 			Order order = new Order();
 			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
 			pageSize = pageSize == null ? 10 : pageIndex;
