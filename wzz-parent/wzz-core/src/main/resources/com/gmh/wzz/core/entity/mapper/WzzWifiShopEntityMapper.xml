@@ -17,6 +17,8 @@
 		<result column="FLOOR" property="floor" jdbcType="VARCHAR" />
 		<result column="WIFI_LNG" property="wifiLng" jdbcType="VARCHAR" />
 		<result column="WIFI_LAT" property="wifiLat" jdbcType="VARCHAR" />
+		<result column="WIFI_X" property="wifiX" jdbcType="VARCHAR" />
+		<result column="WIFI_Y" property="wifiY" jdbcType="VARCHAR" />
 		<result column="PROVINCE" property="province" jdbcType="VARCHAR" />
 		<result column="CITY" property="city" jdbcType="VARCHAR" />
 		<result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
@@ -28,7 +30,8 @@
 		WORK_TEL, OVER_USER, MOBILE_TEL,
 		WIFI, WIFI_PASSWORD,
 		FLOOR, WIFI_LNG,
-		WIFI_LAT,
+		WIFI_LAT,WIFI_X,
+		WIFI_Y,
 		PROVINCE, CITY, PIC_URL, CREATE_TIME, UPDATE_TIME
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
@@ -87,29 +90,23 @@
 				<if test="condition.floor != null">
 					AND FLOOR = #{condition.floor,jdbcType=VARCHAR}
 				</if>
-				<if test="condition.wifiLng != null">
-					AND WIFI_LNG = #{condition.wifiLng,jdbcType=VARCHAR}
-				</if>
-				<if test="condition.wifiLat != null">
-					AND WIFI_LAT = #{condition.wifiLat,jdbcType=VARCHAR}
-				</if>
 				<if test="condition.province != null">
 					AND PROVINCE = #{condition.province,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.city != null">
 					AND CITY = #{condition.city,jdbcType=VARCHAR}
 				</if>
-				<if test="condition.wifiLngMin != null">
-					AND WIFI_LNG &gt;= #{condition.wifiLngMin,jdbcType=VARCHAR}
+				<if test="condition.wifiXMin != null">
+					AND WIFI_X &gt;= #{condition.wifiXMin,jdbcType=VARCHAR}
 				</if>
-				<if test="condition.wifiLatMin != null">
-					AND WIFI_LAT &gt;= #{condition.wifiLatMin,jdbcType=VARCHAR}
+				<if test="condition.wifiYMin != null">
+					AND WIFI_Y &gt;= #{condition.wifiYMin,jdbcType=VARCHAR}
 				</if>
-				<if test="condition.wifiLngMax != null">
-					AND WIFI_LNG &lt;= #{condition.wifiLngMax,jdbcType=VARCHAR}
+				<if test="condition.wifiXMax != null">
+					AND WIFI_X &lt;= #{condition.wifiXMax,jdbcType=VARCHAR}
 				</if>
-				<if test="condition.wifiLatMax != null">
-					AND WIFI_LAT &lt;= #{condition.wifiLatMax,jdbcType=VARCHAR}
+				<if test="condition.wifiYMax != null">
+					AND WIFI_Y &lt;= #{condition.wifiYMax,jdbcType=VARCHAR}
 				</if>
 			</if>
 		</where>
@@ -131,6 +128,8 @@
 		#{wifiPassword,jdbcType=VARCHAR}, #{floor,jdbcType=VARCHAR},
 		#{wifiLng,jdbcType=VARCHAR},
 		#{wifiLat,jdbcType=VARCHAR},
+		#{wifiX,jdbcType=VARCHAR},
+		#{wifiY,jdbcType=VARCHAR},
 		#{province,jdbcType=VARCHAR},
 		#{city,jdbcType=VARCHAR},
 		#{picUrl,jdbcType=VARCHAR},
@@ -181,6 +180,12 @@
 			</if>
 			<if test="wifiLat != null">
 				WIFI_LAT,
+			</if>
+			<if test="wifiX != null">
+				WIFI_X,
+			</if>
+			<if test="wifiY != null">
+				WIFI_Y,
 			</if>
 			<if test="province != null">
 				PROVINCE,
@@ -241,6 +246,12 @@
 			<if test="wifiLat != null">
 				#{wifiLat,jdbcType=VARCHAR},
 			</if>
+			<if test="wifiX != null">
+				#{wifiX,jdbcType=VARCHAR},
+			</if>
+			<if test="wifiY != null">
+				#{wifiY,jdbcType=VARCHAR},
+			</if>
 			<if test="province != null">
 				#{province,jdbcType=VARCHAR},
 			</if>
@@ -300,6 +311,12 @@
 			<if test="wifiLat != null">
 				WIFI_LAT = #{wifiLat,jdbcType=VARCHAR},
 			</if>
+			<if test="wifiX != null">
+				WIFI_X = #{wifiX,jdbcType=VARCHAR},
+			</if>
+			<if test="wifiY != null">
+				WIFI_Y = #{wifiY,jdbcType=VARCHAR},
+			</if>
 			<if test="province != null">
 				PROVINCE = #{province,jdbcType=VARCHAR},
 			</if>
@@ -339,6 +356,9 @@
 		WIFI_LNG = #{wifiLng,jdbcType=VARCHAR},
 		WIFI_LAT =
 		#{wifiLat,jdbcType=VARCHAR},
+		WIFI_X = #{wifiX,jdbcType=VARCHAR},
+		WIFI_Y =
+		#{wifiY,jdbcType=VARCHAR},
 		PROVINCE = #{province,jdbcType=VARCHAR},
 		CITY =
 		#{city,jdbcType=VARCHAR},

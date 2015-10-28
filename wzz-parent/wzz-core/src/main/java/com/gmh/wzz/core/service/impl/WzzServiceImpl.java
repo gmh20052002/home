@@ -1,5 +1,9 @@
 package com.gmh.wzz.core.service.impl;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -399,8 +403,8 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopJobEntity insertWzzWifiShopJob(
-			WzzWifiShopJobEntity data) throws Exception {
+	public WzzWifiShopJobEntity insertWzzWifiShopJob(WzzWifiShopJobEntity data)
+			throws Exception {
 		Assert.notNull(data, "新增对象[WzzWifiShopJobEntity]不能为空");
 		if (StringUtils.isEmpty(data.getId())) {
 			data.setId(UUID.randomUUID().toString());
@@ -410,11 +414,34 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopJobEntity deleteWzzWifiShopJob(
-			WzzWifiShopJobEntity data) throws Exception {
+	public WzzWifiShopJobEntity deleteWzzWifiShopJob(WzzWifiShopJobEntity data)
+			throws Exception {
 		Assert.notNull(data, "删除对象[WzzWifiShopJobEntity]不能为空");
 		wzzWifiShopJobEntityMapper.deleteByShopId(data.getShopId());
 		return data;
 	}
 
+	public void sendMsg(String msgContent, String mobile) throws Exception {
+		String encode = "utf-8";
+		// 组建请求
+		String straddr = SMSServerHost + "?uid=" + SMSServerUserName + "&pwd=" + SMSServerPassword + "&mobile="
+				+ mobile + "&encode=" + encode + "&content=" + msgContent;
+
+		StringBuffer sb = new StringBuffer(straddr);
+		System.out.println("URL:" + sb);
+
+		// 发送请求
+		URL url = new URL(sb.toString());
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		connection.setRequestMethod("POST");
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				url.openStream()));
+
+		// 返回结果
+		String inputline = in.readLine();
+		System.out.println("Response:" + inputline);
+		if(!inputline.contains("stat=100")){
+			throw new Exception("短信发送失败！返回值：" + inputline);
+		}
+	}
 }

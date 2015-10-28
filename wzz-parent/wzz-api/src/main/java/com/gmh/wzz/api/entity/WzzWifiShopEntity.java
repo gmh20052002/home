@@ -45,11 +45,17 @@ public class WzzWifiShopEntity implements Serializable {
 	@ApiModelProperty(value="楼层")
     private String floor;
 
-	@ApiModelProperty(value="WIFI坐标X")
+	@ApiModelProperty(value="WIFI经度坐标")
     private Float wifiLng;
 
-	@ApiModelProperty(value="WIFI坐标Y")
+	@ApiModelProperty(value="WIFI纬度坐标")
     private Float wifiLat;
+
+	@ApiModelProperty(value="WIFI坐标X")
+    private Float wifiX;
+
+	@ApiModelProperty(value="WIFI坐标Y")
+    private Float wifiY;
 
 	@ApiModelProperty(value="省")
     private String province;
@@ -66,10 +72,10 @@ public class WzzWifiShopEntity implements Serializable {
 	@ApiModelProperty(value="更新时间")
     private Date updateTime;
     
-    private Float wifiLngMin = 0f;
-    private Float wifiLngMax = 0f;
-    private Float wifiLatMin = 0f;
-    private Float wifiLatMax = 0f;
+    private Float wifiXMin = null;
+    private Float wifiXMax = null;
+    private Float wifiYMin = null;
+    private Float wifiYMax = null;
 
     public String getId() {
         return id;
@@ -223,35 +229,51 @@ public class WzzWifiShopEntity implements Serializable {
 		this.wifiLat = wifiLat;
 	}
 
-	public Float getWifiLngMin() {
-		return wifiLngMin;
+	public Float getWifiX() {
+		return wifiX;
 	}
 
-	public void setWifiLngMin(Float wifiLngMin) {
-		this.wifiLngMin = wifiLngMin;
+	public void setWifiX(Float wifiX) {
+		this.wifiX = wifiX;
 	}
 
-	public Float getWifiLngMax() {
-		return wifiLngMax;
+	public Float getWifiY() {
+		return wifiY;
 	}
 
-	public void setWifiLngMax(Float wifiLngMax) {
-		this.wifiLngMax = wifiLngMax;
+	public void setWifiY(Float wifiY) {
+		this.wifiY = wifiY;
 	}
 
-	public Float getWifiLatMin() {
-		return wifiLatMin;
+	public Float getWifiXMin() {
+		return wifiXMin;
 	}
 
-	public void setWifiLatMin(Float wifiLatMin) {
-		this.wifiLatMin = wifiLatMin;
+	public void setWifiXMin(Float wifiXMin) {
+		this.wifiXMin = wifiXMin;
 	}
 
-	public Float getWifiLatMax() {
-		return wifiLatMax;
+	public Float getWifiXMax() {
+		return wifiXMax;
 	}
 
-	public void setWifiLatMax(Float wifiLatMax) {
-		this.wifiLatMax = wifiLatMax;
+	public void setWifiXMax(Float wifiXMax) {
+		this.wifiXMax = wifiXMax;
+	}
+
+	public Float getWifiYMin() {
+		return wifiYMin;
+	}
+
+	public void setWifiYMin(Float wifiYMin) {
+		this.wifiYMin = wifiYMin;
+	}
+
+	public Float getWifiYMax() {
+		return wifiYMax;
+	}
+
+	public void setWifiYMax(Float wifiYMax) {
+		this.wifiYMax = wifiYMax;
 	}
 }

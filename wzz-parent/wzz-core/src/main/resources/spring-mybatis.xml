@@ -76,11 +76,11 @@
 		<property name="wzz_wifi_search_scope" value="${wzz.wifi.search.scope}"/>
 		
 		<property name="SMSServerHost" value="${SMSServerHost}"/>
-		<property name="SMSServerPort" value="${SMSServerPort}"/>
+		<!-- <property name="SMSServerPort" value="${SMSServerPort}"/> -->
 		<property name="SMSServerUserName" value="${SMSServerUserName}"/>
 		<property name="SMSServerPassword" value="${SMSServerPassword}"/>
-		<property name="SMSServerAppId" value="${SMSServerAppId}"/>
-		<property name="SMSServerTempleteId" value="${SMSServerTempleteId}"/>
+		<!-- <property name="SMSServerAppId" value="${SMSServerAppId}"/>
+		<property name="SMSServerTempleteId" value="${SMSServerTempleteId}"/> -->
 		<property name="SMSServerTimeout" value="${SMSServerTimeout}"/>
 	</bean>
 </beans>

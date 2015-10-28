@@ -2,7 +2,6 @@ package com.gmh.wzz.web.controller;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cloopen.rest.sdk.CCPRestSmsSDK;
 import com.gmh.wzz.api.entity.MessageCode;
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
@@ -60,7 +58,7 @@ public class WzzV1RestController {
 			condition.setClassType1(classType1);
 			Order order = new Order();
 			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
-			pageSize = pageSize == null ? 10 : pageIndex;
+			pageSize = pageSize == null ? 10 : pageSize;
 			results = wzzService.findWzzWifiShop(condition, order, pageIndex,
 					pageSize);
 		} catch (Exception e) {
@@ -72,21 +70,21 @@ public class WzzV1RestController {
 	@RequestMapping(value = "/v1/findWifiShopsByXY", method = RequestMethod.GET)
 	@ApiOperation(value = "附近的WIFI商铺，默认搜索范围500", httpMethod = "GET", response = Page.class)
 	public @ResponseBody Page<WzzWifiShopEntity> findWifiShopsByXY(
-			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标经度的值") Float wifiLng,
-			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标纬度的值") Float wifiLat,
+			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标经度距离") Float wifix,
+			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标纬度距离") Float wifiY,
 			@RequestParam(defaultValue = "1") @ApiParam(value = "分页参数，当前页码") Integer pageIndex,
 			@RequestParam(defaultValue = "10") @ApiParam(value = "分页参数，每页最大记录数") Integer pageSize) {
 		Page<WzzWifiShopEntity> results = null;
 		try {
 			WzzWifiShopEntity condition = new WzzWifiShopEntity();
 			Float wifiScope = wzzService.getWzz_wifi_search_scope();
-			condition.setWifiLngMin(wifiLng - wifiScope);
-			condition.setWifiLatMin(wifiLat - wifiScope);
-			condition.setWifiLngMax(wifiLng + wifiScope);
-			condition.setWifiLatMax(wifiLat + wifiScope);
+			condition.setWifiXMin(wifix - wifiScope);
+			condition.setWifiYMin(wifiY - wifiScope);
+			condition.setWifiXMax(wifix + wifiScope);
+			condition.setWifiYMax(wifiY + wifiScope);
 			Order order = new Order();
 			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
-			pageSize = pageSize == null ? 10 : pageIndex;
+			pageSize = pageSize == null ? 10 : pageSize;
 			results = wzzService.findWzzWifiShop(condition, order, pageIndex,
 					pageSize);
 		} catch (Exception e) {
@@ -154,8 +152,28 @@ public class WzzV1RestController {
 		}
 		return result;
 	}
-
+	
 	@RequestMapping(value = "/v1/getMessageCode", method = RequestMethod.GET)
+	@ApiOperation(value = "获取短信验证码", httpMethod = "GET", response = MessageCode.class)
+	public @ResponseBody MessageCode getMessageCode(
+			@RequestParam(required = true) @ApiParam(value = "手机号码，必填") String mobilePhone) {
+		MessageCode ret = null;
+		String randNum = getRandNum(6);
+		String timeOut = wzzService.getSMSServerTimeout();
+		
+		String msgContent = "【网蜘蛛】短信验证码:" + randNum + "请在"+timeOut+"分钟内输入，校验码很重要，打死都不能告诉别人~~";
+		try {
+			wzzService.sendMsg(msgContent, mobilePhone);
+			ret = new MessageCode();
+			ret.setMessageCode(randNum);
+			ret.setTimeOut(Long.parseLong(timeOut));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	/*@RequestMapping(value = "/v1/getMessageCode", method = RequestMethod.GET)
 	@ApiOperation(value = "获取短信验证码", httpMethod = "GET", response = MessageCode.class)
 	public @ResponseBody MessageCode getMessageCode(
 			@RequestParam(required = true) @ApiParam(value = "手机号码，必填") String mobilePhone) {
@@ -214,12 +232,12 @@ public class WzzV1RestController {
 		if ("000000".equals(result.get("statusCode"))) {
 			long time = System.currentTimeMillis();
 			// 正常返回输出data包体信息（map）
-			/*
+			
 			 * HashMap<String, Object> data = (HashMap<String, Object>) result
 			 * .get("data"); Set<String> keySet = data.keySet(); for (String key
 			 * : keySet) { Object object = data.get(key); System.out.println(key
 			 * + " = " + object); }
-			 */
+			 
 			ret = new MessageCode();
 			ret.setMessageCode(randNum);
 			ret.setTimeOut(time + Long.parseLong(timeOut) * 60 * 1000);
@@ -229,7 +247,7 @@ public class WzzV1RestController {
 					+ result.get("statusMsg"));
 		}
 		return ret;
-	}
+	}*/
 
 	@RequestMapping(value = "/v1/UploadFiles", method = RequestMethod.POST)
 	@ApiOperation(value = "文件上传", httpMethod = "POST", response = String.class)

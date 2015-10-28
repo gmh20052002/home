@@ -80,11 +80,11 @@ public interface WzzService {
 			WzzWifiShopDiscEntity condition, Order order, int pageIndex,
 			int pageSize) throws Exception;
 
-	public WzzWifiShopDiscEntity insertWzzWifiShopDisc(WzzWifiShopDiscEntity data)
-			throws Exception;
+	public WzzWifiShopDiscEntity insertWzzWifiShopDisc(
+			WzzWifiShopDiscEntity data) throws Exception;
 
-	public WzzWifiShopDiscEntity deleteWzzWifiShopDisc(WzzWifiShopDiscEntity data)
-			throws Exception;
+	public WzzWifiShopDiscEntity deleteWzzWifiShopDisc(
+			WzzWifiShopDiscEntity data) throws Exception;
 
 	public Page<WzzWifiShopJobEntity> findWzzWifiShopJob(
 			WzzWifiShopJobEntity condition, Order order, int pageIndex,
@@ -95,10 +95,12 @@ public interface WzzService {
 
 	public WzzWifiShopJobEntity deleteWzzWifiShopJob(WzzWifiShopJobEntity data)
 			throws Exception;
-	
-	
+
+	public void sendMsg(String msgContent, String mobile) throws Exception;
+
 	/*
-	 * =============================================================================
+	 * ==========================================================================
+	 * ===
 	 */
 
 	public String getWzz_ftp_url();
@@ -106,14 +108,22 @@ public interface WzzService {
 	public String getWzz_ftp_userName();
 
 	public String getWzz_ftp_password();
+
 	public String getWzz_ftp_tmpfile_path();
+
 	public Float getWzz_wifi_search_scope();
-	
+
 	public String getSMSServerHost();
+
 	public String getSMSServerPort();
+
 	public String getSMSServerUserName();
+
 	public String getSMSServerPassword();
+
 	public String getSMSServerAppId();
+
 	public String getSMSServerTempleteId();
+
 	public String getSMSServerTimeout();
 }
