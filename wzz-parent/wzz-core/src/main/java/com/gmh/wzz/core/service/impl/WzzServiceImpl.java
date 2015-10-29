@@ -422,7 +422,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	public void sendMsg(String msgContent, String mobile) throws Exception {
-		String encode = "utf-8";
+		String encode = "utf8";
 		// 组建请求
 		String straddr = SMSServerHost + "?uid=" + SMSServerUserName + "&pwd=" + SMSServerPassword + "&mobile="
 				+ mobile + "&encode=" + encode + "&content=" + msgContent;

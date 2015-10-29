@@ -323,7 +323,7 @@ public class WzzV1RestController {
 		Page<WzzWifiShopDiscEntity> results = null;
 		try {
 			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
-			pageSize = pageSize == null ? 10 : pageIndex;
+			pageSize = pageSize == null ? 10 : pageSize;
 			Order order = new Order();
 			order.setOrderBy("START", Sort.DESC);
 			WzzWifiShopDiscEntity condition = new WzzWifiShopDiscEntity();
@@ -358,7 +358,7 @@ public class WzzV1RestController {
 		Page<WzzWifiShopJobEntity> results = null;
 		try {
 			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
-			pageSize = pageSize == null ? 10 : pageIndex;
+			pageSize = pageSize == null ? 10 : pageSize;
 			Order order = new Order();
 			order.setOrderBy("START", Sort.DESC);
 			WzzWifiShopJobEntity condition = new WzzWifiShopJobEntity();
