@@ -196,7 +196,7 @@ public class WzzWifiShopEntity implements Serializable {
 	public void setPicUrl(String picUrl) {
 		this.picUrl = picUrl;
 	}
-
+	
 	public Date getCreateTime() {
 		return createTime;
 	}
