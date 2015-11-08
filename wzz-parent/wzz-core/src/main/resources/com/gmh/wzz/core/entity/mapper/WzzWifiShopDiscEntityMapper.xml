@@ -72,6 +72,14 @@
 		</trim>
 	</insert>
 	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from WZZ_WIFI_SHOP_DISCOUNT
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	
 	<delete id="deleteByShopId" parameterType="java.lang.String">
 		delete from WZZ_WIFI_SHOP_DISCOUNT
 		where SHOP_ID = #{shopId,jdbcType=VARCHAR}

@@ -2,6 +2,8 @@ package com.gmh.wzz.web.controller;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -35,6 +38,7 @@ import com.wordnik.swagger.annotations.ApiParam;
 @Api(value = "Wzz-Rest-Controller-V1", description = "网蜘蛛Rest接口V1版本", position = 1)
 @Controller()
 public class WzzV1RestController {
+	Logger logger = Logger.getLogger(getClass());
 
 	@Autowired
 	WzzService wzzService;
@@ -175,87 +179,9 @@ public class WzzV1RestController {
 		return ret;
 	}
 
-	/*
-	 * @RequestMapping(value = "/v1/getMessageCode", method = RequestMethod.GET)
-	 * 
-	 * @ApiOperation(value = "获取短信验证码", httpMethod = "GET", response =
-	 * MessageCode.class) public @ResponseBody MessageCode getMessageCode(
-	 * 
-	 * @RequestParam(required = true) @ApiParam(value = "手机号码，必填") String
-	 * mobilePhone) { MessageCode ret = null; HashMap<String, Object> result =
-	 * null;
-	 * 
-	 * // 初始化SDK CCPRestSmsSDK restAPI = new CCPRestSmsSDK();
-	 * 
-	 * //
-	 * ******************************注释***************************************
-	 * ****** // *初始化服务器地址和端口 * //
-	 * *沙盒环境（用于应用开发调试）：restAPI.init("sandboxapp.cloopen.com", "8883");* //
-	 * *生产环境（用户应用上线使用）：restAPI.init("app.cloopen.com", "8883"); * //
-	 * ************
-	 * *******************************************************************
-	 * restAPI.init(wzzService.getSMSServerHost(),
-	 * wzzService.getSMSServerPort());
-	 * 
-	 * //
-	 * ******************************注释***************************************
-	 * ****** // *初始化主帐号和主帐号令牌,对应官网开发者主账号下的ACCOUNT SID和AUTH TOKEN * // *ACOUNT
-	 * SID和AUTH TOKEN在登陆官网后，在“应用-管理控制台”中查看开发者主账号获取* // *参数顺序：第一个参数是ACOUNT
-	 * SID，第二个参数是AUTH TOKEN。 * //
-	 * ***********************************************
-	 * ********************************
-	 * restAPI.setAccount(wzzService.getSMSServerUserName(),
-	 * wzzService.getSMSServerPassword());
-	 * 
-	 * //
-	 * ******************************注释***************************************
-	 * ****** // *初始化应用ID * // *测试开发可使用“测试Demo”的APP ID，正式上线需要使用自己创建的应用的App ID *
-	 * // *应用ID的获取：登陆官网，在“应用-应用列表”，点击应用名称，看应用详情获取APP ID* //
-	 * *********************
-	 * **********************************************************
-	 * restAPI.setAppId(wzzService.getSMSServerAppId());
-	 * 
-	 * //
-	 * ******************************注释***************************************
-	 * ************************* // *调用发送模板短信的接口发送短信 * // *参数顺序说明： * //
-	 * *第一个参数:是要发送的手机号码，可以用逗号分隔，一次最多支持100个手机号 * //
-	 * *第二个参数:是模板ID，在平台上创建的短信模板的ID值；测试的时候可以使用系统的默认模板，id为1。 * //
-	 * *系统默认模板的内容为“【云通讯】您使用的是云通讯短信模板，您的验证码是{1}，请于{2}分钟内正确输入”* //
-	 * *第三个参数是要替换的内容数组。 * //
-	 * ****************************************************
-	 * **********************************************
-	 * 
-	 * //
-	 * **************************************举例说明*****************************
-	 * ****************************************** // *假设您用测试Demo的APP
-	 * ID，则需使用默认模板ID 1，发送手机号是13800000000，传入参数为6532和5，则调用方式为 // * // *result =
-	 * restAPI.sendTemplateSMS("13800000000","1" ,new // String[]{"6532","5"});
-	 * * // *则13800000000手机号收到的短信内容是：【云通讯】您使用的是云通讯短信模板，您的验证码是6532，请于5分钟内正确输入 *
-	 * //
-	 * ***********************************************************************
-	 * ********************************************** String randNum =
-	 * getRandNum(6); String timeOut = wzzService.getSMSServerTimeout(); result
-	 * = restAPI.sendTemplateSMS(mobilePhone,
-	 * wzzService.getSMSServerTempleteId(), new String[] { randNum, timeOut });
-	 * 
-	 * System.out.println("SDKTestGetSubAccounts result=" + result); if
-	 * ("000000".equals(result.get("statusCode"))) { long time =
-	 * System.currentTimeMillis(); // 正常返回输出data包体信息（map）
-	 * 
-	 * HashMap<String, Object> data = (HashMap<String, Object>) result
-	 * .get("data"); Set<String> keySet = data.keySet(); for (String key :
-	 * keySet) { Object object = data.get(key); System.out.println(key + " = " +
-	 * object); }
-	 * 
-	 * ret = new MessageCode(); ret.setMessageCode(randNum); ret.setTimeOut(time
-	 * + Long.parseLong(timeOut) * 60 * 1000); } else { // 异常返回输出错误码和错误信息
-	 * System.out.println("错误码=" + result.get("statusCode") + " 错误信息= " +
-	 * result.get("statusMsg")); } return ret; }
-	 */
-
 	@RequestMapping(value = "/v1/UploadFiles", method = RequestMethod.POST)
 	@ApiOperation(value = "文件上传", httpMethod = "POST", response = String.class)
-	public @ResponseBody String uploadFile(
+	public @ResponseBody Map<String,Object> uploadFile(
 			HttpServletRequest request,
 			@RequestParam(required = false) @ApiParam(value = "省份代码") String province,
 			@RequestParam(required = false) @ApiParam(value = "地市代码") String city,
@@ -286,9 +212,9 @@ public class WzzV1RestController {
 			// 设置上传目录
 			ftpClient.changeWorkingDirectory(uploadPath);
 			ftpClient.setBufferSize(1024);
-			ftpClient.setControlEncoding("UTF-8");
 			// 设置文件类型（二进制）
 			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+			ftpClient.setAutodetectUTF8(true);
 			ftpClient.storeFile(uuidFileName, file.getInputStream());
 			fileUrls = uploadPath + uuidFileName;
 			System.out.println("成功！");
@@ -306,13 +232,15 @@ public class WzzV1RestController {
 				throw new RuntimeException("关闭FTP连接发生异常！", e);
 			}
 		}
-		return "{\"fileUrl\":\"http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl="
-				+ fileUrls + "\"}";
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("fileUrl", "http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl="
+				+ fileUrls);
+		return map;
 	}
 
 	@RequestMapping(value = "/v1/showFtpFile", method = RequestMethod.GET)
 	@ApiOperation(value = "ftp文件显示", httpMethod = "GET")
-	public void showFtpPic(
+	public HttpServletResponse showFtpPic(
 			HttpServletResponse response,
 			@RequestParam(value = "ftpUrl", required = true) @ApiParam(value = "ftp文件路径") String ftpUrl) {
 		FTPClient ftpClient = new FTPClient();
@@ -320,7 +248,37 @@ public class WzzV1RestController {
 			ftpClient.connect(wzzService.getWzz_ftp_url());
 			ftpClient.login(wzzService.getWzz_ftp_userName(),
 					wzzService.getWzz_ftp_password());
+//			response.setContentType("multipart/form-data");
+//			response.setContentType("application/x-msdownload");
+//			response.setCharacterEncoding("UTF-8");
+            /*<option   value="image/bmp">BMP</option>   
+            <option   value="image/gif">GIF</option>   
+            <option   value="image/jpeg">JPEG</option>   
+            <option   value="image/tiff">TIFF</option>   
+            <option   value="image/x-dcx">DCX</option>   
+            <option   value="image/x-pcx">PCX</option>  */
+			logger.debug("response.getContentType====1=====>" + response.getContentType());
+            if(ftpUrl.toLowerCase().endsWith("bmp")){
+            	response.setContentType("image/bmp; charset=utf-8");
+            }else if(ftpUrl.toLowerCase().endsWith("gif")){
+            	response.setContentType("image/gif; charset=utf-8");
+            }else if(ftpUrl.toLowerCase().endsWith("jpeg")){
+            	response.setContentType("image/jpeg; charset=utf-8");
+            }else if(ftpUrl.toLowerCase().endsWith("tiff")){
+            	response.setContentType("image/tiff; charset=utf-8");
+            }else if(ftpUrl.toLowerCase().endsWith("dcx")){
+            	response.setContentType("image/x-dcx; charset=utf-8");
+            }else if(ftpUrl.toLowerCase().endsWith("pcx")){
+            	response.setContentType("image/x-pcx; charset=utf-8");
+            }else if(ftpUrl.toLowerCase().endsWith("png")){
+            	response.setContentType("image/png; charset=utf-8");
+            }else{
+            	response.setContentType("image/jpeg; charset=utf-8");
+            }
+            logger.debug("response.getContentType====2=====>" + response.getContentType());
+            logger.debug("response.getLocale=========>" + response.getLocale());
 			ftpClient.retrieveFile(ftpUrl, response.getOutputStream());
+			return response;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -331,6 +289,7 @@ public class WzzV1RestController {
 				throw new RuntimeException("关闭FTP连接发生异常！", e);
 			}
 		}
+		return response;
 	}
 
 	@RequestMapping(value = "/v1/WifiShopDisc", method = RequestMethod.POST)
@@ -368,6 +327,19 @@ public class WzzV1RestController {
 		return results;
 	}
 
+	@RequestMapping(value = "/v1/getWifiShopDiscById", method = RequestMethod.GET)
+	@ApiOperation(value = "获取优惠信息明细", httpMethod = "GET", response = WzzWifiShopDiscEntity.class)
+	public @ResponseBody WzzWifiShopDiscEntity getWifiShopDiscById(
+			@RequestParam(required = true) @ApiParam(value = "优惠信息Id") String id) {
+		WzzWifiShopDiscEntity result = null;
+		try {
+			result = wzzService.getWzzWifiShopDiscById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	@RequestMapping(value = "/v1/WifiShopJob", method = RequestMethod.POST)
 	@ApiOperation(value = "发布WIFI商铺招聘信息", httpMethod = "POST", response = WzzWifiShopJobEntity.class)
 	public @ResponseBody WzzWifiShopJobEntity addWifiShopJob(
@@ -401,6 +373,19 @@ public class WzzV1RestController {
 			e.printStackTrace();
 		}
 		return results;
+	}
+
+	@RequestMapping(value = "/v1/getWifiShopJobById", method = RequestMethod.GET)
+	@ApiOperation(value = "获取招聘信息明细", httpMethod = "GET", response = WzzWifiShopJobEntity.class)
+	public @ResponseBody WzzWifiShopJobEntity getWifiShopJobById(
+			@RequestParam(required = true) @ApiParam(value = "招聘信息Id") String id) {
+		WzzWifiShopJobEntity result = null;
+		try {
+			result = wzzService.getWzzWifiShopJobById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	private String getRandNum(int charCount) {

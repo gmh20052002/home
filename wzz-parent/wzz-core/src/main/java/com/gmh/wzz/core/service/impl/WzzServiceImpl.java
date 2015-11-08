@@ -444,4 +444,16 @@ public class WzzServiceImpl implements WzzService {
 			throw new Exception("短信发送失败！返回值：" + inputline);
 		}
 	}
+
+	@Override
+	public WzzWifiShopDiscEntity getWzzWifiShopDiscById(String id)
+			throws Exception {
+		return wzzWifiShopDiscEntityMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public WzzWifiShopJobEntity getWzzWifiShopJobById(String id)
+			throws Exception {
+		return wzzWifiShopJobEntityMapper.selectByPrimaryKey(id);
+	}
 }

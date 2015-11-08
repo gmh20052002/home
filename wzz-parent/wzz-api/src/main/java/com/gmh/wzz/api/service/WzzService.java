@@ -86,6 +86,9 @@ public interface WzzService {
 	public WzzWifiShopDiscEntity deleteWzzWifiShopDisc(
 			WzzWifiShopDiscEntity data) throws Exception;
 
+	public WzzWifiShopDiscEntity getWzzWifiShopDiscById(String id)
+			throws Exception;
+
 	public Page<WzzWifiShopJobEntity> findWzzWifiShopJob(
 			WzzWifiShopJobEntity condition, Order order, int pageIndex,
 			int pageSize) throws Exception;
@@ -95,13 +98,16 @@ public interface WzzService {
 
 	public WzzWifiShopJobEntity deleteWzzWifiShopJob(WzzWifiShopJobEntity data)
 			throws Exception;
+	
+	public WzzWifiShopJobEntity getWzzWifiShopJobById(String id)
+			throws Exception;
 
-	public void sendMsg(String msgContent, String mobile) throws Exception;
 
 	/*
 	 * ==========================================================================
 	 * ===
 	 */
+	public void sendMsg(String msgContent, String mobile) throws Exception;
 
 	public String getWzz_ftp_url();
 

@@ -15,6 +15,8 @@ public interface WzzWifiShopJobEntityMapper {
     
     int deleteByShopId(String shopId);
 
+    WzzWifiShopJobEntity selectByPrimaryKey(String id);
+
 	List<WzzWifiShopJobEntity> selectByCondition(
 			@Param("condition") WzzWifiShopJobEntity condition,
 			@Param("order") Order order, Page<WzzWifiShopJobEntity> page);

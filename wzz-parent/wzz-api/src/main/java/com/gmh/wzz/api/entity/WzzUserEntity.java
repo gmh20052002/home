@@ -14,6 +14,8 @@ public class WzzUserEntity implements Serializable {
 
     private String remark;
 
+    private String type;
+
     public String getId() {
         return id;
     }
@@ -53,4 +55,12 @@ public class WzzUserEntity implements Serializable {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }

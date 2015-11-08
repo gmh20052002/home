@@ -2,8 +2,10 @@ package com.gmh.wzz.api.entity;
 
 import java.util.Date;
 
+import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
+@ApiModel(value="WzzWifiShopDiscEntity-wifi商铺优惠信息")
 public class WzzWifiShopDiscEntity {
 	@ApiModelProperty(value="主键，必填",required=true)
     private String id;

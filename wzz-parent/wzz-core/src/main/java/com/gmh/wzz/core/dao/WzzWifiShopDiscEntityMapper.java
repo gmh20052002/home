@@ -15,6 +15,8 @@ public interface WzzWifiShopDiscEntityMapper {
 
     int insertSelective(WzzWifiShopDiscEntity record);
 
+    WzzWifiShopDiscEntity selectByPrimaryKey(String id);
+
 	List<WzzWifiShopDiscEntity> selectByCondition(
 			@Param("condition") WzzWifiShopDiscEntity condition,
 			@Param("order") Order order, Page<WzzWifiShopDiscEntity> page);
