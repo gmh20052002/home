@@ -3,6 +3,7 @@ package com.gmh.wzz.web.controller;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -51,16 +52,19 @@ public class WzzV1RestController {
 		this.wzzService = wzzService;
 	}
 
-	@RequestMapping(value = "/v1/findWifiShopsByType", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/findWifiShopsByTypeAndCity", method = RequestMethod.GET)
 	@ApiOperation(value = "根据类别分页查询WIFI商铺", httpMethod = "GET", response = Page.class)
-	public @ResponseBody Page<WzzWifiShopEntity> findWifiShopsByType(
+	public @ResponseBody
+	Page<WzzWifiShopEntity> findWifiShopsByTypeAndCity(
 			@RequestParam(defaultValue = "", required = true) @ApiParam(required = true, value = "业务大类，值以注册wifi商铺时传入为准") String classType1,
+			@RequestParam(required = false) @ApiParam(required = false, value = "城市，值以注册wifi商铺时传入为准") String city,
 			@RequestParam(defaultValue = "1") @ApiParam(defaultValue = "1", value = "分页参数，当前页码") Integer pageIndex,
 			@RequestParam(defaultValue = "10") @ApiParam(defaultValue = "10", value = "分页参数，每页最大记录数") Integer pageSize) {
 		Page<WzzWifiShopEntity> results = null;
 		try {
 			WzzWifiShopEntity condition = new WzzWifiShopEntity();
 			condition.setClassType1(classType1);
+			condition.setCity(city);
 			Order order = new Order();
 			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
 			pageSize = pageSize == null ? 10 : pageSize;
@@ -74,7 +78,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/findWifiShopsByXY", method = RequestMethod.GET)
 	@ApiOperation(value = "附近的WIFI商铺，默认搜索范围500", httpMethod = "GET", response = Page.class)
-	public @ResponseBody Page<WzzWifiShopEntity> findWifiShopsByXY(
+	public @ResponseBody
+	Page<WzzWifiShopEntity> findWifiShopsByXY(
 			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标经度距离") Float wifix,
 			@RequestParam(defaultValue = "0", required = true) @ApiParam(value = "wifi坐标纬度距离") Float wifiY,
 			@RequestParam(defaultValue = "1") @ApiParam(value = "分页参数，当前页码") Integer pageIndex,
@@ -100,7 +105,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/getWifiShopById", method = RequestMethod.GET)
 	@ApiOperation(value = "根据ID查询WIFI商铺", httpMethod = "GET", response = WzzWifiShopEntity.class)
-	public @ResponseBody WzzWifiShopEntity getWifiShopById(
+	public @ResponseBody
+	WzzWifiShopEntity getWifiShopById(
 			@RequestParam(required = true) @ApiParam(value = "wifi商铺ID") String shopId) {
 		WzzWifiShopEntity results = null;
 		try {
@@ -113,7 +119,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/getWifiShopByWifiBSSID", method = RequestMethod.GET)
 	@ApiOperation(value = "根据WIFI BSSID查询WIFI商铺，可以判断wifi是否开通商铺", httpMethod = "GET", response = WzzWifiShopEntity.class)
-	public @ResponseBody WzzWifiShopEntity getWifiShopByWifiSSID(
+	public @ResponseBody
+	WzzWifiShopEntity getWifiShopByWifiSSID(
 			@RequestParam @ApiParam(value = "wifi地址BSSID") String wifiBSSId) {
 		WzzWifiShopEntity results = null;
 		Page<WzzWifiShopEntity> list = null;
@@ -133,7 +140,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/WifiShop", method = RequestMethod.POST)
 	@ApiOperation(value = "新增WIFI商铺", httpMethod = "POST", response = WzzWifiShopEntity.class)
-	public @ResponseBody WzzWifiShopEntity addWifiShop(
+	public @ResponseBody
+	WzzWifiShopEntity addWifiShop(
 			@RequestBody @ApiParam(value = "wifi商铺实体对象") WzzWifiShopEntity data) {
 		WzzWifiShopEntity result = null;
 		try {
@@ -146,7 +154,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/WifiShop", method = RequestMethod.PUT)
 	@ApiOperation(value = "修改WIFI商铺", httpMethod = "PUT", response = WzzWifiShopEntity.class)
-	public @ResponseBody WzzWifiShopEntity updateWzzWifiShop(
+	public @ResponseBody
+	WzzWifiShopEntity updateWzzWifiShop(
 			@RequestBody @ApiParam(value = "wifi商铺实体对象") WzzWifiShopEntity data)
 			throws Exception {
 		WzzWifiShopEntity result = null;
@@ -160,7 +169,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/getMessageCode", method = RequestMethod.GET)
 	@ApiOperation(value = "获取短信验证码", httpMethod = "GET", response = MessageCode.class)
-	public @ResponseBody MessageCode getMessageCode(
+	public @ResponseBody
+	MessageCode getMessageCode(
 			@RequestParam(required = true) @ApiParam(value = "手机号码，必填") String mobilePhone) {
 		MessageCode ret = null;
 		String randNum = getRandNum(6);
@@ -181,7 +191,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/UploadFiles", method = RequestMethod.POST)
 	@ApiOperation(value = "文件上传", httpMethod = "POST", response = String.class)
-	public @ResponseBody Map<String,Object> uploadFile(
+	public @ResponseBody
+	Map<String, Object> uploadFile(
 			HttpServletRequest request,
 			@RequestParam(required = false) @ApiParam(value = "省份代码") String province,
 			@RequestParam(required = false) @ApiParam(value = "地市代码") String city,
@@ -215,6 +226,8 @@ public class WzzV1RestController {
 			// 设置文件类型（二进制）
 			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
 			ftpClient.setAutodetectUTF8(true);
+			ftpClient.setControlEncoding("utf-8");
+			ftpClient.enterLocalPassiveMode();
 			ftpClient.storeFile(uuidFileName, file.getInputStream());
 			fileUrls = uploadPath + uuidFileName;
 			System.out.println("成功！");
@@ -232,69 +245,112 @@ public class WzzV1RestController {
 				throw new RuntimeException("关闭FTP连接发生异常！", e);
 			}
 		}
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("fileUrl", "http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl="
-				+ fileUrls);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("fileUrl",
+				"http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl="
+						+ fileUrls);
 		return map;
 	}
 
 	@RequestMapping(value = "/v1/showFtpFile", method = RequestMethod.GET)
 	@ApiOperation(value = "ftp文件显示", httpMethod = "GET")
-	public HttpServletResponse showFtpPic(
+	public void showFtpPic(
+			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "ftpUrl", required = true) @ApiParam(value = "ftp文件路径") String ftpUrl) {
 		FTPClient ftpClient = new FTPClient();
+//		FileInputStream is = null;
+//		OutputStream os = null;
+//		OutputStream toClient = null;
+//		File localFile = null;
 		try {
 			ftpClient.connect(wzzService.getWzz_ftp_url());
 			ftpClient.login(wzzService.getWzz_ftp_userName(),
 					wzzService.getWzz_ftp_password());
-//			response.setContentType("multipart/form-data");
-//			response.setContentType("application/x-msdownload");
-//			response.setCharacterEncoding("UTF-8");
-            /*<option   value="image/bmp">BMP</option>   
-            <option   value="image/gif">GIF</option>   
-            <option   value="image/jpeg">JPEG</option>   
-            <option   value="image/tiff">TIFF</option>   
-            <option   value="image/x-dcx">DCX</option>   
-            <option   value="image/x-pcx">PCX</option>  */
-			logger.debug("response.getContentType====1=====>" + response.getContentType());
-            if(ftpUrl.toLowerCase().endsWith("bmp")){
-            	response.setContentType("image/bmp; charset=utf-8");
-            }else if(ftpUrl.toLowerCase().endsWith("gif")){
-            	response.setContentType("image/gif; charset=utf-8");
-            }else if(ftpUrl.toLowerCase().endsWith("jpeg")){
-            	response.setContentType("image/jpeg; charset=utf-8");
-            }else if(ftpUrl.toLowerCase().endsWith("tiff")){
-            	response.setContentType("image/tiff; charset=utf-8");
-            }else if(ftpUrl.toLowerCase().endsWith("dcx")){
-            	response.setContentType("image/x-dcx; charset=utf-8");
-            }else if(ftpUrl.toLowerCase().endsWith("pcx")){
-            	response.setContentType("image/x-pcx; charset=utf-8");
-            }else if(ftpUrl.toLowerCase().endsWith("png")){
-            	response.setContentType("image/png; charset=utf-8");
-            }else{
-            	response.setContentType("image/jpeg; charset=utf-8");
-            }
-            logger.debug("response.getContentType====2=====>" + response.getContentType());
-            logger.debug("response.getLocale=========>" + response.getLocale());
+			// response.setContentType("multipart/form-data");
+			// response.setContentType("application/x-msdownload");
+			// response.setCharacterEncoding("UTF-8");
+			/*
+			 * <option value="image/bmp">BMP</option> <option
+			 * value="image/gif">GIF</option> <option
+			 * value="image/jpeg">JPEG</option> <option
+			 * value="image/tiff">TIFF</option> <option
+			 * value="image/x-dcx">DCX</option> <option
+			 * value="image/x-pcx">PCX</option>
+			 */
+			logger.debug("response.getContentType====1=====>"
+					+ response.getContentType());
+			if (ftpUrl.toLowerCase().endsWith("bmp")) {
+				response.setContentType("image/bmp");
+			} else if (ftpUrl.toLowerCase().endsWith("gif")) {
+				response.setContentType("image/gif");
+			} else if (ftpUrl.toLowerCase().endsWith("jpeg")) {
+				response.setContentType("image/jpeg");
+			} else if (ftpUrl.toLowerCase().endsWith("tiff")) {
+				response.setContentType("image/tiff");
+			} else if (ftpUrl.toLowerCase().endsWith("dcx")) {
+				response.setContentType("image/x-dcx");
+			} else if (ftpUrl.toLowerCase().endsWith("pcx")) {
+				response.setContentType("image/x-pcx");
+			} else if (ftpUrl.toLowerCase().endsWith("png")) {
+				response.setContentType("image/png");
+			} else {
+				response.setContentType("image/jpeg");
+			}
+			ftpClient.setAutodetectUTF8(true);
+			ftpClient.setControlEncoding("utf-8");
+			ftpClient.enterLocalPassiveMode();
+			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+			logger.debug("ftpClient.getControlEncoding=========>"
+					+ ftpClient.getControlEncoding());
+			logger.debug("response.getContentType====2=====>"
+					+ response.getContentType());
+			response.setLocale(Locale.CHINA);
+			logger.debug("response.getLocale=========>" + response.getLocale());
+//			String localPath = request.getSession().getServletContext()
+//					.getRealPath("");
+//			localFile = new File(localPath + File.separator
+//					+ ftpUrl.substring(ftpUrl.lastIndexOf("/")));
+//			os = new FileOutputStream(localFile);
+//			System.out.println(ftpClient.retrieveFile(ftpUrl, os));
+//
+//			is = new FileInputStream(localFile);
+//			int i = is.available(); // 得到文件大小
+//			byte data[] = new byte[i];
+//			is.read(data); // 读数据
+//			toClient = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
+//			toClient.write(data); // 输出数据
 			ftpClient.retrieveFile(ftpUrl, response.getOutputStream());
-			return response;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				ftpClient.disconnect();
+//				if(toClient != null){
+//					toClient.close();
+//				}
+//				if (is != null) {
+//					is.close();
+//				}
+//				if (os != null) {
+//					os.flush();
+//					os.close();
+//				}
+//				if(localFile != null){
+//					localFile.delete();
+//				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new RuntimeException("关闭FTP连接发生异常！", e);
 			}
 		}
-		return response;
+		// return response;
 	}
 
 	@RequestMapping(value = "/v1/WifiShopDisc", method = RequestMethod.POST)
 	@ApiOperation(value = "发布WIFI商铺优惠信息", httpMethod = "POST", response = WzzWifiShopDiscEntity.class)
-	public @ResponseBody WzzWifiShopDiscEntity addWifiShopDisc(
+	public @ResponseBody
+	WzzWifiShopDiscEntity addWifiShopDisc(
 			@RequestBody @ApiParam(value = "wifi商铺优惠信息实体对象") WzzWifiShopDiscEntity data) {
 		WzzWifiShopDiscEntity result = null;
 		try {
@@ -307,7 +363,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/wifiShopDiscs", method = RequestMethod.GET)
 	@ApiOperation(value = "查询WIFI商铺优惠信息", httpMethod = "GET", response = Page.class)
-	public @ResponseBody Page<WzzWifiShopDiscEntity> findWifiShopDiscs(
+	public @ResponseBody
+	Page<WzzWifiShopDiscEntity> findWifiShopDiscs(
 			@RequestParam(required = true) @ApiParam(value = "wifi商铺ID") String shopId,
 			@RequestParam(defaultValue = "1") @ApiParam(value = "分页参数，当前页码") Integer pageIndex,
 			@RequestParam(defaultValue = "10") @ApiParam(value = "分页参数，每页最大记录数") Integer pageSize) {
@@ -329,7 +386,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/getWifiShopDiscById", method = RequestMethod.GET)
 	@ApiOperation(value = "获取优惠信息明细", httpMethod = "GET", response = WzzWifiShopDiscEntity.class)
-	public @ResponseBody WzzWifiShopDiscEntity getWifiShopDiscById(
+	public @ResponseBody
+	WzzWifiShopDiscEntity getWifiShopDiscById(
 			@RequestParam(required = true) @ApiParam(value = "优惠信息Id") String id) {
 		WzzWifiShopDiscEntity result = null;
 		try {
@@ -342,7 +400,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/WifiShopJob", method = RequestMethod.POST)
 	@ApiOperation(value = "发布WIFI商铺招聘信息", httpMethod = "POST", response = WzzWifiShopJobEntity.class)
-	public @ResponseBody WzzWifiShopJobEntity addWifiShopJob(
+	public @ResponseBody
+	WzzWifiShopJobEntity addWifiShopJob(
 			@RequestBody @ApiParam(value = "wifi商铺招聘信息实体对象") WzzWifiShopJobEntity data) {
 		WzzWifiShopJobEntity result = null;
 		try {
@@ -355,7 +414,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/wifiShopJobs", method = RequestMethod.GET)
 	@ApiOperation(value = "查询WIFI商铺招聘信息", httpMethod = "GET", response = Page.class)
-	public @ResponseBody Page<WzzWifiShopJobEntity> findWifiShopJobs(
+	public @ResponseBody
+	Page<WzzWifiShopJobEntity> findWifiShopJobs(
 			@RequestParam(required = true) @ApiParam(value = "wifi商铺ID") String shopId,
 			@RequestParam(defaultValue = "1") @ApiParam(value = "分页参数，当前页码") Integer pageIndex,
 			@RequestParam(defaultValue = "10") @ApiParam(value = "分页参数，每页最大记录数") Integer pageSize) {
@@ -377,7 +437,8 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/getWifiShopJobById", method = RequestMethod.GET)
 	@ApiOperation(value = "获取招聘信息明细", httpMethod = "GET", response = WzzWifiShopJobEntity.class)
-	public @ResponseBody WzzWifiShopJobEntity getWifiShopJobById(
+	public @ResponseBody
+	WzzWifiShopJobEntity getWifiShopJobById(
 			@RequestParam(required = true) @ApiParam(value = "招聘信息Id") String id) {
 		WzzWifiShopJobEntity result = null;
 		try {

@@ -28,14 +28,6 @@
 			<artifactId>commons-net</artifactId>
 			<version>3.3</version>
 		</dependency>
-		
-		<dependency>
-            <groupId>CCP_REST_SMS_SDK_JAVA_v2.6.3r</groupId>
-            <artifactId>CCP_REST_SMS_SDK_JAVA_v2.6.3r</artifactId>
-            <version>2.6.3</version>
-            <scope>system</scope>
-            <systemPath>E:/workspace/git/wzz-parent/wzz-gw/src/main/webapp/WEB-INF/lib/CCP_REST_SMS_SDK_JAVA_v2.6.3r.jar</systemPath>
-        </dependency>
 	</dependencies>
 	<build>
 		<finalName>gateway</finalName>
