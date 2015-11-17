@@ -1,12 +1,11 @@
 package com.gmh.wzz.api.entity;
 
-import java.io.Serializable;
-
-public class WzzUserEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class WzzUserEntity {
     private String id;
 
     private String userName;
+
+    private String password;
 
     private String imei;
 
@@ -14,7 +13,9 @@ public class WzzUserEntity implements Serializable {
 
     private String remark;
 
-    private String type;
+    private String province;
+
+    private String userType;
 
     public String getId() {
         return id;
@@ -30,6 +31,14 @@ public class WzzUserEntity implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
     public String getImei() {
@@ -56,11 +65,19 @@ public class WzzUserEntity implements Serializable {
         this.remark = remark == null ? null : remark.trim();
     }
 
-	public String getType() {
-		return type;
-	}
+    public String getProvince() {
+        return province;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setProvince(String province) {
+        this.province = province == null ? null : province.trim();
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType == null ? null : userType.trim();
+    }
 }

@@ -33,46 +33,50 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
+		<table tableName="WZZ_USER" domainObjectName="WzzUserEntity"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+		<table tableName="WZZ_USER_DISCOUNT" domainObjectName="WzzUserDiscEntity"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
 		<!-- <table tableName="WZZ_BUSINESS_CLASS" domainObjectName="WzzBusinessClassEntity"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-			<columnRenamingRule searchString="^D_" replaceString=""/>
 		</table>
 
 		<table tableName="WZZ_USER" domainObjectName="WzzUserEntity"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-			<columnRenamingRule searchString="^D_" replaceString=""/>
 		</table>
 
 		<table tableName="WZZ_WIFI_SHOP" domainObjectName="WzzWifiShopEntity"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-			<columnRenamingRule searchString="^D_" replaceString=""/>
 		</table>
 
 		<table tableName="WZZ_WIFI_SHOP_PIC" domainObjectName="WzzWifiShopPicEntity"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-			<columnRenamingRule searchString="^D_" replaceString=""/>
-		</table> -->
+		</table>
 
 		<table tableName="WZZ_WIFI_SHOP_DISCOUNT" domainObjectName="WzzWifiShopDiscEntity"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-			<!--<columnRenamingRule searchString="^D_" replaceString=""/> -->
 		</table>
 
 		<table tableName="WZZ_WIFI_SHOP_JOB" domainObjectName="WzzWifiShopJobEntity"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-			<!--<columnRenamingRule searchString="^D_" replaceString=""/> -->
-		</table>
+		</table> -->
 	</context>
 </generatorConfiguration>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gmh.wzz.core.dao.WzzUserDiscEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.gmh.wzz.api.entity.WzzUserDiscEntity" >
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="DISC_ID" property="discId" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzUserDiscEntity" >
+    insert into WZZ_USER_DISCOUNT (USER_ID, DISC_ID)
+    values (#{userId,jdbcType=VARCHAR}, #{discId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzUserDiscEntity" >
+    insert into WZZ_USER_DISCOUNT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="discId != null" >
+        DISC_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="discId != null" >
+        #{discId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

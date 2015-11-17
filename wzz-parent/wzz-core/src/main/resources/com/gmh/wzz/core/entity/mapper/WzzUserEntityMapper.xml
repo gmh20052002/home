@@ -4,13 +4,15 @@
 	<resultMap id="BaseResultMap" type="com.gmh.wzz.api.entity.WzzUserEntity">
 		<id column="ID" property="id" jdbcType="VARCHAR" />
 		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="PASSWORD" property="password" jdbcType="VARCHAR" />
 		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
 		<result column="USER_CNAME" property="userCname" jdbcType="VARCHAR" />
 		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
-		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+		<result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID, USER_NAME, IMEI, USER_CNAME, REMARK,TYPE
+		ID, USER_NAME, PASSWORD, IMEI, USER_CNAME, REMARK, PROVINCE, USER_TYPE
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -20,18 +22,17 @@
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from
-		WZZ_USER
+		delete from WZZ_USER
 		where ID = #{id,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
-		insert into WZZ_USER (ID,
-		USER_NAME, IMEI,
-		USER_CNAME, REMARK, TYPE)
-		values (#{id,jdbcType=VARCHAR},
-		#{userName,jdbcType=VARCHAR},
-		#{imei,jdbcType=VARCHAR},
-		#{userCname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+		insert into WZZ_USER (ID, USER_NAME, PASSWORD,
+		IMEI, USER_CNAME, REMARK,
+		PROVINCE, USER_TYPE)
+		values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{imei,jdbcType=VARCHAR}, #{userCname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+		#{province,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
 		insert into WZZ_USER
@@ -42,6 +43,9 @@
 			<if test="userName != null">
 				USER_NAME,
 			</if>
+			<if test="password != null">
+				PASSWORD,
+			</if>
 			<if test="imei != null">
 				IMEI,
 			</if>
@@ -51,8 +55,11 @@
 			<if test="remark != null">
 				REMARK,
 			</if>
-			<if test="type != null">
-				TYPE,
+			<if test="province != null">
+				PROVINCE,
+			</if>
+			<if test="userType != null">
+				USER_TYPE,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -61,6 +68,9 @@
 			</if>
 			<if test="userName != null">
 				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
 			</if>
 			<if test="imei != null">
 				#{imei,jdbcType=VARCHAR},
@@ -71,8 +81,11 @@
 			<if test="remark != null">
 				#{remark,jdbcType=VARCHAR},
 			</if>
-			<if test="type != null">
-				#{type,jdbcType=VARCHAR},
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -81,6 +94,9 @@
 		<set>
 			<if test="userName != null">
 				USER_NAME = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				PASSWORD = #{password,jdbcType=VARCHAR},
 			</if>
 			<if test="imei != null">
 				IMEI = #{imei,jdbcType=VARCHAR},
@@ -91,8 +107,11 @@
 			<if test="remark != null">
 				REMARK = #{remark,jdbcType=VARCHAR},
 			</if>
-			<if test="type != null">
-				TYPE = #{type,jdbcType=VARCHAR},
+			<if test="province != null">
+				PROVINCE = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				USER_TYPE = #{userType,jdbcType=VARCHAR},
 			</if>
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
@@ -100,11 +119,12 @@
 	<update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
 		update WZZ_USER
 		set USER_NAME = #{userName,jdbcType=VARCHAR},
-		IMEI =
-		#{imei,jdbcType=VARCHAR},
+		PASSWORD = #{password,jdbcType=VARCHAR},
+		IMEI = #{imei,jdbcType=VARCHAR},
 		USER_CNAME = #{userCname,jdbcType=VARCHAR},
 		REMARK = #{remark,jdbcType=VARCHAR},
-		TYPE = #{type,jdbcType=VARCHAR}
+		PROVINCE = #{province,jdbcType=VARCHAR},
+		USER_TYPE = #{userType,jdbcType=VARCHAR}
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
 
@@ -136,5 +156,4 @@
 			</if>
 		</where>
 	</select>
-
 </mapper>

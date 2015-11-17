@@ -52,7 +52,7 @@ public class WzzV1RestController {
 		this.wzzService = wzzService;
 	}
 
-	@RequestMapping(value = "/v1/findWifiShopsByTypeAndCity", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/findWifiShopsByType", method = RequestMethod.GET)
 	@ApiOperation(value = "根据类别分页查询WIFI商铺", httpMethod = "GET", response = Page.class)
 	public @ResponseBody
 	Page<WzzWifiShopEntity> findWifiShopsByTypeAndCity(
