@@ -1,20 +1,32 @@
 package com.gmh.wzz.api.entity;
 
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value="WzzUserEntity-用户账户实体对象")
 public class WzzUserEntity {
+	@ApiModelProperty(value="主键，必填",required=true)
     private String id;
 
+	@ApiModelProperty(value="用户登录名(手机号)，必填",required=true)
     private String userName;
 
+	@ApiModelProperty(value="用户密码，必填",required=true)
     private String password;
 
+	@ApiModelProperty(value="手机imei标识")
     private String imei;
 
+	@ApiModelProperty(value="用户中文名")
     private String userCname;
 
+	@ApiModelProperty(value="用户描述")
     private String remark;
 
+	@ApiModelProperty(value="省")
     private String province;
 
+	@ApiModelProperty(value="市")
     private String userType;
 
     public String getId() {

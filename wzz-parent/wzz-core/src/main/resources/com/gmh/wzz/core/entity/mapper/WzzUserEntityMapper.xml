@@ -139,13 +139,16 @@
 					AND ID = #{condition.id,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.userName != null">
-					AND USER_NAME like '%${condition.userName}%'
+					AND USER_NAME = #{condition.userName,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.password != null">
+					AND PASSWORD = #{condition.password,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.remark != null">
 					AND REMARK like '%${condition.remark}%'
 				</if>
-				<if test="condition.type != null">
-					AND TYPE like '%${condition.type}%'
+				<if test="condition.userType != null">
+					AND USER_TYPE = #{condition.userType,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.imei != null">
 					AND IMEI = #{condition.imei,jdbcType=VARCHAR}
