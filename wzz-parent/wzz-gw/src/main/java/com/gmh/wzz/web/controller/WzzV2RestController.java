@@ -39,7 +39,7 @@ public class WzzV2RestController {
 	@RequestMapping(value = "/v2/User/login", method = RequestMethod.GET)
 	@ApiOperation(value = "用户登录", httpMethod = "GET", response = Boolean.class)
 	public @ResponseBody
-	Boolean login(
+	WzzUserEntity login(
 			@RequestParam(required = true) @ApiParam(value = "用户类型") String userType,
 			@RequestParam(required = true) @ApiParam(value = "用户登录名(手机号)") String userName,
 			@RequestParam(required = true) @ApiParam(value = "登录密码") String password) {
@@ -50,13 +50,14 @@ public class WzzV2RestController {
 			condition.setUserName(userName);
 			condition.setPassword(password);
 			results = wzzService.findWzzUser(condition, null, 1, 10);
-			if (results != null) {
-				return results.getTotalSize() > 0;
+			if (results != null && results.getTotalSize() > 0
+					&& results.getDatas() != null) {
+				return results.getDatas().get(0);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return null;
 	}
 
 	@RequestMapping(value = "/v2/User/findPassword", method = RequestMethod.GET)
@@ -74,8 +75,8 @@ public class WzzV2RestController {
 				WzzUserEntity ret = results.getDatas().get(0);
 				if (ret != null) {
 					String password = ret.getPassword();
-					String msgContent = "【网蜘蛛】通过手机找回密码:" + password
-							+ "密码很重要，打死都不能告诉别人~~";
+					String msgContent = "【网蜘蛛】我们不仅仅是全城免费WIFI工具。您通过手机短信验证找回原密码，您的原密码为"
+							+ password;
 					wzzService.sendMsg(msgContent, userName);
 					return "找回密码成功，已发送到手机号：" + userName;
 				}

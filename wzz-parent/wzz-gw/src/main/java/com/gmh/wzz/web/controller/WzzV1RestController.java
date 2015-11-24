@@ -176,8 +176,8 @@ public class WzzV1RestController {
 		String randNum = getRandNum(6);
 		String timeOut = wzzService.getSMSServerTimeout();
 
-		String msgContent = "【网蜘蛛】短信验证码:" + randNum + "请在" + timeOut
-				+ "分钟内输入，校验码很重要，打死都不能告诉别人~~";
+		String msgContent = "【网蜘蛛】无线智慧城市创新实践者：您本次的短信验证码" + randNum + "请在" + timeOut
+				+ "分钟内输入。";
 		try {
 			wzzService.sendMsg(msgContent, mobilePhone);
 			ret = new MessageCode();
