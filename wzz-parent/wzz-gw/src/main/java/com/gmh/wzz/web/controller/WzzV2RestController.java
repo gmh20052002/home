@@ -1,5 +1,7 @@
 package com.gmh.wzz.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzUserEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -87,6 +92,40 @@ public class WzzV2RestController {
 
 		return "密码获取失败";
 	}
+
+	@RequestMapping(value = "/v2/User/findDiscsByUserId", method = RequestMethod.GET)
+	@ApiOperation(value = "根据用户id查询我的优惠券", httpMethod = "GET")
+	public @ResponseBody
+	List<WzzWifiShopDiscEntity> findDiscsByUserId(
+			@RequestParam(required = true) @ApiParam(value = "用户ID") String userId) {
+		return wzzService.findDiscsByUserId(userId);
+	}
+
+	@RequestMapping(value = "/v2/User/findWifiShopsByUserName", method = RequestMethod.GET)
+	@ApiOperation(value = "根据代理用户手机号查询已开通的店铺列表", httpMethod = "GET")
+	public @ResponseBody
+	Page<WzzWifiShopEntity> findShopsByUserName(
+			@RequestParam(required = true) @ApiParam(value = "用户手机号") String userName,
+			@RequestParam(defaultValue = "1") @ApiParam(defaultValue = "1", value = "分页参数，当前页码") Integer pageIndex,
+			@RequestParam(defaultValue = "10") @ApiParam(defaultValue = "10", value = "分页参数，每页最大记录数") Integer pageSize) {
+		WzzWifiShopEntity condition = new WzzWifiShopEntity();
+		Order order = new Order();
+		try {
+			condition.setUserName(userName);
+			return wzzService.findWzzWifiShop(condition, order, pageIndex, pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/*@RequestMapping(value = "/v2/User/findDiscssByUserName", method = RequestMethod.GET)
+	@ApiOperation(value = "根据用户手机号查询我的优惠券", httpMethod = "GET")
+	public @ResponseBody
+	List<WzzWifiShopDiscEntity> findDiscssByUserName(
+			@RequestParam(required = true) @ApiParam(value = "用户登录名(手机号)") String userName) {
+		return wzzService.findDiscssByUserName(userName);
+	}*/
 
 	public WzzService getWzzService() {
 		return wzzService;

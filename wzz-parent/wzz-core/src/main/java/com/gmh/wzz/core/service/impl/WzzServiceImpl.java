@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -455,5 +456,15 @@ public class WzzServiceImpl implements WzzService {
 	public WzzWifiShopJobEntity getWzzWifiShopJobById(String id)
 			throws Exception {
 		return wzzWifiShopJobEntityMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<WzzWifiShopDiscEntity> findDiscsByUserId(String userId) {
+		return wzzWifiShopDiscEntityMapper.findDiscsByUserId(userId);
+	}
+
+	@Override
+	public List<WzzWifiShopDiscEntity> findDiscssByUserName(String userName) {
+		return wzzWifiShopDiscEntityMapper.findDiscssByUserName(userName);
 	}
 }

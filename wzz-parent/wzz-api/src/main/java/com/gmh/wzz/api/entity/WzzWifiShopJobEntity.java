@@ -14,8 +14,14 @@ public class WzzWifiShopJobEntity {
 	@ApiModelProperty(value="标题，必填",required=true)
     private String title;
 
+	@ApiModelProperty(value="岗位描述",required=false)
+    private String jobdesc;
+
 	@ApiModelProperty(value="描述",required=false)
     private String remark;
+
+	@ApiModelProperty(value="联系人",required=false)
+    private String user;
 
 	@ApiModelProperty(value="电话",required=false)
     private String phone;
@@ -81,4 +87,20 @@ public class WzzWifiShopJobEntity {
     public void setEnd(Date end) {
         this.end = end;
     }
+
+	public String getJobdesc() {
+		return jobdesc;
+	}
+
+	public void setJobdesc(String jobdesc) {
+		this.jobdesc = jobdesc;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
 }

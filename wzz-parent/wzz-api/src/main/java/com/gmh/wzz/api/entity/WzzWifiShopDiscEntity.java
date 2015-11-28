@@ -22,10 +22,10 @@ public class WzzWifiShopDiscEntity {
 	@ApiModelProperty(value="电话",required=false)
     private String phone;
 
-	@ApiModelProperty(value="开始时间，格式：yyyy-MM-dd",required=false)
+	@ApiModelProperty(value="开始时间，格式：yyyy-MM-dd hh:mm:ss",required=false)
     private Date start;
 
-	@ApiModelProperty(value="结束时间，格式：yyyy-MM-dd",required=false)
+	@ApiModelProperty(value="结束时间，格式：yyyy-MM-dd hh:mm:ss",required=false)
     private Date end;
 
     public String getId() {

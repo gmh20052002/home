@@ -36,6 +36,9 @@ public class WzzWifiShopEntity implements Serializable {
 	@ApiModelProperty(value="手机")
     private String mobileTel;
 
+	@ApiModelProperty(value="代理用户手机号")
+    private String userName;
+
 	@ApiModelProperty(value="WIFI唯一标识BSSID，必填",required=true)
     private String wifi;
 
@@ -275,5 +278,13 @@ public class WzzWifiShopEntity implements Serializable {
 
 	public void setWifiYMax(Float wifiYMax) {
 		this.wifiYMax = wifiYMax;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

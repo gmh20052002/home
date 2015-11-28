@@ -10,9 +10,10 @@
 		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
 		<result column="PROVINCE" property="province" jdbcType="VARCHAR" />
 		<result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
+		<result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID, USER_NAME, PASSWORD, IMEI, USER_CNAME, REMARK, PROVINCE, USER_TYPE
+		ID, USER_NAME, PASSWORD, IMEI, USER_CNAME, REMARK, PROVINCE, USER_TYPE, END_TIME
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -28,11 +29,11 @@
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
 		insert into WZZ_USER (ID, USER_NAME, PASSWORD,
 		IMEI, USER_CNAME, REMARK,
-		PROVINCE, USER_TYPE)
+		PROVINCE, USER_TYPE, END_TIME)
 		values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR},
 		#{imei,jdbcType=VARCHAR}, #{userCname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
-		#{province,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR})
+		#{province,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
 		insert into WZZ_USER
@@ -61,6 +62,9 @@
 			<if test="userType != null">
 				USER_TYPE,
 			</if>
+			<if test="endTime != null">
+				END_TIME,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -86,6 +90,9 @@
 			</if>
 			<if test="userType != null">
 				#{userType,jdbcType=VARCHAR},
+			</if>
+			<if test="entTime != null">
+				#{entTime,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -155,6 +162,12 @@
 				</if>
 				<if test="condition.userCname != null">
 					AND USER_CNAME like '%${condition.userCname}%'
+				</if>
+				<if test="condition.endTimeBegin != null">
+					AND END_TIME &gt;= #{condition.endTimeBegin,jdbcType=TIMESTAMP}
+				</if>
+				<if test="condition.endTimeEnd != null">
+					AND END_TIME &lt;= #{condition.endTimeEnd,jdbcType=TIMESTAMP}
 				</if>
 			</if>
 		</where>

@@ -5,21 +5,28 @@
 		<result column="ID" property="id" jdbcType="VARCHAR" />
 		<result column="SHOP_ID" property="shopId" jdbcType="VARCHAR" />
 		<result column="TITLE" property="title" jdbcType="VARCHAR" />
+		<result column="JOBDESC" property="jobdesc" jdbcType="VARCHAR" />
 		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="USER" property="user" jdbcType="VARCHAR" />
 		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
 		<result column="START" property="start" jdbcType="DATE" />
 		<result column="END" property="end" jdbcType="DATE" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID, SHOP_ID, TITLE, REMARK, PHONE, START, END
+		ID, SHOP_ID, TITLE, REMARK, USER, PHONE, START, END
 	</sql>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
-		insert into WZZ_WIFI_SHOP_JOB (ID, SHOP_ID, TITLE,
-		REMARK, PHONE, START,
+		insert into WZZ_WIFI_SHOP_JOB
+		(ID, SHOP_ID, TITLE,JOBDESC,
+		REMARK, USER, PHONE, START,
 		END)
-		values (#{id,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR},
+		values
+		(#{id,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR},
 		#{title,jdbcType=VARCHAR},
-		#{remark,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{start,jdbcType=DATE},
+		#{jobdesc,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{start,jdbcType=DATE},
 		#{end,jdbcType=DATE})
 	</insert>
 	<insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
@@ -34,8 +41,14 @@
 			<if test="title != null">
 				TITLE,
 			</if>
+			<if test="jobdesc != null">
+				JOBDESC,
+			</if>
 			<if test="remark != null">
 				REMARK,
+			</if>
+			<if test="user != null">
+				USER,
 			</if>
 			<if test="phone != null">
 				PHONE,
@@ -57,8 +70,14 @@
 			<if test="title != null">
 				#{title,jdbcType=VARCHAR},
 			</if>
+			<if test="jobdesc != null">
+				#{jobdesc,jdbcType=VARCHAR},
+			</if>
 			<if test="remark != null">
 				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="user != null">
+				#{user,jdbcType=VARCHAR},
 			</if>
 			<if test="phone != null">
 				#{phone,jdbcType=VARCHAR},
@@ -71,7 +90,7 @@
 			</if>
 		</trim>
 	</insert>
-	
+
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
 		select
@@ -79,9 +98,10 @@
 		from WZZ_WIFI_SHOP_JOB
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
-	
+
 	<delete id="deleteByShopId" parameterType="java.lang.String">
-		delete from WZZ_WIFI_SHOP_JOB
+		delete from
+		WZZ_WIFI_SHOP_JOB
 		where SHOP_ID = #{shopId,jdbcType=VARCHAR}
 	</delete>
 
@@ -101,8 +121,14 @@
 				<if test="condition.title != null">
 					AND TITLE like '%${condition.title}%'
 				</if>
+				<if test="condition.jobdesc != null">
+					AND JOBDESC like '%${condition.jobdesc}%'
+				</if>
 				<if test="condition.remark != null">
 					AND REMARK like '%${condition.remark}%'
+				</if>
+				<if test="condition.user != null">
+					AND USER = #{condition.user,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.phone != null">
 					AND PHONE = #{condition.phone,jdbcType=VARCHAR}

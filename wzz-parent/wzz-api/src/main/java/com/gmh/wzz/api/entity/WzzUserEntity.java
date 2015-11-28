@@ -1,5 +1,7 @@
 package com.gmh.wzz.api.entity;
 
+import java.util.Date;
+
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
@@ -28,6 +30,15 @@ public class WzzUserEntity {
 
 	@ApiModelProperty(value="市")
     private String userType;
+
+	@ApiModelProperty(value="vip到期时间，格式：yyyy-MM-dd hh:mm:ss")
+    private Date endTime;
+	
+	@ApiModelProperty(value="vip到期时间，格式：yyyy-MM-dd hh:mm:ss")
+    private Date endTimeBegin;
+
+	@ApiModelProperty(value="vip到期时间，格式：yyyy-MM-dd hh:mm:ss")
+    private Date endTimeEnd;
 
     public String getId() {
         return id;
@@ -92,4 +103,28 @@ public class WzzUserEntity {
     public void setUserType(String userType) {
         this.userType = userType == null ? null : userType.trim();
     }
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public Date getEndTimeBegin() {
+		return endTimeBegin;
+	}
+
+	public void setEndTimeBegin(Date endTimeBegin) {
+		this.endTimeBegin = endTimeBegin;
+	}
+
+	public Date getEndTimeEnd() {
+		return endTimeEnd;
+	}
+
+	public void setEndTimeEnd(Date endTimeEnd) {
+		this.endTimeEnd = endTimeEnd;
+	}
 }

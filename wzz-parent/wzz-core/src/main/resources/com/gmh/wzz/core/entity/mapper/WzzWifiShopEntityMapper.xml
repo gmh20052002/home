@@ -11,6 +11,7 @@
 		<result column="WORK_TEL" property="workTel" jdbcType="VARCHAR" />
 		<result column="OVER_USER" property="overUser" jdbcType="VARCHAR" />
 		<result column="MOBILE_TEL" property="mobileTel" jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
 		<result column="WIFI" property="wifi" jdbcType="VARCHAR" />
 		<result column="WIFI_PASSWORD" property="wifiPassword"
 			jdbcType="VARCHAR" />
@@ -27,7 +28,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		ID, NAME, ADDRESS, REMARK, CLASS_TYPE1, CLASS_TYPE2,
-		WORK_TEL, OVER_USER, MOBILE_TEL,
+		WORK_TEL, OVER_USER, MOBILE_TEL,USER_NAME,
 		WIFI, WIFI_PASSWORD,
 		FLOOR, WIFI_LNG,
 		WIFI_LAT,WIFI_X,
@@ -80,6 +81,9 @@
 				<if test="condition.mobileTel != null">
 					AND MOBILE_TEL like '%${condition.mobileTel}%'
 				</if>
+				<if test="condition.userName != null">
+					AND USER_NAME like '%${condition.userName}%'
+				</if>
 				<if test="condition.wifi != null">
 					AND WIFI = #{condition.wifi,jdbcType=VARCHAR}
 				</if>
@@ -124,6 +128,7 @@
 		#{workTel,jdbcType=VARCHAR},
 		#{overUser,jdbcType=VARCHAR},
 		#{mobileTel,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
 		#{wifi,jdbcType=VARCHAR},
 		#{wifiPassword,jdbcType=VARCHAR}, #{floor,jdbcType=VARCHAR},
 		#{wifiLng,jdbcType=VARCHAR},
@@ -165,6 +170,9 @@
 			</if>
 			<if test="mobileTel != null">
 				MOBILE_TEL,
+			</if>
+			<if test="mobileTel != null">
+				USER_NAME,
 			</if>
 			<if test="wifi != null">
 				WIFI,
@@ -231,6 +239,9 @@
 			<if test="mobileTel != null">
 				#{mobileTel,jdbcType=VARCHAR},
 			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
 			<if test="wifi != null">
 				#{wifi,jdbcType=VARCHAR},
 			</if>
@@ -296,6 +307,9 @@
 			<if test="mobileTel != null">
 				MOBILE_TEL = #{mobileTel,jdbcType=VARCHAR},
 			</if>
+			<if test="userName != null">
+				USER_NAME = #{userName,jdbcType=VARCHAR},
+			</if>
 			<if test="wifi != null">
 				WIFI = #{wifi,jdbcType=VARCHAR},
 			</if>
@@ -349,6 +363,8 @@
 		OVER_USER = #{overUser,jdbcType=VARCHAR},
 		MOBILE_TEL =
 		#{mobileTel,jdbcType=VARCHAR},
+		USER_NAME =
+		#{userName,jdbcType=VARCHAR},
 		WIFI = #{wifi,jdbcType=VARCHAR},
 		WIFI_PASSWORD = #{wifiPassword,jdbcType=VARCHAR},
 		FLOOR =

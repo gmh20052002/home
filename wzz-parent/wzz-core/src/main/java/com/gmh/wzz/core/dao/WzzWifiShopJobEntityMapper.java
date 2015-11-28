@@ -20,4 +20,9 @@ public interface WzzWifiShopJobEntityMapper {
 	List<WzzWifiShopJobEntity> selectByCondition(
 			@Param("condition") WzzWifiShopJobEntity condition,
 			@Param("order") Order order, Page<WzzWifiShopJobEntity> page);
+	
+
+	public List<WzzWifiShopJobEntity> findJobsByUserId(String userId);
+	
+	public List<WzzWifiShopJobEntity> findJobsByUserName(String userName);
 }

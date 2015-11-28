@@ -20,4 +20,8 @@ public interface WzzWifiShopDiscEntityMapper {
 	List<WzzWifiShopDiscEntity> selectByCondition(
 			@Param("condition") WzzWifiShopDiscEntity condition,
 			@Param("order") Order order, Page<WzzWifiShopDiscEntity> page);
+	
+	public List<WzzWifiShopDiscEntity> findDiscsByUserId(String userId);
+	
+	public List<WzzWifiShopDiscEntity> findDiscssByUserName(String userName);
 }

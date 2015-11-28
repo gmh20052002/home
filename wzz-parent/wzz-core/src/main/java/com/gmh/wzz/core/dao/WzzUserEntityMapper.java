@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzUserEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopJobEntity;
 
 public interface WzzUserEntityMapper {
 	int deleteByPrimaryKey(String id);

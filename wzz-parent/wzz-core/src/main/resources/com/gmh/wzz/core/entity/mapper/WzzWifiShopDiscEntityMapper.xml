@@ -14,12 +14,14 @@
 		ID, SHOP_ID, TITLE, REMARK, PHONE, START, END
 	</sql>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
-		insert into WZZ_WIFI_SHOP_DISCOUNT (ID, SHOP_ID, TITLE,
+		insert into
+		WZZ_WIFI_SHOP_DISCOUNT (ID, SHOP_ID, TITLE,
 		REMARK, PHONE, START,
 		END)
 		values (#{id,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR},
 		#{title,jdbcType=VARCHAR},
-		#{remark,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{start,jdbcType=DATE},
+		#{remark,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR}, #{start,jdbcType=DATE},
 		#{end,jdbcType=DATE})
 	</insert>
 	<insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
@@ -71,7 +73,7 @@
 			</if>
 		</trim>
 	</insert>
-	
+
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
 		select
@@ -79,9 +81,10 @@
 		from WZZ_WIFI_SHOP_DISCOUNT
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
-	
+
 	<delete id="deleteByShopId" parameterType="java.lang.String">
-		delete from WZZ_WIFI_SHOP_DISCOUNT
+		delete from
+		WZZ_WIFI_SHOP_DISCOUNT
 		where SHOP_ID = #{shopId,jdbcType=VARCHAR}
 	</delete>
 
@@ -109,5 +112,24 @@
 				</if>
 			</if>
 		</where>
+	</select>
+
+	<select id="findDiscsByUserId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from WZZ_WIFI_SHOP_DISCOUNT t1,WZZ_USER_DISCOUNT t2
+		where
+		t1.ID=t2.DISC_ID and t2.USER_ID = #{userId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findDiscssByUserName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		t1.ID, t1.SHOP_ID, t1.TITLE, t1.REMARK, t1.PHONE, t1.START, t1.END
+		from WZZ_WIFI_SHOP_DISCOUNT t1,WZZ_USER_DISCOUNT t2, WZZ_USER t3
+		where
+		t1.ID=t2.DISC_ID and t2.USER_ID = t3.ID and
+		t3.USER_NAME=#{userName,jdbcType=VARCHAR}
 	</select>
 </mapper>

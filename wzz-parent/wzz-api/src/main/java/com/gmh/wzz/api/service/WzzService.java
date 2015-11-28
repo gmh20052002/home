@@ -1,5 +1,7 @@
 package com.gmh.wzz.api.service;
 
+import java.util.List;
+
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
@@ -108,7 +110,19 @@ public interface WzzService {
 	 * ===
 	 */
 	public void sendMsg(String msgContent, String mobile) throws Exception;
+	
+	
 
+	/*
+	 * ====================================v2======================================
+	 * ===
+	 */
+	
+	public List<WzzWifiShopDiscEntity> findDiscsByUserId(String userId);
+	
+	public List<WzzWifiShopDiscEntity> findDiscssByUserName(String userName);
+	
+	
 	public String getWzz_ftp_url();
 
 	public String getWzz_ftp_userName();
