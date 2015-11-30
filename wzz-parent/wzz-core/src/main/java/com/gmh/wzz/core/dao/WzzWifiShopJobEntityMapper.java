@@ -14,8 +14,14 @@ public interface WzzWifiShopJobEntityMapper {
     int insertSelective(WzzWifiShopJobEntity record);
     
     int deleteByShopId(String shopId);
+	
+    int deleteByPrimaryKey(String id);
 
     WzzWifiShopJobEntity selectByPrimaryKey(String id);
+
+	int updateByPrimaryKeySelective(WzzWifiShopJobEntity record);
+
+	int updateByPrimaryKey(WzzWifiShopJobEntity record);
 
 	List<WzzWifiShopJobEntity> selectByCondition(
 			@Param("condition") WzzWifiShopJobEntity condition,

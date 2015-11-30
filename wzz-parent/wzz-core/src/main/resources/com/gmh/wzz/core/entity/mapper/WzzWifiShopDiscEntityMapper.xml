@@ -132,4 +132,46 @@
 		t1.ID=t2.DISC_ID and t2.USER_ID = t3.ID and
 		t3.USER_NAME=#{userName,jdbcType=VARCHAR}
 	</select>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
+		update WZZ_WIFI_SHOP_DISCOUNT
+		<set>
+			<if test="shopId != null">
+				SHOP_ID = #{shopId,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				PHONE = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="start != null">
+				START = #{start,jdbcType=VARCHAR},
+			</if>
+			<if test="end != null">
+				END = #{end,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
+		update WZZ_WIFI_SHOP_DISCOUNT
+		set SHOP_ID = #{shopId,jdbcType=VARCHAR},
+				TITLE = #{title,jdbcType=VARCHAR},
+				REMARK = #{remark,jdbcType=VARCHAR},
+				PHONE = #{phone,jdbcType=VARCHAR},
+				START = #{start,jdbcType=VARCHAR},
+				END = #{end,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		WZZ_WIFI_SHOP_DISCOUNT
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
 </mapper>

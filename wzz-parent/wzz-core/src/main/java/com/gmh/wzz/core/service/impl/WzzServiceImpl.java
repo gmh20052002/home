@@ -385,10 +385,20 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopDiscEntity deleteWzzWifiShopDisc(
+	public WzzWifiShopDiscEntity deleteWzzWifiShopDiscByShopId(
 			WzzWifiShopDiscEntity data) throws Exception {
 		Assert.notNull(data, "删除对象[WzzWifiShopDiscEntity]不能为空");
+		Assert.notNull(data.getShopId(), "删除对象[WzzWifiShopDiscEntity.shopId]不能为空");
 		wzzWifiShopDiscEntityMapper.deleteByShopId(data.getShopId());
+		return data;
+	}
+
+	@Override
+	public WzzWifiShopDiscEntity deleteWzzWifiShopDiscById(
+			WzzWifiShopDiscEntity data) throws Exception {
+		Assert.notNull(data, "删除对象[WzzWifiShopDiscEntity]不能为空");
+		Assert.notNull(data.getId(), "删除对象[WzzWifiShopDiscEntity.id]不能为空");
+		wzzWifiShopDiscEntityMapper.deleteByPrimaryKey(data.getId());
 		return data;
 	}
 
@@ -415,10 +425,20 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopJobEntity deleteWzzWifiShopJob(WzzWifiShopJobEntity data)
+	public WzzWifiShopJobEntity deleteWzzWifiShopJobByShopId(WzzWifiShopJobEntity data)
 			throws Exception {
 		Assert.notNull(data, "删除对象[WzzWifiShopJobEntity]不能为空");
+		Assert.notNull(data.getShopId(), "删除对象[WzzWifiShopJobEntity.shopId]不能为空");
 		wzzWifiShopJobEntityMapper.deleteByShopId(data.getShopId());
+		return data;
+	}
+
+	@Override
+	public WzzWifiShopJobEntity deleteWzzWifiShopJobById(WzzWifiShopJobEntity data)
+			throws Exception {
+		Assert.notNull(data, "删除对象[WzzWifiShopJobEntity]不能为空");
+		Assert.notNull(data.getId(), "删除对象[WzzWifiShopJobEntity.id]不能为空");
+		wzzWifiShopJobEntityMapper.deleteByPrimaryKey(data.getId());
 		return data;
 	}
 
@@ -466,5 +486,19 @@ public class WzzServiceImpl implements WzzService {
 	@Override
 	public List<WzzWifiShopDiscEntity> findDiscssByUserName(String userName) {
 		return wzzWifiShopDiscEntityMapper.findDiscssByUserName(userName);
+	}
+
+	@Override
+	public WzzWifiShopDiscEntity updateWzzWifiShopDisc(WzzWifiShopDiscEntity data) throws Exception {
+		Assert.notNull(data, "修改对象[WzzWifiShopDiscEntity]不能为空");
+		wzzWifiShopDiscEntityMapper.updateByPrimaryKeySelective(data);
+		return data;
+	}
+
+	@Override
+	public WzzWifiShopJobEntity updateWzzWifiShopJob(WzzWifiShopJobEntity data) throws Exception {
+		Assert.notNull(data, "修改对象[WzzWifiShopJobEntity]不能为空");
+		wzzWifiShopJobEntityMapper.updateByPrimaryKeySelective(data);
+		return data;
 	}
 }

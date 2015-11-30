@@ -85,7 +85,13 @@ public interface WzzService {
 	public WzzWifiShopDiscEntity insertWzzWifiShopDisc(
 			WzzWifiShopDiscEntity data) throws Exception;
 
-	public WzzWifiShopDiscEntity deleteWzzWifiShopDisc(
+	public WzzWifiShopDiscEntity updateWzzWifiShopDisc(
+			WzzWifiShopDiscEntity data) throws Exception;
+
+	public WzzWifiShopDiscEntity deleteWzzWifiShopDiscByShopId(
+			WzzWifiShopDiscEntity data) throws Exception;
+
+	public WzzWifiShopDiscEntity deleteWzzWifiShopDiscById(
 			WzzWifiShopDiscEntity data) throws Exception;
 
 	public WzzWifiShopDiscEntity getWzzWifiShopDiscById(String id)
@@ -98,7 +104,13 @@ public interface WzzService {
 	public WzzWifiShopJobEntity insertWzzWifiShopJob(WzzWifiShopJobEntity data)
 			throws Exception;
 
-	public WzzWifiShopJobEntity deleteWzzWifiShopJob(WzzWifiShopJobEntity data)
+	public WzzWifiShopJobEntity updateWzzWifiShopJob(WzzWifiShopJobEntity data)
+			throws Exception;
+
+	public WzzWifiShopJobEntity deleteWzzWifiShopJobByShopId(WzzWifiShopJobEntity data)
+			throws Exception;
+
+	public WzzWifiShopJobEntity deleteWzzWifiShopJobById(WzzWifiShopJobEntity data)
 			throws Exception;
 	
 	public WzzWifiShopJobEntity getWzzWifiShopJobById(String id)

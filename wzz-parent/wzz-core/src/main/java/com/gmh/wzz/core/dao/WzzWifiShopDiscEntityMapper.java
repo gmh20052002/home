@@ -17,6 +17,12 @@ public interface WzzWifiShopDiscEntityMapper {
 
     WzzWifiShopDiscEntity selectByPrimaryKey(String id);
 
+	int updateByPrimaryKeySelective(WzzWifiShopDiscEntity record);
+
+	int updateByPrimaryKey(WzzWifiShopDiscEntity record);
+	
+    int deleteByPrimaryKey(String id);
+
 	List<WzzWifiShopDiscEntity> selectByCondition(
 			@Param("condition") WzzWifiShopDiscEntity condition,
 			@Param("order") Order order, Page<WzzWifiShopDiscEntity> page);

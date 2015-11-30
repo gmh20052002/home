@@ -106,7 +106,7 @@
 	</delete>
 
 	<select id="selectByCondition" resultMap="BaseResultMap"
-		parameterType="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
+		parameterType="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
 		select
 		<include refid="Base_Column_List" />
 		from WZZ_WIFI_SHOP_JOB
@@ -136,4 +136,54 @@
 			</if>
 		</where>
 	</select>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
+		update WZZ_WIFI_SHOP_JOB
+		<set>
+			<if test="shopId != null">
+				SHOP_ID = #{shopId,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="jobdesc != null">
+				JOBDESC = #{jobdesc,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="user != null">
+				USER = #{user,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				PHONE = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="start != null">
+				START = #{start,jdbcType=VARCHAR},
+			</if>
+			<if test="end != null">
+				END = #{end,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
+		update WZZ_WIFI_SHOP_JOB
+		set SHOP_ID = #{shopId,jdbcType=VARCHAR},
+				TITLE = #{title,jdbcType=VARCHAR},
+				JOBDESC = #{jobdesc,jdbcType=VARCHAR},
+				REMARK = #{remark,jdbcType=VARCHAR},
+				USER = #{user,jdbcType=VARCHAR},
+				PHONE = #{phone,jdbcType=VARCHAR},
+				START = #{start,jdbcType=VARCHAR},
+				END = #{end,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		WZZ_WIFI_SHOP_JOB
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
 </mapper>

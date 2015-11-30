@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,7 @@ import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzUserEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopJobEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -118,7 +120,69 @@ public class WzzV2RestController {
 		}
 		return null;
 	}
+	
+	@RequestMapping(value = "/v2/WifiShopDisc", method = RequestMethod.PUT)
+	@ApiOperation(value = "修改WIFI商铺优惠信息", httpMethod = "PUT", response = WzzWifiShopDiscEntity.class)
+	public @ResponseBody
+	WzzWifiShopDiscEntity addWifiShopDisc(
+			@RequestBody @ApiParam(value = "wifi商铺优惠信息实体对象") WzzWifiShopDiscEntity data) {
+		WzzWifiShopDiscEntity result = null;
+		try {
+			result = wzzService.updateWzzWifiShopDisc(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/v2/WifiShopDisc/{id}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "删除WIFI商铺优惠信息", httpMethod = "DELETE", response = WzzWifiShopDiscEntity.class)
+	public @ResponseBody
+	WzzWifiShopDiscEntity deleteWifiShopDisc(
+			@PathVariable @ApiParam(value = "优惠信息Id") String id) {
+		WzzWifiShopDiscEntity result = null;
+		try {
+			result = new WzzWifiShopDiscEntity();
+			result.setId(id);
+			result = wzzService.deleteWzzWifiShopDiscById(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
+
+	@RequestMapping(value = "/v2/WifiShopJob/{id}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "删除WIFI商铺招聘信息", httpMethod = "DELETE", response = WzzWifiShopJobEntity.class)
+	public @ResponseBody
+	WzzWifiShopJobEntity deleteWifiShopJob(
+			@PathVariable @ApiParam(value = "招聘信息Id") String id) {
+		WzzWifiShopJobEntity result = null;
+		try {
+			result = new WzzWifiShopJobEntity();
+			result.setId(id);
+			result = wzzService.deleteWzzWifiShopJobById(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+
+	@RequestMapping(value = "/v2/WifiShopJob", method = RequestMethod.PUT)
+	@ApiOperation(value = "修改WIFI商铺招聘信息", httpMethod = "PUT", response = WzzWifiShopJobEntity.class)
+	public @ResponseBody
+	WzzWifiShopJobEntity addWifiShopJob(
+			@RequestBody @ApiParam(value = "wifi商铺招聘信息实体对象") WzzWifiShopJobEntity data) {
+		WzzWifiShopJobEntity result = null;
+		try {
+			result = wzzService.updateWzzWifiShopJob(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	/*@RequestMapping(value = "/v2/User/findDiscssByUserName", method = RequestMethod.GET)
 	@ApiOperation(value = "根据用户手机号查询我的优惠券", httpMethod = "GET")
 	public @ResponseBody
