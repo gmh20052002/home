@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
+import com.gmh.wzz.api.entity.WzzUserDiscEntity;
 import com.gmh.wzz.api.entity.WzzUserEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
@@ -168,7 +169,6 @@ public class WzzV2RestController {
 		return result;
 	}
 
-
 	@RequestMapping(value = "/v2/WifiShopJob", method = RequestMethod.PUT)
 	@ApiOperation(value = "修改WIFI商铺招聘信息", httpMethod = "PUT", response = WzzWifiShopJobEntity.class)
 	public @ResponseBody
@@ -181,6 +181,42 @@ public class WzzV2RestController {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@RequestMapping(value = "/v2/WifiShop/{id}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "删除WIFI商铺", httpMethod = "DELETE", response = WzzWifiShopEntity.class)
+	public @ResponseBody
+	WzzWifiShopEntity deleteWifiShop(
+			@PathVariable @ApiParam(value = "WIFI商铺Id") String id) {
+		WzzWifiShopEntity result = null;
+		try {
+			result = new WzzWifiShopEntity();
+			result.setId(id);
+			WzzWifiShopDiscEntity data1 = new WzzWifiShopDiscEntity();
+			data1.setShopId(id);
+			WzzWifiShopJobEntity data2 = new WzzWifiShopJobEntity();
+			data2.setShopId(id);
+			wzzService.deleteWzzWifiShopDiscByShopId(data1);
+			wzzService.deleteWzzWifiShopJobByShopId(data2);
+			result = wzzService.deleteWzzWifiShop(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/v2/addUserDisc", method = RequestMethod.POST)
+	@ApiOperation(value = "领取优惠劵", httpMethod = "POST", response = WzzUserDiscEntity.class)
+	public @ResponseBody
+	WzzUserDiscEntity addUserDisc(
+			@RequestBody @ApiParam(value = "用户优惠券关联对象") WzzUserDiscEntity data) {
+		try {
+			boolean ret = wzzService.insertDiscOfUser(data);
+			if(ret) return data;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/*@RequestMapping(value = "/v2/User/findDiscssByUserName", method = RequestMethod.GET)

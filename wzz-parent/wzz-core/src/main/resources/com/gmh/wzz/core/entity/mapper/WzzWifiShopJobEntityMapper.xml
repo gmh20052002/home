@@ -13,7 +13,7 @@
 		<result column="END" property="end" jdbcType="DATE" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID, SHOP_ID, TITLE, REMARK, USER, PHONE, START, END
+		ID, SHOP_ID, TITLE, JOBDESC, REMARK, USER, PHONE, START, END
 	</sql>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
 		insert into WZZ_WIFI_SHOP_JOB

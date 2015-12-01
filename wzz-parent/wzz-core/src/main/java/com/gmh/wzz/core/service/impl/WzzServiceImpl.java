@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
+import com.gmh.wzz.api.entity.WzzUserDiscEntity;
 import com.gmh.wzz.api.entity.WzzUserEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
@@ -22,6 +23,7 @@ import com.gmh.wzz.api.entity.WzzWifiShopJobEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopPicEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.gmh.wzz.core.dao.WzzBusinessClassEntityMapper;
+import com.gmh.wzz.core.dao.WzzUserDiscEntityMapper;
 import com.gmh.wzz.core.dao.WzzUserEntityMapper;
 import com.gmh.wzz.core.dao.WzzWifiShopDiscEntityMapper;
 import com.gmh.wzz.core.dao.WzzWifiShopEntityMapper;
@@ -42,6 +44,8 @@ public class WzzServiceImpl implements WzzService {
 	private WzzWifiShopDiscEntityMapper wzzWifiShopDiscEntityMapper;
 	@Autowired
 	private WzzWifiShopJobEntityMapper wzzWifiShopJobEntityMapper;
+	@Autowired
+	private WzzUserDiscEntityMapper wzzUserDiscEntityMapper;
 
 	private String wzz_ftp_url = "120.25.226.197";
 	private String wzz_ftp_userName = "www";
@@ -287,7 +291,7 @@ public class WzzServiceImpl implements WzzService {
 	@Override
 	public WzzWifiShopEntity deleteWzzWifiShop(WzzWifiShopEntity data)
 			throws Exception {
-		Assert.notNull(data, "删除对象[WzzWifiShopEntity]不能为空");
+		Assert.notNull(data.getId(), "删除对象[WzzWifiShopEntity.id]不能为空");
 		wzzWifiShopEntityMapper.deleteByPrimaryKey(data.getId());
 		return data;
 	}
@@ -500,5 +504,19 @@ public class WzzServiceImpl implements WzzService {
 		Assert.notNull(data, "修改对象[WzzWifiShopJobEntity]不能为空");
 		wzzWifiShopJobEntityMapper.updateByPrimaryKeySelective(data);
 		return data;
+	}
+
+	public WzzUserDiscEntityMapper getWzzUserDiscEntityMapper() {
+		return wzzUserDiscEntityMapper;
+	}
+
+	public void setWzzUserDiscEntityMapper(WzzUserDiscEntityMapper wzzUserDiscEntityMapper) {
+		this.wzzUserDiscEntityMapper = wzzUserDiscEntityMapper;
+	}
+
+	@Override
+	public boolean insertDiscOfUser(WzzUserDiscEntity record)  throws Exception {
+		wzzUserDiscEntityMapper.insert(record);
+		return true;
 	}
 }

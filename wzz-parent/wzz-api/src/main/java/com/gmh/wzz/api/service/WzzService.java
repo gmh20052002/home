@@ -5,6 +5,7 @@ import java.util.List;
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
+import com.gmh.wzz.api.entity.WzzUserDiscEntity;
 import com.gmh.wzz.api.entity.WzzUserEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
@@ -131,6 +132,8 @@ public interface WzzService {
 	 */
 	
 	public List<WzzWifiShopDiscEntity> findDiscsByUserId(String userId);
+	
+	public boolean insertDiscOfUser(WzzUserDiscEntity record) throws Exception ;
 	
 	public List<WzzWifiShopDiscEntity> findDiscssByUserName(String userName);
 	
