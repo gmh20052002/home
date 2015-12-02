@@ -4,6 +4,8 @@
 	<resultMap id="BaseResultMap" type="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
 		<result column="ID" property="id" jdbcType="VARCHAR" />
 		<result column="SHOP_ID" property="shopId" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
 		<result column="TITLE" property="title" jdbcType="VARCHAR" />
 		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
 		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
@@ -11,7 +13,8 @@
 		<result column="END" property="end" jdbcType="DATE" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID, SHOP_ID, TITLE, REMARK, PHONE, START, END
+		t1.ID, t1.SHOP_ID, t2.NAME, t2.ADDRESS, t1.TITLE,
+		t1.REMARK, t1.PHONE, t1.START, t1.END
 	</sql>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
 		insert into
@@ -78,8 +81,9 @@
 		parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
-		from WZZ_WIFI_SHOP_DISCOUNT
-		where ID = #{id,jdbcType=VARCHAR}
+		from WZZ_WIFI_SHOP_DISCOUNT t1,WZZ_WIFI_SHOP t2
+		t1.SHOP_ID=t2.ID AND
+		t1.ID = #{id,jdbcType=VARCHAR}
 	</select>
 
 	<delete id="deleteByShopId" parameterType="java.lang.String">
@@ -92,23 +96,24 @@
 		parameterType="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
 		select
 		<include refid="Base_Column_List" />
-		from WZZ_WIFI_SHOP_DISCOUNT
+		from WZZ_WIFI_SHOP_DISCOUNT t1,WZZ_WIFI_SHOP t2
 		<where>
+			t1.SHOP_ID=t2.ID
 			<if test="condition != null">
 				<if test="condition.id != null">
-					AND ID = #{condition.id,jdbcType=VARCHAR}
+					AND t1.ID = #{condition.id,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.shopId != null">
-					AND SHOP_ID = #{condition.shopId,jdbcType=VARCHAR}
+					AND t1.SHOP_ID = #{condition.shopId,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.title != null">
-					AND TITLE like '%${condition.title}%'
+					AND t1.TITLE like '%${condition.title}%'
 				</if>
 				<if test="condition.remark != null">
-					AND REMARK like '%${condition.remark}%'
+					AND t1.REMARK like '%${condition.remark}%'
 				</if>
 				<if test="condition.phone != null">
-					AND PHONE = #{condition.phone,jdbcType=VARCHAR}
+					AND t1.PHONE = #{condition.phone,jdbcType=VARCHAR}
 				</if>
 			</if>
 		</where>
@@ -118,21 +123,25 @@
 		parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
-		from WZZ_WIFI_SHOP_DISCOUNT t1,WZZ_USER_DISCOUNT t2
+		from WZZ_WIFI_SHOP_DISCOUNT t1,WZZ_WIFI_SHOP t2,WZZ_USER_DISCOUNT t3
 		where
-		t1.ID=t2.DISC_ID and t2.USER_ID = #{userId,jdbcType=VARCHAR}
+		t1.ID=t3.DISC_ID and t1.SHOP_ID=t2.ID and t3.USER_ID =
+		#{userId,jdbcType=VARCHAR}
 	</select>
 
 	<select id="findDiscssByUserName" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
 		select
-		t1.ID, t1.SHOP_ID, t1.TITLE, t1.REMARK, t1.PHONE, t1.START, t1.END
-		from WZZ_WIFI_SHOP_DISCOUNT t1,WZZ_USER_DISCOUNT t2, WZZ_USER t3
+		t1.ID, t1.SHOP_ID, t2.NAME, t2.ADDRESS, t1.TITLE,
+		t1.REMARK, t1.PHONE, t1.START, t1.END
+		from WZZ_WIFI_SHOP_DISCOUNT
+		t1,WZZ_WIFI_SHOP t2,WZZ_USER_DISCOUNT t3, WZZ_USER t4
 		where
-		t1.ID=t2.DISC_ID and t2.USER_ID = t3.ID and
-		t3.USER_NAME=#{userName,jdbcType=VARCHAR}
+		t1.ID=t3.DISC_ID and t1.SHOP_ID=t2.ID and
+		t3.USER_ID = t4.ID and
+		t4.USER_NAME=#{userName,jdbcType=VARCHAR}
 	</select>
-	
+
 	<update id="updateByPrimaryKeySelective" parameterType="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
 		update WZZ_WIFI_SHOP_DISCOUNT
 		<set>
@@ -157,18 +166,22 @@
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
-	
+
 	<update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzWifiShopDiscEntity">
-		update WZZ_WIFI_SHOP_DISCOUNT
+		update
+		WZZ_WIFI_SHOP_DISCOUNT
 		set SHOP_ID = #{shopId,jdbcType=VARCHAR},
-				TITLE = #{title,jdbcType=VARCHAR},
-				REMARK = #{remark,jdbcType=VARCHAR},
-				PHONE = #{phone,jdbcType=VARCHAR},
-				START = #{start,jdbcType=VARCHAR},
-				END = #{end,jdbcType=VARCHAR}
+		TITLE =
+		#{title,jdbcType=VARCHAR},
+		REMARK = #{remark,jdbcType=VARCHAR},
+		PHONE =
+		#{phone,jdbcType=VARCHAR},
+		START = #{start,jdbcType=VARCHAR},
+		END =
+		#{end,jdbcType=VARCHAR}
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
-	
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from
 		WZZ_WIFI_SHOP_DISCOUNT

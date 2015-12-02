@@ -11,6 +11,12 @@ public class WzzWifiShopJobEntity {
 	@ApiModelProperty(value="店铺ID，必填",required=true)
     private String shopId;
 
+	@ApiModelProperty(value="店铺名称",required=true)
+    private String name;
+
+	@ApiModelProperty(value="店铺地址")
+    private String address;
+
 	@ApiModelProperty(value="标题，必填",required=true)
     private String title;
 
@@ -102,5 +108,21 @@ public class WzzWifiShopJobEntity {
 
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }

@@ -11,9 +11,11 @@
 		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
 		<result column="START" property="start" jdbcType="DATE" />
 		<result column="END" property="end" jdbcType="DATE" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID, SHOP_ID, TITLE, JOBDESC, REMARK, USER, PHONE, START, END
+		t1.ID, t1.SHOP_ID, t1.TITLE, t1.JOBDESC, t1.REMARK, t1.USER, t1.PHONE, t1.START, t1.END,t2.NAME, t2.ADDRESS
 	</sql>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
 		insert into WZZ_WIFI_SHOP_JOB
@@ -95,8 +97,8 @@
 		parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
-		from WZZ_WIFI_SHOP_JOB
-		where ID = #{id,jdbcType=VARCHAR}
+		from WZZ_WIFI_SHOP_JOB t1, WZZ_WIFI_SHOP t2
+		where t1.SHOP_ID=t2.ID AND t1.ID = #{id,jdbcType=VARCHAR}
 	</select>
 
 	<delete id="deleteByShopId" parameterType="java.lang.String">
@@ -109,8 +111,9 @@
 		parameterType="com.gmh.wzz.api.entity.WzzWifiShopJobEntity">
 		select
 		<include refid="Base_Column_List" />
-		from WZZ_WIFI_SHOP_JOB
+		from WZZ_WIFI_SHOP_JOB t1, WZZ_WIFI_SHOP t2
 		<where>
+			t1.SHOP_ID=t2.ID
 			<if test="condition != null">
 				<if test="condition.id != null">
 					AND ID = #{condition.id,jdbcType=VARCHAR}
