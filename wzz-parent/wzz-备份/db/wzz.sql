@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2015-11-30 22:32:56
+Date: 2015-12-04 23:11:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -65,7 +65,6 @@ CREATE TABLE `WZZ_USER` (
 -- ----------------------------
 -- Records of WZZ_USER
 -- ----------------------------
-INSERT INTO `WZZ_USER` VALUES ('', 'dddd', 'dddd', null, null, null, null, null, null);
 INSERT INTO `WZZ_USER` VALUES ('001', '18974870731', '123456', 'sdfwer23erterw', '郭明华', null, 'hn', 'user', '2015-11-28 22:32:00');
 INSERT INTO `WZZ_USER` VALUES ('002', '18789700861', '123456', null, '王海波', null, '', 'shop', '2015-11-30 19:27:16');
 INSERT INTO `WZZ_USER` VALUES ('42fc14b496194a65912b2873c46f6853', '13307620922', '123456', null, '林小宇', null, null, 'proxy', '2015-11-28 22:32:53');
@@ -75,9 +74,9 @@ INSERT INTO `WZZ_USER` VALUES ('42fc14b496194a65912b2873c46f6853', '13307620922'
 -- ----------------------------
 DROP TABLE IF EXISTS `WZZ_USER_DISCOUNT`;
 CREATE TABLE `WZZ_USER_DISCOUNT` (
-  `USER_ID` varchar(64) DEFAULT NULL COMMENT '用户ID',
-  `DISC_ID` varchar(64) DEFAULT NULL,
-  KEY `FK_User_DIsc` (`USER_ID`),
+  `USER_ID` varchar(64) NOT NULL COMMENT '用户ID',
+  `DISC_ID` varchar(64) NOT NULL,
+  UNIQUE KEY `Unique_User_DIsc` (`USER_ID`,`DISC_ID`),
   CONSTRAINT `FK_User_DIsc` FOREIGN KEY (`USER_ID`) REFERENCES `WZZ_USER` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户优惠劵';
 
@@ -118,11 +117,13 @@ CREATE TABLE `WZZ_WIFI_SHOP` (
 -- ----------------------------
 -- Records of WZZ_WIFI_SHOP
 -- ----------------------------
+INSERT INTO `WZZ_WIFI_SHOP` VALUES ('067c4f86043547108484b3242d7d994b', '林小宇奶茶店（侨中分店）', '海南省文昌市教育东路靠近惠群家园', '好吃又好喝的奶茶店', 'meishi', 'huoguodian', '13307620922', '林小宇', '13307620922', '28:2c:b2:14:67:10', '123456789', '110.76876', '19.60558', '6', 'hainansheng', 'wenchang', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/257a31070004442fa700d47fada273f9.jpg', '2015-12-04 18:20:42', '2015-12-04 18:20:42', '11303950.00000', '2180041.25000', '13307620922');
+INSERT INTO `WZZ_WIFI_SHOP` VALUES ('359cf03bb14d44b4abe091f40ca1f0ee', '林小宇奶茶店（侨中分店）', '海南省文昌市教育东路靠近惠群家园', '好吃又好喝的奶茶店', 'meishi', 'huoguodian', '13307620922', '林小宇', '13307620922', '28:2c:b2:14:67:10', '123456789', '110.76879', '19.60556', '6', 'hainansheng', 'wenchang', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/e4600de287ad4d81aa0dc5b1899ecc87.jpg', '2015-12-04 18:00:48', '2015-12-04 18:00:48', '11303955.00000', '2180039.25000', '13307620922');
+INSERT INTO `WZZ_WIFI_SHOP` VALUES ('5b20e7a6c9154532891ebed6b0d0f18d', '林小宇奶茶店（侨中分店）', '海南省文昌市教育东路靠近惠群家园', '好吃又好喝的奶茶店', 'meishi', 'huoguodian', '13307620922', '林小宇', '13307620922', '28:2c:b2:14:67:10', '123456789', '110.76887', '19.60552', '6', 'hainansheng', 'wenchang', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/302c47adf81240fe8c6b062a814411a6.jpg', '2015-12-04 18:07:45', '2015-12-04 18:07:45', '11303967.00000', '2180034.75000', '13307620922');
 INSERT INTO `WZZ_WIFI_SHOP` VALUES ('7c8c43a61da7404b80fe8e8cf3792015', '布谷网络科技', '海南省海口市龙华区国贸北路靠近海口金贸大厦', '企业建站、网络推广、电商', 'weishang', 'weishang', '089868521012', '王先生', '17789736151', 'a4:56:02:37:35:41', 'Bugu1668', '110.32191', '20.02766', '12', 'hainansheng', 'haikou', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/haikou/7a7656de1077469bb44f9028183db985.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/haikou/f472f2cdbb5f4c129080368ff4086e4f.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/haikou/1cf29ae3ec594e7e80c73a344261c39d.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/haikou/a662444f657a4c61939af23b35308742.jpg', '2015-11-24 09:44:58', '2015-11-24 09:44:58', '11220717.00000', '2226974.50000', '');
-INSERT INTO `WZZ_WIFI_SHOP` VALUES ('85065c468e454c1b92049442d6c50061', '林小宇奶茶店（侨中分店）', '海南省文昌市文中路靠近中共文昌市委党校', '好吃又好喝的奶茶店', 'meishi', 'xiaochikuaicandian', '13307620922', '林小宇', '13307620922', 'd0:c7:c0:12:e4:26', '13034984965', '110.75906', '19.60574', '1', 'hainansheng', 'wenchang', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/abdbbca8a47a4d21842c00aa99e63884.jpg', '2015-11-30 09:57:21', '2015-11-30 09:57:21', '11303021.00000', '2180059.00000', '13307620922');
-INSERT INTO `WZZ_WIFI_SHOP` VALUES ('9efea8e40f064f2bb024f4a2f4e191d5', '阿坝', '海南省文昌市教育路靠近惠群家园', '哈哈', 'meishi', 'huoguodian', '555', '阿坝', '112555555', '28:2c:b2:14:67:10', '123456', '110.76903', '19.60561', '6', 'hainansheng', 'wenchang', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/a53409ff52e64eca8035014a121310f5.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/f54aa14133cd4c5fb8e7340b6941b7de.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/59d3bcd40b9b4fbaa59fdeef91cc8089.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/98ce637a69a54180861f90535b45ab42.jpg', '2015-11-22 23:01:08', '2015-11-22 23:01:08', '11303972.00000', '2180045.00000', '');
-INSERT INTO `WZZ_WIFI_SHOP` VALUES ('a41968971604430893795d2c4182011e', '林小宇奶茶店（侨中分店）', '海南省文昌市教育路靠近惠群家园', '好吃又好喝的奶茶店', 'meishi', 'huoguodian', '13307620922', '林小宇', '13307620922', '28:2c:b2:14:67:10', '123456789', '110.76890', '19.60557', '6', 'hainansheng', 'wenchang', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/7767edbd600d4787842a2243013875e5.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/156a09ccf61f441ebc4e8f6c1bc620b1.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/2107b76516854e8a94e2ba3befedc30f.jpg', '2015-11-29 10:49:15', '2015-11-29 10:49:15', '11303964.00000', '2180040.75000', '13307620922');
-INSERT INTO `WZZ_WIFI_SHOP` VALUES ('fed3d9260993405689f172fda6d4fdbe', '林小宇奶茶店（侨中分店）', '海南省文昌市教育路靠近惠群家园', '好吃又好喝的奶茶店', 'meishi', 'huoguodian', '13307620922', '林小宇', '13307620922', '28:2c:b2:14:67:10', '123456789', '110.76891', '19.60574', '6', 'hainansheng', 'wenchang', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/f3ec4be612e9442eacc53cb7753c7411.jpg', '2015-11-30 09:44:34', '2015-11-30 09:44:34', '11303948.00000', '2180059.00000', '13307620922');
+INSERT INTO `WZZ_WIFI_SHOP` VALUES ('9563483e13284236b5effaf79af8209b', '林小宇奶茶店（侨中分店）', '海南省文昌市教育东路靠近惠群家园', '好吃又好喝的奶茶店', 'meishi', 'huoguodian', '13307620922', '林小宇', '13307620922', '28:2c:b2:14:67:10', '123456789', '110.76879', '19.60556', '6', 'hainansheng', 'wenchang', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/e1a7fa62208b47c197cbffa65b8ac314.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/dfec7f0625b34601ae44c89c527b41a2.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/c69159ec7f3e4b1ebbbccf3f243ada9f.jpg', '2015-12-04 13:18:01', '2015-12-04 13:18:01', '11303955.00000', '2180038.75000', '18789700861');
+INSERT INTO `WZZ_WIFI_SHOP` VALUES ('bc7fe0bbcdf4422fa8a021c45031b8af', '林小宇奶茶店（侨中分店）', '海南省文昌市教育东路靠近惠群家园', '好吃又好喝的奶茶店', 'meishi', 'huoguodian', '13307620922', '林小宇', '13307620922', '28:2c:b2:14:67:10', '123456789', '110.76879', '19.60556', '6', 'hainansheng', 'wenchang', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/92010dab735a4cf8bb48e6f3e5a6c3c3.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/5d5f8d30042d4e2483a2a3aa41309f8c.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/81c7b27bc68e43b28d1078e3d8f2b4d6.jpg,http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/5645b02455434f4d9afbeb9992ae8981.jpg', '2015-12-04 17:38:15', '2015-12-04 17:38:15', '11303955.00000', '2180039.00000', '13307620922');
+INSERT INTO `WZZ_WIFI_SHOP` VALUES ('db7437dfd7974948a7d18a892c131b42', '林小宇奶茶店（侨中分店）', '海南省文昌市教育东路靠近惠群家园', '好吃又好喝的奶茶店', 'meishi', 'huoguodian', '13307620922', '林小宇', '13307620922', '28:2c:b2:14:67:10', '123456789', '110.76878', '19.60559', '6', 'hainansheng', 'wenchang', 'http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=/ftpdir/hainansheng/wenchang/4ce919cb049346cdb573c9b82e3cd795.jpg', '2015-12-04 17:42:05', '2015-12-04 17:42:05', '11303951.00000', '2180042.50000', '13307620922');
 
 -- ----------------------------
 -- Table structure for WZZ_WIFI_SHOP_DISCOUNT
@@ -144,13 +145,9 @@ CREATE TABLE `WZZ_WIFI_SHOP_DISCOUNT` (
 -- ----------------------------
 -- Records of WZZ_WIFI_SHOP_DISCOUNT
 -- ----------------------------
-INSERT INTO `WZZ_WIFI_SHOP_DISCOUNT` VALUES ('788d33d0fa384641a9e7fb1ac000bb3d', null, '满100减30', '进店消费返利', '13307620922', '2015-11-30', '2015-12-08');
-INSERT INTO `WZZ_WIFI_SHOP_DISCOUNT` VALUES ('81cc5ae329de4d3296f58e474a4f4035', null, '咯破坏', '听你', '13307620922', '2015-11-30', '2015-11-30');
-INSERT INTO `WZZ_WIFI_SHOP_DISCOUNT` VALUES ('8c167390e71d40f29edafdcf87414d31', null, '100减50', '进店消费满100省', '13307620922', '2015-11-30', '2015-12-04');
-INSERT INTO `WZZ_WIFI_SHOP_DISCOUNT` VALUES ('b0f6dff1ce8b427f8708e2f84930828c', 'fed3d9260993405689f172fda6d4fdbe', '满100减50', '进店优惠哦', '13307620922', '2015-11-30', '2015-12-05');
-INSERT INTO `WZZ_WIFI_SHOP_DISCOUNT` VALUES ('e855600fb7d54bccaa5ababe19db6622', null, '满100减30', '只要有本优惠卷，进店消费可以返利', '13307620922', '2015-11-30', '2015-12-06');
-INSERT INTO `WZZ_WIFI_SHOP_DISCOUNT` VALUES ('ecf246bb-7b5a-4a61-98dc-65fc5e56459c', 'a41968971604430893795d2c4182011e', '限时优惠，全场5折', '林小宇奶茶店（侨中分店），限时优惠，全场5折', '13307620922', '2015-12-12', '2015-12-14');
-INSERT INTO `WZZ_WIFI_SHOP_DISCOUNT` VALUES ('fed3d9260993405689f172fda6d4fdbe', null, '满100减30', '进店消费返利', '13307620922', '2015-11-30', '2015-12-08');
+INSERT INTO `WZZ_WIFI_SHOP_DISCOUNT` VALUES ('b260027a-8676-45e2-a0c1-2e47259583aa', '7c8c43a61da7404b80fe8e8cf3792015', '优惠打7折咯。。。', '优惠打7折咯。。。', '11111111111', '2015-12-04', '2015-12-24');
+INSERT INTO `WZZ_WIFI_SHOP_DISCOUNT` VALUES ('b6c21302-fb09-47de-962c-c3fe550bf519', '7c8c43a61da7404b80fe8e8cf3792015', '优惠打5折咯。。。', '优惠打5折咯。。。', '11111111111', '2015-12-04', '2015-12-24');
+INSERT INTO `WZZ_WIFI_SHOP_DISCOUNT` VALUES ('c795bd92-7b74-4c6f-856d-f80d62d5efb6', '7c8c43a61da7404b80fe8e8cf3792015', '优惠打3折咯。。', '优惠打3折咯。。。', '11111111111', '2015-12-04', '2015-12-24');
 
 -- ----------------------------
 -- Table structure for WZZ_WIFI_SHOP_JOB
@@ -174,7 +171,6 @@ CREATE TABLE `WZZ_WIFI_SHOP_JOB` (
 -- ----------------------------
 -- Records of WZZ_WIFI_SHOP_JOB
 -- ----------------------------
-INSERT INTO `WZZ_WIFI_SHOP_JOB` VALUES ('ecf246bb-7b5a-4a61-98dc-65fc5e56459c', 'a41968971604430893795d2c4182011e', '招聘店长', '负责分店事务', '林小宇奶茶店（侨中分店），招聘服务员，待遇从优', '林小宇', '13307620922', '2015-12-12', '2015-12-30');
 
 -- ----------------------------
 -- Table structure for WZZ_WIFI_SHOP_PIC

@@ -135,6 +135,8 @@ public interface WzzService {
 	
 	public boolean insertDiscOfUser(WzzUserDiscEntity record) throws Exception ;
 	
+	public boolean deleteDiscOfUser(WzzUserDiscEntity record) throws Exception ;
+	
 	public List<WzzWifiShopDiscEntity> findDiscssByUserName(String userName);
 	
 	

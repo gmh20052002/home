@@ -58,6 +58,9 @@
 				<if test="condition.id != null">
 					AND ID = #{condition.id,jdbcType=VARCHAR}
 				</if>
+				<if test="condition.name != null">
+					AND NAME like '%${condition.name}%'
+				</if>
 				<if test="condition.address != null">
 					AND ADDRESS like '%${condition.address}%'
 				</if>

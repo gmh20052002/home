@@ -219,13 +219,43 @@ public class WzzV2RestController {
 		return null;
 	}
 	
-	/*@RequestMapping(value = "/v2/User/findDiscssByUserName", method = RequestMethod.GET)
-	@ApiOperation(value = "根据用户手机号查询我的优惠券", httpMethod = "GET")
+	@RequestMapping(value = "/v2/deleteUserDisc", method = RequestMethod.DELETE)
+	@ApiOperation(value = "删除用户已领取优惠劵（只传用户id时清除，删除某一条时同时需要传用户id和优惠劵id）", httpMethod = "DELETE", response = WzzUserDiscEntity.class)
 	public @ResponseBody
-	List<WzzWifiShopDiscEntity> findDiscssByUserName(
-			@RequestParam(required = true) @ApiParam(value = "用户登录名(手机号)") String userName) {
-		return wzzService.findDiscssByUserName(userName);
-	}*/
+	WzzUserDiscEntity deleteUserDisc(
+			@RequestBody @ApiParam(value = "用户优惠券关联对象") WzzUserDiscEntity data) {
+		try {
+			boolean ret = wzzService.deleteDiscOfUser(data);
+			if(ret) return data;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@RequestMapping(value = "/v1/findWifiShopsByName", method = RequestMethod.GET)
+	@ApiOperation(value = "根据名称分页查询WIFI商铺", httpMethod = "GET", response = Page.class)
+	public @ResponseBody
+	Page<WzzWifiShopEntity> findWifiShopsByName(
+			@RequestParam(defaultValue = "", required = false) @ApiParam(required = false, value = "商铺名称，可以模糊查找") String name,
+			@RequestParam(required = false) @ApiParam(required = false, value = "城市，值以注册wifi商铺时传入为准") String city,
+			@RequestParam(defaultValue = "1") @ApiParam(defaultValue = "1", value = "分页参数，当前页码") Integer pageIndex,
+			@RequestParam(defaultValue = "10") @ApiParam(defaultValue = "10", value = "分页参数，每页最大记录数") Integer pageSize) {
+		Page<WzzWifiShopEntity> results = null;
+		try {
+			WzzWifiShopEntity condition = new WzzWifiShopEntity();
+			condition.setName(name);
+			condition.setCity(city);
+			Order order = new Order();
+			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
+			pageSize = pageSize == null ? 10 : pageSize;
+			results = wzzService.findWzzWifiShop(condition, order, pageIndex,
+					pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return results;
+	}
 
 	public WzzService getWzzService() {
 		return wzzService;

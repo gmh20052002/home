@@ -519,4 +519,10 @@ public class WzzServiceImpl implements WzzService {
 		wzzUserDiscEntityMapper.insert(record);
 		return true;
 	}
+
+	@Override
+	public boolean deleteDiscOfUser(WzzUserDiscEntity record) throws Exception {
+		wzzUserDiscEntityMapper.delete(record);
+		return true;
+	}
 }
