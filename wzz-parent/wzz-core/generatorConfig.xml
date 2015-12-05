@@ -33,12 +33,12 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="WZZ_USER" domainObjectName="WzzUserEntity"
+		<!-- <table tableName="WZZ_USER" domainObjectName="WzzUserEntity"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-		</table>
-		<table tableName="WZZ_USER_DISCOUNT" domainObjectName="WzzUserDiscEntity"
+		</table> -->
+		<table tableName="WZZ_USER_FEEDBACK" domainObjectName="WzzUserFBEntity"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">

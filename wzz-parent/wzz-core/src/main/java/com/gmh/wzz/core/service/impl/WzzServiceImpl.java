@@ -17,6 +17,7 @@ import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
 import com.gmh.wzz.api.entity.WzzUserDiscEntity;
 import com.gmh.wzz.api.entity.WzzUserEntity;
+import com.gmh.wzz.api.entity.WzzUserFBEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopJobEntity;
@@ -25,6 +26,7 @@ import com.gmh.wzz.api.service.WzzService;
 import com.gmh.wzz.core.dao.WzzBusinessClassEntityMapper;
 import com.gmh.wzz.core.dao.WzzUserDiscEntityMapper;
 import com.gmh.wzz.core.dao.WzzUserEntityMapper;
+import com.gmh.wzz.core.dao.WzzUserFBEntityMapper;
 import com.gmh.wzz.core.dao.WzzWifiShopDiscEntityMapper;
 import com.gmh.wzz.core.dao.WzzWifiShopEntityMapper;
 import com.gmh.wzz.core.dao.WzzWifiShopJobEntityMapper;
@@ -46,6 +48,8 @@ public class WzzServiceImpl implements WzzService {
 	private WzzWifiShopJobEntityMapper wzzWifiShopJobEntityMapper;
 	@Autowired
 	private WzzUserDiscEntityMapper wzzUserDiscEntityMapper;
+	@Autowired
+	private WzzUserFBEntityMapper wzzUserFBEntityMapper;
 
 	private String wzz_ftp_url = "120.25.226.197";
 	private String wzz_ftp_userName = "www";
@@ -65,8 +69,7 @@ public class WzzServiceImpl implements WzzService {
 		return wzzBusinessClassEntityMapper;
 	}
 
-	public void setWzzBusinessClassEntityMapper(
-			WzzBusinessClassEntityMapper wzzBusinessClassEntityMapper) {
+	public void setWzzBusinessClassEntityMapper(WzzBusinessClassEntityMapper wzzBusinessClassEntityMapper) {
 		this.wzzBusinessClassEntityMapper = wzzBusinessClassEntityMapper;
 	}
 
@@ -74,8 +77,7 @@ public class WzzServiceImpl implements WzzService {
 		return wzzWifiShopEntityMapper;
 	}
 
-	public void setWzzWifiShopEntityMapper(
-			WzzWifiShopEntityMapper wzzWifiShopEntityMapper) {
+	public void setWzzWifiShopEntityMapper(WzzWifiShopEntityMapper wzzWifiShopEntityMapper) {
 		this.wzzWifiShopEntityMapper = wzzWifiShopEntityMapper;
 	}
 
@@ -91,8 +93,7 @@ public class WzzServiceImpl implements WzzService {
 		return wzzWifiShopDiscEntityMapper;
 	}
 
-	public void setWzzWifiShopDiscEntityMapper(
-			WzzWifiShopDiscEntityMapper wzzWifiShopDiscEntityMapper) {
+	public void setWzzWifiShopDiscEntityMapper(WzzWifiShopDiscEntityMapper wzzWifiShopDiscEntityMapper) {
 		this.wzzWifiShopDiscEntityMapper = wzzWifiShopDiscEntityMapper;
 	}
 
@@ -100,8 +101,7 @@ public class WzzServiceImpl implements WzzService {
 		return wzzWifiShopJobEntityMapper;
 	}
 
-	public void setWzzWifiShopJobEntityMapper(
-			WzzWifiShopJobEntityMapper wzzWifiShopJobEntityMapper) {
+	public void setWzzWifiShopJobEntityMapper(WzzWifiShopJobEntityMapper wzzWifiShopJobEntityMapper) {
 		this.wzzWifiShopJobEntityMapper = wzzWifiShopJobEntityMapper;
 	}
 
@@ -109,8 +109,7 @@ public class WzzServiceImpl implements WzzService {
 		return wzzWifiShopPicEntityMapper;
 	}
 
-	public void setWzzWifiShopPicEntityMapper(
-			WzzWifiShopPicEntityMapper wzzWifiShopPicEntityMapper) {
+	public void setWzzWifiShopPicEntityMapper(WzzWifiShopPicEntityMapper wzzWifiShopPicEntityMapper) {
 		this.wzzWifiShopPicEntityMapper = wzzWifiShopPicEntityMapper;
 	}
 
@@ -211,9 +210,8 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public Page<WzzBusinessClassEntity> findWzzBusinessClass(
-			WzzBusinessClassEntity condition, Order order, int pageIndex,
-			int pageSize) throws Exception {
+	public Page<WzzBusinessClassEntity> findWzzBusinessClass(WzzBusinessClassEntity condition, Order order,
+			int pageIndex, int pageSize) throws Exception {
 		Page<WzzBusinessClassEntity> page = new Page<WzzBusinessClassEntity>();
 		page.setPageIndex(pageIndex);
 		page.setPageSize(pageSize);
@@ -222,14 +220,12 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzBusinessClassEntity getWzzBusinessClassById(String id)
-			throws Exception {
+	public WzzBusinessClassEntity getWzzBusinessClassById(String id) throws Exception {
 		return wzzBusinessClassEntityMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
-	public WzzBusinessClassEntity insertWzzBusinessClass(
-			WzzBusinessClassEntity data) throws Exception {
+	public WzzBusinessClassEntity insertWzzBusinessClass(WzzBusinessClassEntity data) throws Exception {
 		Assert.notNull(data, "新增对象[WzzBusinessClassEntity]不能为空");
 		if (StringUtils.isEmpty(data.getId())) {
 			data.setId(UUID.randomUUID().toString());
@@ -239,24 +235,22 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzBusinessClassEntity updateWzzBusinessClass(
-			WzzBusinessClassEntity data) throws Exception {
+	public WzzBusinessClassEntity updateWzzBusinessClass(WzzBusinessClassEntity data) throws Exception {
 		Assert.notNull(data, "修改对象[WzzBusinessClassEntity]不能为空");
 		wzzBusinessClassEntityMapper.updateByPrimaryKeySelective(data);
 		return data;
 	}
 
 	@Override
-	public WzzBusinessClassEntity deleteWzzBusinessClass(
-			WzzBusinessClassEntity data) throws Exception {
+	public WzzBusinessClassEntity deleteWzzBusinessClass(WzzBusinessClassEntity data) throws Exception {
 		Assert.notNull(data, "删除对象[WzzBusinessClassEntity]不能为空");
 		wzzBusinessClassEntityMapper.deleteByPrimaryKey(data.getId());
 		return data;
 	}
 
 	@Override
-	public Page<WzzWifiShopEntity> findWzzWifiShop(WzzWifiShopEntity condition,
-			Order order, int pageIndex, int pageSize) throws Exception {
+	public Page<WzzWifiShopEntity> findWzzWifiShop(WzzWifiShopEntity condition, Order order, int pageIndex,
+			int pageSize) throws Exception {
 		Page<WzzWifiShopEntity> page = new Page<WzzWifiShopEntity>();
 		page.setPageIndex(pageIndex);
 		page.setPageSize(pageSize);
@@ -270,8 +264,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopEntity insertWzzWifiShop(WzzWifiShopEntity data)
-			throws Exception {
+	public WzzWifiShopEntity insertWzzWifiShop(WzzWifiShopEntity data) throws Exception {
 		Assert.notNull(data, "新增对象[WzzWifiShopEntity]不能为空");
 		if (StringUtils.isEmpty(data.getId())) {
 			data.setId(UUID.randomUUID().toString());
@@ -281,24 +274,22 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopEntity updateWzzWifiShop(WzzWifiShopEntity data)
-			throws Exception {
+	public WzzWifiShopEntity updateWzzWifiShop(WzzWifiShopEntity data) throws Exception {
 		Assert.notNull(data, "修改对象[WzzWifiShopEntity]不能为空");
 		wzzWifiShopEntityMapper.updateByPrimaryKeySelective(data);
 		return data;
 	}
 
 	@Override
-	public WzzWifiShopEntity deleteWzzWifiShop(WzzWifiShopEntity data)
-			throws Exception {
+	public WzzWifiShopEntity deleteWzzWifiShop(WzzWifiShopEntity data) throws Exception {
 		Assert.notNull(data.getId(), "删除对象[WzzWifiShopEntity.id]不能为空");
 		wzzWifiShopEntityMapper.deleteByPrimaryKey(data.getId());
 		return data;
 	}
 
 	@Override
-	public Page<WzzUserEntity> findWzzUser(WzzUserEntity condition,
-			Order order, int pageIndex, int pageSize) throws Exception {
+	public Page<WzzUserEntity> findWzzUser(WzzUserEntity condition, Order order, int pageIndex, int pageSize)
+			throws Exception {
 		Page<WzzUserEntity> page = new Page<WzzUserEntity>();
 		page.setPageIndex(pageIndex);
 		page.setPageSize(pageSize);
@@ -336,8 +327,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public Page<WzzWifiShopPicEntity> findWzzWifiShopPic(
-			WzzWifiShopPicEntity condition, Order order, int pageIndex,
+	public Page<WzzWifiShopPicEntity> findWzzWifiShopPic(WzzWifiShopPicEntity condition, Order order, int pageIndex,
 			int pageSize) throws Exception {
 		Page<WzzWifiShopPicEntity> page = new Page<WzzWifiShopPicEntity>();
 		page.setPageIndex(pageIndex);
@@ -347,28 +337,23 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopPicEntity insertWzzWifiShopPic(WzzWifiShopPicEntity data)
-			throws Exception {
+	public WzzWifiShopPicEntity insertWzzWifiShopPic(WzzWifiShopPicEntity data) throws Exception {
 		Assert.notNull(data, "新增对象[WzzWifiShopPicEntity]不能为空");
-		Assert.notNull(data.getShopId(),
-				"新增对象[WzzWifiShopPicEntity.shopId]不能为空");
+		Assert.notNull(data.getShopId(), "新增对象[WzzWifiShopPicEntity.shopId]不能为空");
 		wzzWifiShopPicEntityMapper.insert(data);
 		return data;
 	}
 
 	@Override
-	public WzzWifiShopPicEntity deleteWzzWifiShopPic(WzzWifiShopPicEntity data)
-			throws Exception {
+	public WzzWifiShopPicEntity deleteWzzWifiShopPic(WzzWifiShopPicEntity data) throws Exception {
 		Assert.notNull(data, "删除对象[WzzWifiShopPicEntity]不能为空");
-		Assert.notNull(data.getShopId(),
-				"新增对象[WzzWifiShopPicEntity.shopId]不能为空");
+		Assert.notNull(data.getShopId(), "新增对象[WzzWifiShopPicEntity.shopId]不能为空");
 		wzzWifiShopPicEntityMapper.deleteByShopId(data.getShopId());
 		return data;
 	}
 
 	@Override
-	public Page<WzzWifiShopDiscEntity> findWzzWifiShopDisc(
-			WzzWifiShopDiscEntity condition, Order order, int pageIndex,
+	public Page<WzzWifiShopDiscEntity> findWzzWifiShopDisc(WzzWifiShopDiscEntity condition, Order order, int pageIndex,
 			int pageSize) throws Exception {
 		Page<WzzWifiShopDiscEntity> page = new Page<WzzWifiShopDiscEntity>();
 		page.setPageIndex(pageIndex);
@@ -378,8 +363,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopDiscEntity insertWzzWifiShopDisc(
-			WzzWifiShopDiscEntity data) throws Exception {
+	public WzzWifiShopDiscEntity insertWzzWifiShopDisc(WzzWifiShopDiscEntity data) throws Exception {
 		Assert.notNull(data, "新增对象[WzzWifiShopDiscEntity]不能为空");
 		if (StringUtils.isEmpty(data.getId())) {
 			data.setId(UUID.randomUUID().toString());
@@ -389,8 +373,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopDiscEntity deleteWzzWifiShopDiscByShopId(
-			WzzWifiShopDiscEntity data) throws Exception {
+	public WzzWifiShopDiscEntity deleteWzzWifiShopDiscByShopId(WzzWifiShopDiscEntity data) throws Exception {
 		Assert.notNull(data, "删除对象[WzzWifiShopDiscEntity]不能为空");
 		Assert.notNull(data.getShopId(), "删除对象[WzzWifiShopDiscEntity.shopId]不能为空");
 		wzzWifiShopDiscEntityMapper.deleteByShopId(data.getShopId());
@@ -398,8 +381,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopDiscEntity deleteWzzWifiShopDiscById(
-			WzzWifiShopDiscEntity data) throws Exception {
+	public WzzWifiShopDiscEntity deleteWzzWifiShopDiscById(WzzWifiShopDiscEntity data) throws Exception {
 		Assert.notNull(data, "删除对象[WzzWifiShopDiscEntity]不能为空");
 		Assert.notNull(data.getId(), "删除对象[WzzWifiShopDiscEntity.id]不能为空");
 		wzzWifiShopDiscEntityMapper.deleteByPrimaryKey(data.getId());
@@ -407,8 +389,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public Page<WzzWifiShopJobEntity> findWzzWifiShopJob(
-			WzzWifiShopJobEntity condition, Order order, int pageIndex,
+	public Page<WzzWifiShopJobEntity> findWzzWifiShopJob(WzzWifiShopJobEntity condition, Order order, int pageIndex,
 			int pageSize) throws Exception {
 		Page<WzzWifiShopJobEntity> page = new Page<WzzWifiShopJobEntity>();
 		page.setPageIndex(pageIndex);
@@ -418,8 +399,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopJobEntity insertWzzWifiShopJob(WzzWifiShopJobEntity data)
-			throws Exception {
+	public WzzWifiShopJobEntity insertWzzWifiShopJob(WzzWifiShopJobEntity data) throws Exception {
 		Assert.notNull(data, "新增对象[WzzWifiShopJobEntity]不能为空");
 		if (StringUtils.isEmpty(data.getId())) {
 			data.setId(UUID.randomUUID().toString());
@@ -429,8 +409,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopJobEntity deleteWzzWifiShopJobByShopId(WzzWifiShopJobEntity data)
-			throws Exception {
+	public WzzWifiShopJobEntity deleteWzzWifiShopJobByShopId(WzzWifiShopJobEntity data) throws Exception {
 		Assert.notNull(data, "删除对象[WzzWifiShopJobEntity]不能为空");
 		Assert.notNull(data.getShopId(), "删除对象[WzzWifiShopJobEntity.shopId]不能为空");
 		wzzWifiShopJobEntityMapper.deleteByShopId(data.getShopId());
@@ -438,8 +417,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public WzzWifiShopJobEntity deleteWzzWifiShopJobById(WzzWifiShopJobEntity data)
-			throws Exception {
+	public WzzWifiShopJobEntity deleteWzzWifiShopJobById(WzzWifiShopJobEntity data) throws Exception {
 		Assert.notNull(data, "删除对象[WzzWifiShopJobEntity]不能为空");
 		Assert.notNull(data.getId(), "删除对象[WzzWifiShopJobEntity.id]不能为空");
 		wzzWifiShopJobEntityMapper.deleteByPrimaryKey(data.getId());
@@ -449,8 +427,8 @@ public class WzzServiceImpl implements WzzService {
 	public void sendMsg(String msgContent, String mobile) throws Exception {
 		String encode = "utf8";
 		// 组建请求
-		String straddr = SMSServerHost + "?uid=" + SMSServerUserName + "&pwd=" + SMSServerPassword + "&mobile="
-				+ mobile + "&encode=" + encode + "&content=" + msgContent;
+		String straddr = SMSServerHost + "?uid=" + SMSServerUserName + "&pwd=" + SMSServerPassword + "&mobile=" + mobile
+				+ "&encode=" + encode + "&content=" + msgContent;
 
 		StringBuffer sb = new StringBuffer(straddr);
 		System.out.println("URL:" + sb);
@@ -459,26 +437,23 @@ public class WzzServiceImpl implements WzzService {
 		URL url = new URL(sb.toString());
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				url.openStream()));
+		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
 		// 返回结果
 		String inputline = in.readLine();
 		System.out.println("Response:" + inputline);
-		if(!inputline.contains("stat=100")){
+		if (!inputline.contains("stat=100")) {
 			throw new Exception("短信发送失败！返回值：" + inputline);
 		}
 	}
 
 	@Override
-	public WzzWifiShopDiscEntity getWzzWifiShopDiscById(String id)
-			throws Exception {
+	public WzzWifiShopDiscEntity getWzzWifiShopDiscById(String id) throws Exception {
 		return wzzWifiShopDiscEntityMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
-	public WzzWifiShopJobEntity getWzzWifiShopJobById(String id)
-			throws Exception {
+	public WzzWifiShopJobEntity getWzzWifiShopJobById(String id) throws Exception {
 		return wzzWifiShopJobEntityMapper.selectByPrimaryKey(id);
 	}
 
@@ -515,7 +490,7 @@ public class WzzServiceImpl implements WzzService {
 	}
 
 	@Override
-	public boolean insertDiscOfUser(WzzUserDiscEntity record)  throws Exception {
+	public boolean insertDiscOfUser(WzzUserDiscEntity record) throws Exception {
 		wzzUserDiscEntityMapper.insert(record);
 		return true;
 	}
@@ -524,5 +499,47 @@ public class WzzServiceImpl implements WzzService {
 	public boolean deleteDiscOfUser(WzzUserDiscEntity record) throws Exception {
 		wzzUserDiscEntityMapper.delete(record);
 		return true;
+	}
+
+	public WzzUserFBEntityMapper getWzzUserFBEntityMapper() {
+		return wzzUserFBEntityMapper;
+	}
+
+	public void setWzzUserFBEntityMapper(WzzUserFBEntityMapper wzzUserFBEntityMapper) {
+		this.wzzUserFBEntityMapper = wzzUserFBEntityMapper;
+	}
+
+	@Override
+	public WzzUserFBEntity insertWzzUserFB(WzzUserFBEntity data) throws Exception {
+		Assert.notNull(data, "新增对象[WzzUserFBEntity]不能为空");
+		if (StringUtils.isEmpty(data.getId())) {
+			data.setId(UUID.randomUUID().toString());
+		}
+		wzzUserFBEntityMapper.insert(data);
+		return data;
+	}
+
+	@Override
+	public WzzUserFBEntity updateWzzUserFB(WzzUserFBEntity data) throws Exception {
+		Assert.notNull(data, "修改对象[WzzUserFBEntity]不能为空");
+		wzzUserFBEntityMapper.updateByPrimaryKeySelective(data);
+		return data;
+	}
+
+	@Override
+	public WzzUserFBEntity deleteWzzUserFB(WzzUserFBEntity data) throws Exception {
+		Assert.notNull(data.getId(), "删除对象[WzzUserFBEntity.id]不能为空");
+		wzzUserFBEntityMapper.deleteByPrimaryKey(data.getId());
+		return data;
+	}
+
+	@Override
+	public Page<WzzUserFBEntity> findWzzUserFB(WzzUserFBEntity condition, Order order, int pageIndex,
+			int pageSize) throws Exception {
+		Page<WzzUserFBEntity> page = new Page<WzzUserFBEntity>();
+		page.setPageIndex(pageIndex);
+		page.setPageSize(pageSize);
+		wzzUserFBEntityMapper.selectByCondition(condition, order, page);
+		return page;
 	}
 }

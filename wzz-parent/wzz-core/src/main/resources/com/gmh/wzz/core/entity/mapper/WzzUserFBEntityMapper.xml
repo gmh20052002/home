@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gmh.wzz.core.dao.WzzUserFBEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.gmh.wzz.api.entity.WzzUserFBEntity" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="FEED_TIME" property="feedTime" jdbcType="TIMESTAMP" />
+    <result column="REPLAY_TIME" property="replayTime" jdbcType="TIMESTAMP" />
+    <result column="FEED_BACK" property="feedBack" jdbcType="LONGVARCHAR" />
+    <result column="REPLAY" property="replay" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, FEED_TIME, REPLAY_TIME, FEED_BACK, REPLAY
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WZZ_USER_FEEDBACK
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from WZZ_USER_FEEDBACK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzUserFBEntity" >
+    insert into WZZ_USER_FEEDBACK (ID, USER_ID, FEED_TIME, 
+      REPLAY_TIME, FEED_BACK, REPLAY
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{feedTime,jdbcType=TIMESTAMP}, 
+      #{replayTime,jdbcType=TIMESTAMP}, #{feedBack,jdbcType=LONGVARCHAR}, #{replay,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzUserFBEntity" >
+    insert into WZZ_USER_FEEDBACK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="feedTime != null" >
+        FEED_TIME,
+      </if>
+      <if test="replayTime != null" >
+        REPLAY_TIME,
+      </if>
+      <if test="feedBack != null" >
+        FEED_BACK,
+      </if>
+      <if test="replay != null" >
+        REPLAY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="feedTime != null" >
+        #{feedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replayTime != null" >
+        #{replayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feedBack != null" >
+        #{feedBack,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="replay != null" >
+        #{replay,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmh.wzz.api.entity.WzzUserFBEntity" >
+    update WZZ_USER_FEEDBACK
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="feedTime != null" >
+        FEED_TIME = #{feedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replayTime != null" >
+        REPLAY_TIME = #{replayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feedBack != null" >
+        FEED_BACK = #{feedBack,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="replay != null" >
+        REPLAY = #{replay,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzUserFBEntity" >
+    update WZZ_USER_FEEDBACK
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      FEED_TIME = #{feedTime,jdbcType=TIMESTAMP},
+      REPLAY_TIME = #{replayTime,jdbcType=TIMESTAMP},
+      FEED_BACK = #{feedBack,jdbcType=LONGVARCHAR},
+      REPLAY = #{replay,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="com.gmh.wzz.api.entity.WzzUserFBEntity">
+		select
+		<include refid="Base_Column_List" />
+		from WZZ_USER_FEEDBACK
+		<where>
+			<if test="condition != null">
+				<if test="condition.id != null">
+					AND ID = #{condition.id,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.userId != null">
+					AND USER_ID = #{condition.userId,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.feedBack != null">
+					AND FEEDBACK like '%${condition.feedBack,jdbcType=VARCHAR}%'
+				</if>
+				<if test="condition.replay != null">
+					AND REPLAY like '%${condition.replay,jdbcType=VARCHAR}%'
+				</if>
+			</if>
+		</where>
+	</select>
+</mapper>

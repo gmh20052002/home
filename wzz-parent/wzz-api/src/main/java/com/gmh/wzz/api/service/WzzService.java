@@ -7,6 +7,7 @@ import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
 import com.gmh.wzz.api.entity.WzzUserDiscEntity;
 import com.gmh.wzz.api.entity.WzzUserEntity;
+import com.gmh.wzz.api.entity.WzzUserFBEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopJobEntity;
@@ -138,6 +139,23 @@ public interface WzzService {
 	public boolean deleteDiscOfUser(WzzUserDiscEntity record) throws Exception ;
 	
 	public List<WzzWifiShopDiscEntity> findDiscssByUserName(String userName);
+	
+
+	/*
+	 * ====================================v2======================================
+	 */
+	public WzzUserFBEntity insertWzzUserFB(WzzUserFBEntity data)
+			throws Exception;
+
+	public WzzUserFBEntity updateWzzUserFB(WzzUserFBEntity data)
+			throws Exception;
+
+	public WzzUserFBEntity deleteWzzUserFB(WzzUserFBEntity data)
+			throws Exception;
+
+	public Page<WzzUserFBEntity> findWzzUserFB(
+			WzzUserFBEntity condition, Order order, int pageIndex,
+			int pageSize) throws Exception;
 	
 	
 	public String getWzz_ftp_url();
