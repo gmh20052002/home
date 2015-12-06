@@ -201,8 +201,8 @@ public class WzzV2RestController {
 		return null;
 	}
 
-	@RequestMapping(value = "/v2/deleteUserDisc", method = RequestMethod.DELETE)
-	@ApiOperation(value = "删除用户已领取优惠劵（只传用户id时清除，删除某一条时同时需要传用户id和优惠劵id）", httpMethod = "DELETE", response = WzzUserDiscEntity.class)
+	@RequestMapping(value = "/v2/deleteUserDisc", method = RequestMethod.POST)
+	@ApiOperation(value = "删除用户已领取优惠劵（只传用户id时清除，删除某一条时同时需要传用户id和优惠劵id）", httpMethod = "POST", response = WzzUserDiscEntity.class)
 	public @ResponseBody WzzUserDiscEntity deleteUserDisc(
 			@RequestBody @ApiParam(value = "用户优惠券关联对象") WzzUserDiscEntity data) {
 		try {
@@ -267,6 +267,7 @@ public class WzzV2RestController {
 			@PathVariable @ApiParam(value = "用户反馈信息Id") String id) {
 		try {
 			WzzUserFBEntity data = new WzzUserFBEntity();
+			data.setId(id);
 			return wzzService.deleteWzzUserFB(data);
 		} catch (Exception e) {
 			e.printStackTrace();
