@@ -215,7 +215,7 @@ public class WzzV2RestController {
 		return null;
 	}
 
-	@RequestMapping(value = "/v1/findWifiShopsByName", method = RequestMethod.GET)
+	@RequestMapping(value = "/v2/findWifiShopsByName", method = RequestMethod.GET)
 	@ApiOperation(value = "根据名称分页查询WIFI商铺", httpMethod = "GET", response = Page.class)
 	public @ResponseBody Page<WzzWifiShopEntity> findWifiShopsByName(
 			@RequestParam(defaultValue = "", required = false) @ApiParam(required = false, value = "商铺名称，可以模糊查找") String name,
@@ -275,7 +275,7 @@ public class WzzV2RestController {
 		return null;
 	}
 
-	@RequestMapping(value = "/v1/UserFeedBacks", method = RequestMethod.GET)
+	@RequestMapping(value = "/v2/UserFeedBacks", method = RequestMethod.GET)
 	@ApiOperation(value = "分页查询用户反馈信息", httpMethod = "GET", response = Page.class)
 	public @ResponseBody Page<WzzUserFBEntity> findUserFeedBacks(
 			@RequestParam( required = false) @ApiParam(required = false, value = "反馈信息ID") String id,
