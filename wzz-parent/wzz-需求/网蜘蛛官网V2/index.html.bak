@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<!--
+	Overflow by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>网蜘蛛【官网】-不仅仅是全城免费WIFI</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="wifi共享软件,网蜘蛛,网蜘蛛安卓版,网蜘蛛官网" />
+		<meta name="keywords" content="wifi共享软件,网蜘蛛,网蜘蛛安卓版,网蜘蛛官网" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.scrolly.min.js"></script>
+		<script src="js/jquery.poptrox.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Header -->
+			<section id="header">
+				<header>
+					<h1>网蜘蛛</h1>
+					<p>不仅仅是全城免费WIFI</p>
+				</header>
+				<footer>
+					<a href="#banner" class="button style2 scrolly-middle">更多精彩再往下</a>
+				</footer>
+			</section>
+
+		<!-- Banner -->
+			<section id="banner">
+				<header>
+					<h2>移动互联网O2O生态圈构建者</h2>
+				</header>
+				<p> 最便捷的O2O解决方案,轻松帮助传统商铺实现互联网+转型</p>
+				<footer>
+					<a href="#first" class="button style2 scrolly">用户青睐</a>
+				</footer>
+			</section>
+
+		<!-- Feature 1 -->
+			<article id="first" class="container box style1 right">
+				<a href="" class="image fit"><img src="images/pic_01.jpg" alt="" /></a>
+				<div class="inner">
+					<header>
+						<h2>全城免费wifi创新者</h2>
+					</header>
+					<p>我们致力于构建全城免费wifi网络，以最便捷、最可靠的方式实现全城覆盖，一个APP即刻开启免费wifi之旅</p>
+				</div>
+			</article>
+
+		<!-- Feature 2 -->
+			<article class="container box style1 left">
+				<a href="" class="image fit"><img src="images/pic_02.jpg" alt="" /></a>
+				<div class="inner">
+					<header>
+						<h2>无线智慧城市的实践者</h2>
+					</header>
+					<p>亿万wifi热点基础，网蜘蛛将我们城市的生活、商业等信息数据连接在一起，构建我们未来的智慧城市梦想</p>
+				</div>
+			</article>
+
+		<!-- Portfolio -->
+			<article class="container box style2">
+				<header>
+					<h2>在这里 在那里 有网蜘蛛就有WIFI</h2>
+					<p>在每个城市 每个街区 每个角落 <br />
+					您都可以享受商户和网蜘蛛为您提供的全城WIFI网络</p>
+				</header>
+				<div class="inner gallery">
+					<div class="row 0%">
+						<div class="3u"><a href="images/fulls/01.jpg" class="image fit"><img src="images/thumbs/01.jpg" alt="" title="步行街、商业街区" /></a></div>
+						<div class="3u"><a href="images/fulls/02.jpg" class="image fit"><img src="images/thumbs/02.jpg" alt="" title="大型商场、综合性商业体" /></a></div>
+						<div class="3u"><a href="images/fulls/03.jpg" class="image fit"><img src="images/thumbs/03.jpg" alt="" title="便利店、专卖店等" /></a></div>
+						<div class="3u"><a href="images/fulls/04.jpg" class="image fit"><img src="images/thumbs/04.jpg" alt="" title="酒店大堂、银行大厅、医院大堂等" /></a></div>
+					</div>
+					<div class="row 0%">
+						<div class="3u"><a href="images/fulls/05.jpg" class="image fit"><img src="images/thumbs/05.jpg" alt="" title="景区、公园等公共场所" /></a></div>
+						<div class="3u"><a href="images/fulls/06.jpg" class="image fit"><img src="images/thumbs/06.jpg" alt="" title="韩国大型商场案例" /></a></div>
+						<div class="3u"><a href="images/fulls/07.jpg" class="image fit"><img src="images/thumbs/07.jpg" alt="" title="商场内服装等专柜、专卖店" /></a></div>
+						<div class="3u"><a href="images/fulls/08.jpg" class="image fit"><img src="images/thumbs/08.jpg" alt="" title="美食、餐饮、休闲娱乐场所等" /></a></div>
+					</div>
+				</div>
+			</article>
+
+	
+				<!-- Feature 2 -->
+			<article class="container box style1 left">
+				<a href="http://down.wangzhizhu.com" class="image fit" ><img src="images/down-code.png" alt="" /></a>
+				<div class="inner">
+					<header>
+						<h2>网蜘蛛 APP安装</h2>
+					</header>
+					<p>1、扫右边的二维码下载网蜘蛛APP安装文件</p>
+					<p><a  href="http://down.wangzhizhu.com/wangzhizhu.apk" style="text-decoration:underline; color:
+					#000000">2、如不能正常扫码，则点击进入APP下载页面</a></p>
+				</div>
+			</article>
+		
+		
+				<!-- 代理商 1 -->
+			<article id="first" class="container box style1 right">
+				<a href="" class="image fit"><img src="images/pic01.jpg" alt="" /></a>
+				<div class="inner">
+					<header>
+						<h2>合作洽谈</h2>
+					</header>
+					<p>如果您想成为我们的代理或者业务合作，请联系热线：</p>
+					<p>0898-66664664(合作)66663664(客服)</p>
+				</div>
+			</article>
+
+		<section id="footer">
+			<ul class="icons">	
+				<li><a class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+				<li><a class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+				<li><a class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
+				<li><a class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+				<li><a class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+				
+			</ul>
+			<div class="copyright">
+				<ul class="menu">
+					<li>海南网蜘蛛科技有限公司 &copy; All rights reserved.</li>
+					<li>地址：海南省 海口市 美兰区 蓝天路59号 汇隆大厦A座B1601</li>
+					<p>网站备案号：<a href="http://www.miitbeian.gov.cn">琼ICP备15001709号-1</a></p>
+				</ul>
+		  </div>
+		</section>
+
+	</body>
+</html>
