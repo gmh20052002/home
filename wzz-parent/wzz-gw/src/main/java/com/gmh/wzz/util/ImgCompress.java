@@ -28,6 +28,19 @@ public class ImgCompress {
 	/**
 	 * 构造函数
 	 */
+	public ImgCompress(InputStream input, File outFile) throws IOException {
+		file = outFile;
+		if(!file.exists()){
+			file.createNewFile();
+		}
+		img = ImageIO.read(input); // 构造Image对象
+		width = img.getWidth(null); // 得到源图宽
+		height = img.getHeight(null); // 得到源图长
+	}
+
+	/**
+	 * 构造函数
+	 */
 	public ImgCompress(File fromfile) throws IOException {
 		file = new File(fromfile.getParent() + File.separator  + fromfile.getName().split("\\.")[0] + "_zm." + fromfile.getName().split("\\.")[1]);
 		if(!file.exists()){

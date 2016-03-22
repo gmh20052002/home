@@ -231,6 +231,8 @@ public class WzzV1RestController {
 			System.out.println("成功！");
 			// }
 			// }
+			//开始压缩图片
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException("FTP客户端出错！", e);
@@ -248,6 +250,30 @@ public class WzzV1RestController {
 				"http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl="
 						+ fileUrls);
 		return map;
+	}
+	
+	@RequestMapping(value = "/v1/deleteFtpFile", method = RequestMethod.GET)
+	@ApiOperation(value = "删除ftp文件", httpMethod = "GET")
+	public void deleteFtpFile(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value = "ftpUrl", required = true) @ApiParam(value = "ftp文件路径") String ftpUrl) {
+		FTPClient ftpClient = new FTPClient();
+		try {
+			ftpClient.connect(wzzService.getWzz_ftp_url());
+			ftpClient.login(wzzService.getWzz_ftp_userName(),
+					wzzService.getWzz_ftp_password());
+			ftpClient.deleteFile(ftpUrl);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ftpClient.disconnect();
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new RuntimeException("关闭FTP连接发生异常！", e);
+			}
+		}
 	}
 
 	@RequestMapping(value = "/v1/showFtpZoomFile", method = RequestMethod.GET)
@@ -294,54 +320,60 @@ public class WzzV1RestController {
 					+ response.getContentType());
 			response.setLocale(Locale.CHINA);
 			logger.debug("response.getLocale=========>" + response.getLocale());
-
+  
 			inputStream = ftpClient.retrieveFileStream(ftpUrl);
 
 			String localPath = request.getSession().getServletContext()
 					.getRealPath("");
-			
-			File path = new File(localPath + File.separator + "zoom_tmp");
-			if(!path.exists()){
-				path.mkdirs();
-			}
-			localFile = new File(path.getAbsolutePath()
-					+ File.separator
-					+ ftpUrl.substring(ftpUrl.lastIndexOf("/")));
-//			if(!localFile.exists()){
-//				localFile.createNewFile();
+
+//			File path = new File(localPath + File.separator + "zoom_tmp");
+//			if (!path.exists()) {
+//				path.mkdirs();
 //			}
-			fos = new FileOutputStream(localFile);
-			ftpClient.retrieveFile(ftpUrl, fos);
-			
-			ImgCompress imgCom = new ImgCompress(localFile);
+			localFile = new File(localPath + File.separator + "zoom_tmp" + File.separator
+					+ ftpUrl.substring(ftpUrl.lastIndexOf("/")));
+//			localFile = new File("D://"
+//					+ ftpUrl.substring(ftpUrl.lastIndexOf("/")));
+//			 if(!localFile.exists()){
+//				 localFile.createNewFile();
+//			 }
+//			fos = new FileOutputStream(localFile);
+//			ftpClient.retrieveFile(ftpUrl, fos);
+			// inputStream = ftpClient.retrieveFileStream(ftpUrl);
+			// byte[] c = new byte[1024];
+			// int len;
+			// while ((len = inputStream.read(c, 0, c.length)) != -1) {
+			// fos.write(c, 0, len);
+			// }
+
+			ImgCompress imgCom = new ImgCompress(inputStream, localFile);
 			imgCom.resize(100, 100);
-			
-			fin = new BufferedInputStream(new FileInputStream(localFile));  
-            byte[] content = new byte[1024];  
-            int length;  
-            while ((length = fin.read(content, 0, content.length)) != -1) {  
-    			response.getOutputStream().write(content, 0, length);
-            }  
-			
-//			ftpClient.retrieveFile(ftpUrl, response.getOutputStream());
+
+			fin = new BufferedInputStream(new FileInputStream(localFile));
+			byte[] content = new byte[1024];
+			int length;
+			while ((length = fin.read(content, 0, content.length)) != -1) {
+				response.getOutputStream().write(content, 0, length);
+			}
+
+			// ftpClient.retrieveFile(ftpUrl, response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (fos != null) {
+					IOUtils.closeQuietly(fos);
+				}
+				if (inputStream != null) {
+					IOUtils.closeQuietly(inputStream);
+				}
+				if (fin != null) {
+					IOUtils.closeQuietly(fin);
+				}
+				// if(localFile != null){
+				// localFile.delete();
+				// }
 				ftpClient.disconnect();
-				 if (inputStream != null) {
-					 inputStream.close();
-				 }
-				 if (fos != null) {
-					 fos.flush();
-					 fos.close();
-				 }
-				 if (fin != null) {
-					 fin.close();
-				 }
-//				 if(localFile != null){
-//					 localFile.delete();
-//				 }
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new RuntimeException("关闭FTP连接发生异常！", e);
@@ -365,17 +397,6 @@ public class WzzV1RestController {
 			ftpClient.connect(wzzService.getWzz_ftp_url());
 			ftpClient.login(wzzService.getWzz_ftp_userName(),
 					wzzService.getWzz_ftp_password());
-			// response.setContentType("multipart/form-data");
-			// response.setContentType("application/x-msdownload");
-			// response.setCharacterEncoding("UTF-8");
-			/*
-			 * <option value="image/bmp">BMP</option> <option
-			 * value="image/gif">GIF</option> <option
-			 * value="image/jpeg">JPEG</option> <option
-			 * value="image/tiff">TIFF</option> <option
-			 * value="image/x-dcx">DCX</option> <option
-			 * value="image/x-pcx">PCX</option>
-			 */
 			logger.debug("response.getContentType====1=====>"
 					+ response.getContentType());
 			if (ftpUrl.toLowerCase().endsWith("bmp")) {
@@ -405,38 +426,12 @@ public class WzzV1RestController {
 					+ response.getContentType());
 			response.setLocale(Locale.CHINA);
 			logger.debug("response.getLocale=========>" + response.getLocale());
-			// String localPath = request.getSession().getServletContext()
-			// .getRealPath("");
-			// localFile = new File(localPath + File.separator
-			// + ftpUrl.substring(ftpUrl.lastIndexOf("/")));
-			// os = new FileOutputStream(localFile);
-			// System.out.println(ftpClient.retrieveFile(ftpUrl, os));
-			//
-			// is = new FileInputStream(localFile);
-			// int i = is.available(); // 得到文件大小
-			// byte data[] = new byte[i];
-			// is.read(data); // 读数据
-			// toClient = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
-			// toClient.write(data); // 输出数据
 			ftpClient.retrieveFile(ftpUrl, response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				ftpClient.disconnect();
-				// if(toClient != null){
-				// toClient.close();
-				// }
-				// if (is != null) {
-				// is.close();
-				// }
-				// if (os != null) {
-				// os.flush();
-				// os.close();
-				// }
-				// if(localFile != null){
-				// localFile.delete();
-				// }
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new RuntimeException("关闭FTP连接发生异常！", e);
