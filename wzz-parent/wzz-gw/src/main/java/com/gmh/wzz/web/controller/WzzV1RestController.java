@@ -3,7 +3,6 @@ package com.gmh.wzz.web.controller;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -231,8 +230,8 @@ public class WzzV1RestController {
 			System.out.println("成功！");
 			// }
 			// }
-			//开始压缩图片
-			
+			// 开始压缩图片
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException("FTP客户端出错！", e);
@@ -251,7 +250,7 @@ public class WzzV1RestController {
 						+ fileUrls);
 		return map;
 	}
-	
+
 	@RequestMapping(value = "/v1/deleteFtpFile", method = RequestMethod.GET)
 	@ApiOperation(value = "删除ftp文件", httpMethod = "GET")
 	public void deleteFtpFile(
@@ -320,25 +319,26 @@ public class WzzV1RestController {
 					+ response.getContentType());
 			response.setLocale(Locale.CHINA);
 			logger.debug("response.getLocale=========>" + response.getLocale());
-  
+
 			inputStream = ftpClient.retrieveFileStream(ftpUrl);
 
 			String localPath = request.getSession().getServletContext()
 					.getRealPath("");
 
-//			File path = new File(localPath + File.separator + "zoom_tmp");
-//			if (!path.exists()) {
-//				path.mkdirs();
-//			}
-			localFile = new File(localPath + File.separator + "zoom_tmp" + File.separator
+			String basePath = localPath + File.separator + "zoom_tmp";
+			File path = new File(basePath);
+			if (!path.exists()) {
+				path.mkdirs();
+			}
+			localFile = new File(basePath + File.separator
 					+ ftpUrl.substring(ftpUrl.lastIndexOf("/")));
-//			localFile = new File("D://"
-//					+ ftpUrl.substring(ftpUrl.lastIndexOf("/")));
-//			 if(!localFile.exists()){
-//				 localFile.createNewFile();
-//			 }
-//			fos = new FileOutputStream(localFile);
-//			ftpClient.retrieveFile(ftpUrl, fos);
+			// localFile = new File("D://"
+			// + ftpUrl.substring(ftpUrl.lastIndexOf("/")));
+			// if(!localFile.exists()){
+			// localFile.createNewFile();
+			// }
+			// fos = new FileOutputStream(localFile);
+			// ftpClient.retrieveFile(ftpUrl, fos);
 			// inputStream = ftpClient.retrieveFileStream(ftpUrl);
 			// byte[] c = new byte[1024];
 			// int len;
@@ -370,9 +370,9 @@ public class WzzV1RestController {
 				if (fin != null) {
 					IOUtils.closeQuietly(fin);
 				}
-				// if(localFile != null){
-				// localFile.delete();
-				// }
+				if (localFile != null) {
+					localFile.delete();
+				}
 				ftpClient.disconnect();
 			} catch (IOException e) {
 				e.printStackTrace();

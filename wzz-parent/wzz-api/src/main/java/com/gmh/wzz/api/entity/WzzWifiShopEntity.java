@@ -69,6 +69,9 @@ public class WzzWifiShopEntity implements Serializable {
 	@ApiModelProperty(value="图片地址，多个用逗号分隔")
     private String picUrl;
 
+	@ApiModelProperty(value="缩略图片地址，多个用逗号分隔")
+    private String zoomPicUrl;
+
 	@ApiModelProperty(value="注册时间")
     private Date createTime;
 
@@ -286,5 +289,16 @@ public class WzzWifiShopEntity implements Serializable {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getZoomPicUrl() {
+		if(picUrl != null && !"".equals(picUrl)){
+			zoomPicUrl = picUrl.replaceAll("/showFtpFile", "/showFtpZoomFile");
+		}
+		return zoomPicUrl;
+	}
+
+	public void setZoomPicUrl(String zoomPicUrl) {
+		this.zoomPicUrl = zoomPicUrl;
 	}
 }
