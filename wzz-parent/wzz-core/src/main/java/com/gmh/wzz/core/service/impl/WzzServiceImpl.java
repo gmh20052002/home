@@ -254,6 +254,7 @@ public class WzzServiceImpl implements WzzService {
 		Page<WzzWifiShopEntity> page = new Page<WzzWifiShopEntity>();
 		page.setPageIndex(pageIndex);
 		page.setPageSize(pageSize);
+		order.setOrderBy("((WIFI_X-"+condition.getWifiX()+")*(WIFI_X-"+condition.getWifiX()+") + (WIFI_Y-"+condition.getWifiY()+")*(WIFI_Y-"+condition.getWifiY()+"))");
 		wzzWifiShopEntityMapper.selectByCondition(condition, order, page);
 		return page;
 	}

@@ -91,6 +91,8 @@ public class WzzV1RestController {
 		try {
 			WzzWifiShopEntity condition = new WzzWifiShopEntity();
 			Float wifiScope = wzzService.getWzz_wifi_search_scope();
+			condition.setWifiX(wifix);
+			condition.setWifiY(wifiY);
 			condition.setWifiXMin(wifix - wifiScope);
 			condition.setWifiYMin(wifiY - wifiScope);
 			condition.setWifiXMax(wifix + wifiScope);
