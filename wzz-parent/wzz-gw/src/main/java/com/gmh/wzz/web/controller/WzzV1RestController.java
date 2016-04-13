@@ -32,6 +32,7 @@ import com.gmh.wzz.api.entity.MessageCode;
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.Sort;
+import com.gmh.wzz.api.entity.WzzUserEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopJobEntity;
@@ -148,6 +149,28 @@ public class WzzV1RestController {
 		WzzWifiShopEntity result = null;
 		try {
 			result = wzzService.insertWzzWifiShop(data);
+			
+			if(result != null){//添加店铺成功，发送短信
+				String mobile = result.getMobileTel();
+				String userName = result.getUserName();
+				if(mobile != null && mobile.equals(userName)){//商户创建
+					WzzUserEntity condition = new WzzUserEntity();
+					condition.setUserName(userName);
+					Page<WzzUserEntity> results = wzzService.findWzzUser(condition, null, 1, 10);
+					if (results != null && results.getTotalSize() > 0 && results.getDatas() != null) {
+						WzzUserEntity ret = results.getDatas().get(0);
+						if (ret != null) {
+							String password = ret.getPassword();
+							String msgContent = "【网蜘蛛】连上您的WIFI，让过客成为顾客。WIFI云店铺已经创建成功，您的帐号为"+mobile+"，密码为"+password+"。请妥善保管好本信息。网蜘蛛APP下载地址down.wangzhizhu.com";
+							try {
+								wzzService.sendMsg(msgContent, mobile);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
