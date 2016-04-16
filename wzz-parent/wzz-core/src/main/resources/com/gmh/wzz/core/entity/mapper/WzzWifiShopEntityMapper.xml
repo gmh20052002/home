@@ -26,6 +26,7 @@
 		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
 		<result column="END_TIME" property="vipEndTime" jdbcType="TIMESTAMP" />
+		<result column="VIP" property="vip" jdbcType="BOOLEAN" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		ID, NAME, ADDRESS, REMARK, CLASS_TYPE1, CLASS_TYPE2,
@@ -40,20 +41,33 @@
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
-		select 
+		select
 		a.ID, a.NAME, a.ADDRESS, a.REMARK, a.CLASS_TYPE1,
 		a.CLASS_TYPE2,
-		a.WORK_TEL, a.OVER_USER, a.MOBILE_TEL,a.USER_NAME,
+		a.WORK_TEL,
+		a.OVER_USER, a.MOBILE_TEL,a.USER_NAME,
 		a.WIFI,
 		a.WIFI_PASSWORD,
-		a.FLOOR, a.WIFI_LNG,
+		a.FLOOR,
+		a.WIFI_LNG,
 		a.WIFI_LAT,a.WIFI_X,
 		a.WIFI_Y,
 		a.PROVINCE, a.CITY,
-		a.PIC_URL, a.CREATE_TIME, a.UPDATE_TIME, b.END_TIME
-		from WZZ_WIFI_SHOP a, WZZ_USER b 
+		a.PIC_URL,
+		a.CREATE_TIME, a.UPDATE_TIME,
+		b.END_TIME,
+		CASE
+		WHEN (b.END_TIME - NOW()) >= 0 THEN
+		true
+		ELSE
+		false
+		END as
+		VIP
+		from WZZ_WIFI_SHOP a, WZZ_USER b
 		where a.ID
-		= #{id,jdbcType=VARCHAR} AND a.USER_NAME=b.USER_NAME
+		= #{id,jdbcType=VARCHAR}
+		AND
+		a.USER_NAME=b.USER_NAME
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from

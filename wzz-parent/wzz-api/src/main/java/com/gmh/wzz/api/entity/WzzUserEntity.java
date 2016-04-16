@@ -39,6 +39,9 @@ public class WzzUserEntity {
 
 	@ApiModelProperty(value="vip到期时间，格式：yyyy-MM-dd hh:mm:ss")
     private Date endTimeEnd;
+	
+	@ApiModelProperty(value = "是否VIP")
+	private Boolean vip;
 
     public String getId() {
         return id;
@@ -126,5 +129,13 @@ public class WzzUserEntity {
 
 	public void setEndTimeEnd(Date endTimeEnd) {
 		this.endTimeEnd = endTimeEnd;
+	}
+
+	public Boolean getVip() {
+		return vip;
+	}
+
+	public void setVip(Boolean vip) {
+		this.vip = vip;
 	}
 }

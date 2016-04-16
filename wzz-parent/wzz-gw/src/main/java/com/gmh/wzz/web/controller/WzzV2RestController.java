@@ -44,7 +44,7 @@ public class WzzV2RestController {
 	}
 
 	@RequestMapping(value = "/v2/User/login", method = RequestMethod.GET)
-	@ApiOperation(value = "用户登录", httpMethod = "GET", response = Boolean.class)
+	@ApiOperation(value = "用户登录", httpMethod = "GET", response = WzzUserEntity.class)
 	public @ResponseBody WzzUserEntity login(@RequestParam(required = true) @ApiParam(value = "用户类型") String userType,
 			@RequestParam(required = true) @ApiParam(value = "用户登录名(手机号)") String userName,
 			@RequestParam(required = true) @ApiParam(value = "登录密码") String password) {

@@ -11,9 +11,18 @@
 		<result column="PROVINCE" property="province" jdbcType="VARCHAR" />
 		<result column="USER_TYPE" property="userType" jdbcType="VARCHAR" />
 		<result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="VIP" property="vip" jdbcType="BOOLEAN" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID, USER_NAME, PASSWORD, IMEI, USER_CNAME, REMARK, PROVINCE, USER_TYPE, END_TIME
+		ID, USER_NAME, PASSWORD, IMEI, USER_CNAME, REMARK,
+		PROVINCE, USER_TYPE, END_TIME,
+		CASE
+		WHEN (END_TIME - NOW()) >= 0 THEN
+		true
+		ELSE
+		false
+		END as
+		VIP
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -23,17 +32,22 @@
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from WZZ_USER
+		delete from
+		WZZ_USER
 		where ID = #{id,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
-		insert into WZZ_USER (ID, USER_NAME, PASSWORD,
+		insert into WZZ_USER (ID,
+		USER_NAME, PASSWORD,
 		IMEI, USER_CNAME, REMARK,
-		PROVINCE, USER_TYPE, END_TIME)
+		PROVINCE, USER_TYPE,
+		END_TIME)
 		values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR},
-		#{imei,jdbcType=VARCHAR}, #{userCname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
-		#{province,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR})
+		#{imei,jdbcType=VARCHAR},
+		#{userCname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+		#{province,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR},
+		#{endTime,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
 		insert into WZZ_USER
@@ -126,13 +140,16 @@
 	<update id="updateByPrimaryKey" parameterType="com.gmh.wzz.api.entity.WzzUserEntity">
 		update WZZ_USER
 		set USER_NAME = #{userName,jdbcType=VARCHAR},
-		PASSWORD = #{password,jdbcType=VARCHAR},
+		PASSWORD =
+		#{password,jdbcType=VARCHAR},
 		IMEI = #{imei,jdbcType=VARCHAR},
 		USER_CNAME = #{userCname,jdbcType=VARCHAR},
-		REMARK = #{remark,jdbcType=VARCHAR},
+		REMARK =
+		#{remark,jdbcType=VARCHAR},
 		PROVINCE = #{province,jdbcType=VARCHAR},
 		USER_TYPE = #{userType,jdbcType=VARCHAR}
-		where ID = #{id,jdbcType=VARCHAR}
+		where ID =
+		#{id,jdbcType=VARCHAR}
 	</update>
 
 	<select id="selectByCondition" resultMap="BaseResultMap"
@@ -164,10 +181,12 @@
 					AND USER_CNAME like '%${condition.userCname}%'
 				</if>
 				<if test="condition.endTimeBegin != null">
-					AND END_TIME &gt;= #{condition.endTimeBegin,jdbcType=TIMESTAMP}
+					AND END_TIME &gt;=
+					#{condition.endTimeBegin,jdbcType=TIMESTAMP}
 				</if>
 				<if test="condition.endTimeEnd != null">
-					AND END_TIME &lt;= #{condition.endTimeEnd,jdbcType=TIMESTAMP}
+					AND END_TIME &lt;=
+					#{condition.endTimeEnd,jdbcType=TIMESTAMP}
 				</if>
 			</if>
 		</where>

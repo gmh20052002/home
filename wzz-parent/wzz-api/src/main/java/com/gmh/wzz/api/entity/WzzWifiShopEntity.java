@@ -6,181 +6,182 @@ import java.util.Date;
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
-@ApiModel(value="WzzWifiShopEntity-wifi商铺实体对象")
+@ApiModel(value = "WzzWifiShopEntity-wifi商铺实体对象")
 public class WzzWifiShopEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	@ApiModelProperty(value="主键，必填",required=true)
-    private String id;
+	@ApiModelProperty(value = "主键，必填", required = true)
+	private String id;
 
-	@ApiModelProperty(value="店铺名称，必填",required=true)
-    private String name;
+	@ApiModelProperty(value = "店铺名称，必填", required = true)
+	private String name;
 
-	@ApiModelProperty(value="店铺地址")
-    private String address;
+	@ApiModelProperty(value = "店铺地址")
+	private String address;
 
-	@ApiModelProperty(value="店铺描述")
-    private String remark;
+	@ApiModelProperty(value = "店铺描述")
+	private String remark;
 
-	@ApiModelProperty(value="一级分类",required=true)
-    private String classType1;
+	@ApiModelProperty(value = "一级分类", required = true)
+	private String classType1;
 
-	@ApiModelProperty(value="二级分类")
-    private String classType2;
+	@ApiModelProperty(value = "二级分类")
+	private String classType2;
 
-	@ApiModelProperty(value="工作电话")
-    private String workTel;
+	@ApiModelProperty(value = "工作电话")
+	private String workTel;
 
-	@ApiModelProperty(value="拥有者")
-    private String overUser;
+	@ApiModelProperty(value = "拥有者")
+	private String overUser;
 
-	@ApiModelProperty(value="手机")
-    private String mobileTel;
+	@ApiModelProperty(value = "手机")
+	private String mobileTel;
 
-	@ApiModelProperty(value="代理用户手机号")
-    private String userName;
+	@ApiModelProperty(value = "代理用户手机号")
+	private String userName;
 
-	@ApiModelProperty(value="WIFI唯一标识BSSID，必填",required=true)
-    private String wifi;
+	@ApiModelProperty(value = "WIFI唯一标识BSSID，必填", required = true)
+	private String wifi;
 
-	@ApiModelProperty(value="WIFI密码，必填",required=true)
-    private String wifiPassword;
+	@ApiModelProperty(value = "WIFI密码，必填", required = true)
+	private String wifiPassword;
 
-	@ApiModelProperty(value="楼层")
-    private String floor;
+	@ApiModelProperty(value = "楼层")
+	private String floor;
 
-	@ApiModelProperty(value="WIFI经度坐标")
-    private Float wifiLng;
+	@ApiModelProperty(value = "WIFI经度坐标")
+	private Float wifiLng;
 
-	@ApiModelProperty(value="WIFI纬度坐标")
-    private Float wifiLat;
+	@ApiModelProperty(value = "WIFI纬度坐标")
+	private Float wifiLat;
 
-	@ApiModelProperty(value="WIFI坐标X")
-    private Float wifiX;
+	@ApiModelProperty(value = "WIFI坐标X")
+	private Float wifiX;
 
-	@ApiModelProperty(value="WIFI坐标Y")
-    private Float wifiY;
+	@ApiModelProperty(value = "WIFI坐标Y")
+	private Float wifiY;
 
-	@ApiModelProperty(value="省")
-    private String province;
+	@ApiModelProperty(value = "省")
+	private String province;
 
-	@ApiModelProperty(value="市")
-    private String city;
+	@ApiModelProperty(value = "市")
+	private String city;
 
-	@ApiModelProperty(value="图片地址，多个用逗号分隔")
-    private String picUrl;
+	@ApiModelProperty(value = "图片地址，多个用逗号分隔")
+	private String picUrl;
 
-	@ApiModelProperty(value="缩略图片地址，多个用逗号分隔")
-    private String zoomPicUrl;
+	@ApiModelProperty(value = "缩略图片地址，多个用逗号分隔")
+	private String zoomPicUrl;
 
-	@ApiModelProperty(value="注册时间")
-    private Date createTime;
+	@ApiModelProperty(value = "注册时间")
+	private Date createTime;
 
-	@ApiModelProperty(value="更新时间")
-    private Date updateTime;
+	@ApiModelProperty(value = "更新时间")
+	private Date updateTime;
 
-	@ApiModelProperty(value="创建会员到期时间，可以用于判断是否VIP")
+	@ApiModelProperty(value = "创建会员到期时间，可以用于判断是否VIP")
 	private Date vipEndTime;
-    
-    private Float wifiXMin = null;
-    private Float wifiXMax = null;
-    private Float wifiYMin = null;
-    private Float wifiYMax = null;
+	@ApiModelProperty(value = "是否VIP")
+	private Boolean vip;
+	private Float wifiXMin = null;
+	private Float wifiXMax = null;
+	private Float wifiYMin = null;
+	private Float wifiYMax = null;
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
+	public void setId(String id) {
+		this.id = id == null ? null : id.trim();
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
-    }
+	public void setAddress(String address) {
+		this.address = address == null ? null : address.trim();
+	}
 
-    public String getRemark() {
-        return remark;
-    }
+	public String getRemark() {
+		return remark;
+	}
 
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
+	public void setRemark(String remark) {
+		this.remark = remark == null ? null : remark.trim();
+	}
 
-    public String getWorkTel() {
-        return workTel;
-    }
+	public String getWorkTel() {
+		return workTel;
+	}
 
-    public void setWorkTel(String workTel) {
-        this.workTel = workTel == null ? null : workTel.trim();
-    }
+	public void setWorkTel(String workTel) {
+		this.workTel = workTel == null ? null : workTel.trim();
+	}
 
-    public String getOverUser() {
-        return overUser;
-    }
+	public String getOverUser() {
+		return overUser;
+	}
 
-    public void setOverUser(String overUser) {
-        this.overUser = overUser == null ? null : overUser.trim();
-    }
+	public void setOverUser(String overUser) {
+		this.overUser = overUser == null ? null : overUser.trim();
+	}
 
-    public String getMobileTel() {
-        return mobileTel;
-    }
+	public String getMobileTel() {
+		return mobileTel;
+	}
 
-    public void setMobileTel(String mobileTel) {
-        this.mobileTel = mobileTel == null ? null : mobileTel.trim();
-    }
+	public void setMobileTel(String mobileTel) {
+		this.mobileTel = mobileTel == null ? null : mobileTel.trim();
+	}
 
-    public String getWifi() {
-        return wifi;
-    }
+	public String getWifi() {
+		return wifi;
+	}
 
-    public void setWifi(String wifi) {
-        this.wifi = wifi == null ? null : wifi.trim();
-    }
+	public void setWifi(String wifi) {
+		this.wifi = wifi == null ? null : wifi.trim();
+	}
 
-    public String getWifiPassword() {
-        return wifiPassword;
-    }
+	public String getWifiPassword() {
+		return wifiPassword;
+	}
 
-    public void setWifiPassword(String wifiPassword) {
-        this.wifiPassword = wifiPassword == null ? null : wifiPassword.trim();
-    }
+	public void setWifiPassword(String wifiPassword) {
+		this.wifiPassword = wifiPassword == null ? null : wifiPassword.trim();
+	}
 
-    public String getFloor() {
-        return floor;
-    }
+	public String getFloor() {
+		return floor;
+	}
 
-    public void setFloor(String floor) {
-        this.floor = floor == null ? null : floor.trim();
-    }
+	public void setFloor(String floor) {
+		this.floor = floor == null ? null : floor.trim();
+	}
 
-    public String getProvince() {
-        return province;
-    }
+	public String getProvince() {
+		return province;
+	}
 
-    public void setProvince(String province) {
-        this.province = province == null ? null : province.trim();
-    }
+	public void setProvince(String province) {
+		this.province = province == null ? null : province.trim();
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public void setCity(String city) {
-        this.city = city == null ? null : city.trim();
-    }
+	public void setCity(String city) {
+		this.city = city == null ? null : city.trim();
+	}
 
 	public String getClassType1() {
 		return classType1;
@@ -205,7 +206,7 @@ public class WzzWifiShopEntity implements Serializable {
 	public void setPicUrl(String picUrl) {
 		this.picUrl = picUrl;
 	}
-	
+
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -295,7 +296,7 @@ public class WzzWifiShopEntity implements Serializable {
 	}
 
 	public String getZoomPicUrl() {
-		if(picUrl != null && !"".equals(picUrl)){
+		if (picUrl != null && !"".equals(picUrl)) {
 			zoomPicUrl = picUrl.replaceAll("/showFtpFile", "/showFtpZoomFile");
 		}
 		return zoomPicUrl;
@@ -311,5 +312,13 @@ public class WzzWifiShopEntity implements Serializable {
 
 	public void setVipEndTime(Date vipEndTime) {
 		this.vipEndTime = vipEndTime;
+	}
+
+	public Boolean getVip() {
+		return vip;
+	}
+
+	public void setVip(Boolean vip) {
+		this.vip = vip;
 	}
 }
