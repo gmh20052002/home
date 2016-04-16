@@ -25,22 +25,35 @@
 		<result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
 		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="END_TIME" property="vipEndTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		ID, NAME, ADDRESS, REMARK, CLASS_TYPE1, CLASS_TYPE2,
 		WORK_TEL, OVER_USER, MOBILE_TEL,USER_NAME,
 		WIFI, WIFI_PASSWORD,
-		FLOOR, WIFI_LNG,
+		FLOOR,
+		WIFI_LNG,
 		WIFI_LAT,WIFI_X,
 		WIFI_Y,
-		PROVINCE, CITY, PIC_URL, CREATE_TIME, UPDATE_TIME
+		PROVINCE, CITY, PIC_URL, CREATE_TIME,
+		UPDATE_TIME
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from WZZ_WIFI_SHOP
-		where ID = #{id,jdbcType=VARCHAR}
+		select 
+		a.ID, a.NAME, a.ADDRESS, a.REMARK, a.CLASS_TYPE1,
+		a.CLASS_TYPE2,
+		a.WORK_TEL, a.OVER_USER, a.MOBILE_TEL,a.USER_NAME,
+		a.WIFI,
+		a.WIFI_PASSWORD,
+		a.FLOOR, a.WIFI_LNG,
+		a.WIFI_LAT,a.WIFI_X,
+		a.WIFI_Y,
+		a.PROVINCE, a.CITY,
+		a.PIC_URL, a.CREATE_TIME, a.UPDATE_TIME, b.END_TIME
+		from WZZ_WIFI_SHOP a, WZZ_USER b 
+		where a.ID
+		= #{id,jdbcType=VARCHAR} AND a.USER_NAME=b.USER_NAME
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from
@@ -133,7 +146,8 @@
 		#{mobileTel,jdbcType=VARCHAR},
 		#{userName,jdbcType=VARCHAR},
 		#{wifi,jdbcType=VARCHAR},
-		#{wifiPassword,jdbcType=VARCHAR}, #{floor,jdbcType=VARCHAR},
+		#{wifiPassword,jdbcType=VARCHAR},
+		#{floor,jdbcType=VARCHAR},
 		#{wifiLng,jdbcType=VARCHAR},
 		#{wifiLat,jdbcType=VARCHAR},
 		#{wifiX,jdbcType=VARCHAR},
@@ -375,14 +389,18 @@
 		WIFI_LNG = #{wifiLng,jdbcType=VARCHAR},
 		WIFI_LAT =
 		#{wifiLat,jdbcType=VARCHAR},
-		WIFI_X = #{wifiX,jdbcType=VARCHAR},
+		WIFI_X =
+		#{wifiX,jdbcType=VARCHAR},
 		WIFI_Y =
 		#{wifiY,jdbcType=VARCHAR},
-		PROVINCE = #{province,jdbcType=VARCHAR},
+		PROVINCE =
+		#{province,jdbcType=VARCHAR},
 		CITY =
 		#{city,jdbcType=VARCHAR},
-		PIC_URL = #{picUrl,jdbcType=VARCHAR},
-		CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+		PIC_URL =
+		#{picUrl,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP},
 		UPDATE_TIME =
 		#{updateTime,jdbcType=TIMESTAMP}
 		where ID = #{id,jdbcType=VARCHAR}

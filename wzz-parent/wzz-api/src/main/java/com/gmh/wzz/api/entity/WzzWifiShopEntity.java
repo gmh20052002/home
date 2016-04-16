@@ -77,6 +77,9 @@ public class WzzWifiShopEntity implements Serializable {
 
 	@ApiModelProperty(value="更新时间")
     private Date updateTime;
+
+	@ApiModelProperty(value="创建会员到期时间，可以用于判断是否VIP")
+	private Date vipEndTime;
     
     private Float wifiXMin = null;
     private Float wifiXMax = null;
@@ -300,5 +303,13 @@ public class WzzWifiShopEntity implements Serializable {
 
 	public void setZoomPicUrl(String zoomPicUrl) {
 		this.zoomPicUrl = zoomPicUrl;
+	}
+
+	public Date getVipEndTime() {
+		return vipEndTime;
+	}
+
+	public void setVipEndTime(Date vipEndTime) {
+		this.vipEndTime = vipEndTime;
 	}
 }
