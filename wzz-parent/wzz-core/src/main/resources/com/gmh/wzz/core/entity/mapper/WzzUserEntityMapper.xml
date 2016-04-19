@@ -134,6 +134,9 @@
 			<if test="userType != null">
 				USER_TYPE = #{userType,jdbcType=VARCHAR},
 			</if>
+			<if test="endTime != null">
+				END_TIME = #{endTime,jdbcType=TIMESTAMP},
+			</if>
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
@@ -147,7 +150,8 @@
 		REMARK =
 		#{remark,jdbcType=VARCHAR},
 		PROVINCE = #{province,jdbcType=VARCHAR},
-		USER_TYPE = #{userType,jdbcType=VARCHAR}
+		USER_TYPE = #{userType,jdbcType=VARCHAR},
+		END_TIME = #{endTime,jdbcType=TIMESTAMP}
 		where ID =
 		#{id,jdbcType=VARCHAR}
 	</update>
