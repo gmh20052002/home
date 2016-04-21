@@ -39,9 +39,7 @@
 		PROVINCE, CITY, PIC_URL, CREATE_TIME,
 		UPDATE_TIME
 	</sql>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.String">
-		select
+	<sql id="Base_Column_List_forQ">
 		a.ID, a.NAME, a.ADDRESS, a.REMARK, a.CLASS_TYPE1,
 		a.CLASS_TYPE2,
 		a.WORK_TEL,
@@ -63,11 +61,15 @@
 		false
 		END as
 		VIP
-		from WZZ_WIFI_SHOP a, WZZ_USER b
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List_forQ" />
+		from WZZ_WIFI_SHOP a left join WZZ_USER b on
+		a.MOBILE_TEL=b.USER_NAME
 		where a.ID
 		= #{id,jdbcType=VARCHAR}
-		AND
-		a.USER_NAME=b.USER_NAME
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from
@@ -78,69 +80,70 @@
 	<select id="selectByCondition" resultMap="BaseResultMap"
 		parameterType="com.gmh.wzz.api.entity.WzzWifiShopEntity">
 		select
-		<include refid="Base_Column_List" />
-		from WZZ_WIFI_SHOP
+		<include refid="Base_Column_List_forQ" />
+		from WZZ_WIFI_SHOP a left join WZZ_USER b on
+		a.MOBILE_TEL=b.USER_NAME
 		<where>
 			<if test="condition != null">
 				<if test="condition.id != null">
-					AND ID = #{condition.id,jdbcType=VARCHAR}
+					AND a.ID = #{condition.id,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.name != null">
-					AND NAME like '%${condition.name}%'
+					AND a.NAME like '%${condition.name}%'
 				</if>
 				<if test="condition.address != null">
-					AND ADDRESS like '%${condition.address}%'
+					AND a.ADDRESS like '%${condition.address}%'
 				</if>
 				<if test="condition.remark != null">
-					AND REMARK like '%${condition.remark}%'
+					AND a.REMARK like '%${condition.remark}%'
 				</if>
 				<if test="condition.classType1 != null">
-					AND CLASS_TYPE1 =
+					AND a.CLASS_TYPE1 =
 					#{condition.classType1,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.classType2 != null">
-					AND CLASS_TYPE2 =
+					AND a.CLASS_TYPE2 =
 					#{condition.classType2,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.workTel != null">
-					AND WORK_TEL like '%${condition.workTel}%'
+					AND a.WORK_TEL like '%${condition.workTel}%'
 				</if>
 				<if test="condition.overUser != null">
-					AND OVER_USER like '%${condition.overUser}%'
+					AND a.OVER_USER like '%${condition.overUser}%'
 				</if>
 				<if test="condition.mobileTel != null">
-					AND MOBILE_TEL like '%${condition.mobileTel}%'
+					AND a.MOBILE_TEL like '%${condition.mobileTel}%'
 				</if>
 				<if test="condition.userName != null">
-					AND USER_NAME like '%${condition.userName}%'
+					AND a.USER_NAME like '%${condition.userName}%'
 				</if>
 				<if test="condition.wifi != null">
-					AND WIFI = #{condition.wifi,jdbcType=VARCHAR}
+					AND a.WIFI = #{condition.wifi,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.wifiPassword != null">
-					AND WIFI_PASSWORD =
+					AND a.WIFI_PASSWORD =
 					#{condition.wifiPassword,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.floor != null">
-					AND FLOOR = #{condition.floor,jdbcType=VARCHAR}
+					AND a.FLOOR = #{condition.floor,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.province != null">
-					AND PROVINCE = #{condition.province,jdbcType=VARCHAR}
+					AND a.PROVINCE = #{condition.province,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.city != null">
-					AND CITY = #{condition.city,jdbcType=VARCHAR}
+					AND a.CITY = #{condition.city,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.wifiXMin != null">
-					AND WIFI_X &gt;= #{condition.wifiXMin,jdbcType=VARCHAR}
+					AND a.WIFI_X &gt;= #{condition.wifiXMin,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.wifiYMin != null">
-					AND WIFI_Y &gt;= #{condition.wifiYMin,jdbcType=VARCHAR}
+					AND a.WIFI_Y &gt;= #{condition.wifiYMin,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.wifiXMax != null">
-					AND WIFI_X &lt;= #{condition.wifiXMax,jdbcType=VARCHAR}
+					AND a.WIFI_X &lt;= #{condition.wifiXMax,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.wifiYMax != null">
-					AND WIFI_Y &lt;= #{condition.wifiYMax,jdbcType=VARCHAR}
+					AND a.WIFI_Y &lt;= #{condition.wifiYMax,jdbcType=VARCHAR}
 				</if>
 			</if>
 		</where>

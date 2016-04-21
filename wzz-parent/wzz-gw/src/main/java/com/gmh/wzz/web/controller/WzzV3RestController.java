@@ -37,6 +37,7 @@ public class WzzV3RestController {
 				data = results.getDatas().get(0);
 				data.setEndTime(endTime);
 				wzzService.updateWzzUser(data);
+				data = wzzService.getWzzUserById(data.getId());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

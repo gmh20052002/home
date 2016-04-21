@@ -271,7 +271,7 @@ public class WzzServiceImpl implements WzzService {
 			data.setId(UUID.randomUUID().toString());
 		}
 		wzzWifiShopEntityMapper.insert(data);
-		return data;
+		return wzzWifiShopEntityMapper.selectByPrimaryKey(data.getId());
 	}
 
 	@Override
