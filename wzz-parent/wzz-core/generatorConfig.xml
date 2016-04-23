@@ -23,7 +23,7 @@
 		</javaModelGenerator>
 
 		<sqlMapGenerator targetPackage="com.gmh.wzz.core.entity.mapper"
-			targetProject="wzz-core/src/main/java">
+			targetProject="wzz-core/src/main/resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
@@ -33,16 +33,21 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<!-- <table tableName="WZZ_USER" domainObjectName="WzzUserEntity"
-			enableCountByExample="false" enableUpdateByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-		</table> -->
-		<table tableName="WZZ_USER_FEEDBACK" domainObjectName="WzzUserFBEntity"
+		<table tableName="WZZ_SHOP_WIFI" domainObjectName="WzzSPWifiEntity"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 		</table>
+		<!-- <table tableName="WZZ_USER" domainObjectName="WzzUserEntity"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+		<table tableName="WZZ_USER_FEEDBACK" domainObjectName="WzzUserFBEntity"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table> -->
 		<!-- <table tableName="WZZ_BUSINESS_CLASS" domainObjectName="WzzBusinessClassEntity"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"

@@ -1,6 +1,8 @@
 package com.gmh.wzz.web.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
+import com.gmh.wzz.api.entity.WzzSPWifiEntity;
 import com.gmh.wzz.api.entity.WzzUserEntity;
+import com.gmh.wzz.api.entity.WzzWifiShopEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -44,6 +49,49 @@ public class WzzV3RestController {
 		}
 		return data;
 	}
+
+	@RequestMapping(value = "/v3/findWifisByShopId", method = RequestMethod.GET)
+	@ApiOperation(value = "根据商铺id查询所有的wifi", httpMethod = "GET", response = WzzUserEntity.class)
+	public @ResponseBody List<WzzSPWifiEntity> findShopIdsByWifi(
+			@RequestParam(required = true) @ApiParam(value = "商铺id") String shopId) {
+		List<WzzSPWifiEntity> result = null;
+		try {
+			WzzSPWifiEntity condition = new WzzSPWifiEntity();
+			condition.setShopId(shopId);
+			Page<WzzSPWifiEntity> results = wzzService.findWzzSPWifiEntity(condition, null, 1, 10);
+			if (results != null && results.getTotalSize() > 0 && results.getDatas() != null) {
+				result = results.getDatas();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/*@RequestMapping(value = "/v3/getWifiShopsByWifiBSSID", method = RequestMethod.GET)
+	@ApiOperation(value = "根据WIFI BSSID查询所有WIFI商铺", httpMethod = "GET", response = WzzWifiShopEntity.class)
+	public @ResponseBody List<WzzWifiShopEntity> getWifiShopByWifiSSID(
+			@RequestParam @ApiParam(value = "wifi地址BSSID") String wifiBSSId) {
+		List<WzzWifiShopEntity> results = null;
+		try {
+			Order order = new Order();
+			WzzSPWifiEntity condition1 = new WzzSPWifiEntity();
+			condition1.setWifi(wifiBSSId);
+			Page<WzzSPWifiEntity> wifis = wzzService.findWzzSPWifiEntity(condition1, order, 1, 1000);
+			results = new ArrayList<WzzWifiShopEntity>();
+			if (wifis != null && wifis.getDatas() != null && wifis.getTotalSize() > 0) {
+				for (WzzSPWifiEntity wifi : wifis.getDatas()) {
+					WzzWifiShopEntity tmp = wzzService.getWzzWifiShopById(wifi.getShopId());
+					if (tmp != null) {
+						results.add(tmp);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return results;
+	}*/
 
 	public WzzService getWzzService() {
 		return wzzService;

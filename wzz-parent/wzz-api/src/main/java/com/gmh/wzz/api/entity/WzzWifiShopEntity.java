@@ -2,6 +2,7 @@ package com.gmh.wzz.api.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
@@ -86,6 +87,8 @@ public class WzzWifiShopEntity implements Serializable {
 	private Float wifiXMax = null;
 	private Float wifiYMin = null;
 	private Float wifiYMax = null;
+	@ApiModelProperty(value = "wifi列表，用于商铺有多个wifi")
+	List<WzzSPWifiEntity> wifis = null;
 
 	public String getId() {
 		return id;
@@ -320,5 +323,13 @@ public class WzzWifiShopEntity implements Serializable {
 
 	public void setVip(Boolean vip) {
 		this.vip = vip;
+	}
+
+	public List<WzzSPWifiEntity> getWifis() {
+		return wifis;
+	}
+
+	public void setWifis(List<WzzSPWifiEntity> wifis) {
+		this.wifis = wifis;
 	}
 }

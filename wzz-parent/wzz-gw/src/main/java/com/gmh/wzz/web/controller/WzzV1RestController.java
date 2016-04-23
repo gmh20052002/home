@@ -32,6 +32,7 @@ import com.gmh.wzz.api.entity.MessageCode;
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.Sort;
+import com.gmh.wzz.api.entity.WzzSPWifiEntity;
 import com.gmh.wzz.api.entity.WzzUserEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopDiscEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopEntity;
@@ -73,8 +74,7 @@ public class WzzV1RestController {
 			Order order = new Order();
 			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
 			pageSize = pageSize == null ? 10 : pageSize;
-			results = wzzService.findWzzWifiShop(condition, order, pageIndex,
-					pageSize);
+			results = wzzService.findWzzWifiShop(condition, order, pageIndex, pageSize);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,8 +101,7 @@ public class WzzV1RestController {
 			Order order = new Order();
 			pageIndex = (pageIndex == null || pageIndex <= 0) ? 1 : pageIndex;
 			pageSize = pageSize == null ? 10 : pageSize;
-			results = wzzService.findWzzWifiShop(condition, order, pageIndex,
-					pageSize);
+			results = wzzService.findWzzWifiShop(condition, order, pageIndex, pageSize);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -135,6 +134,16 @@ public class WzzV1RestController {
 			list = wzzService.findWzzWifiShop(condition, order, 1, 1);
 			if (list != null && list.getDatas() != null) {
 				results = list.getDatas().get(0);
+			} else {
+				WzzSPWifiEntity condition1 = new WzzSPWifiEntity();
+				condition1.setWifi(wifiBSSId);
+				Page<WzzSPWifiEntity> wifis = wzzService.findWzzSPWifiEntity(condition1, order, 1, 1);
+				if (wifis != null && wifis.getDatas() != null) {
+					for (WzzSPWifiEntity wifi : wifis.getDatas()) {
+						return wzzService.getWzzWifiShopById(wifi.getShopId());
+					}
+				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,11 +158,11 @@ public class WzzV1RestController {
 		WzzWifiShopEntity result = null;
 		try {
 			result = wzzService.insertWzzWifiShop(data);
-			
-			if(result != null){//添加店铺成功，发送短信
+
+			if (result != null) {// 添加店铺成功，发送短信
 				String mobile = result.getMobileTel();
 				String userName = result.getUserName();
-				if(mobile != null && mobile.equals(userName)){//商户创建
+				if (mobile != null && mobile.equals(userName)) {// 商户创建
 					WzzUserEntity condition = new WzzUserEntity();
 					condition.setUserName(userName);
 					Page<WzzUserEntity> results = wzzService.findWzzUser(condition, null, 1, 10);
@@ -161,7 +170,8 @@ public class WzzV1RestController {
 						WzzUserEntity ret = results.getDatas().get(0);
 						if (ret != null) {
 							String password = ret.getPassword();
-							String msgContent = "【网蜘蛛】连上您的WIFI，让过客成为顾客。WIFI云店铺已经创建成功，您的帐号为"+mobile+"，密码为"+password+"。请妥善保管好本信息。网蜘蛛APP下载地址down.wangzhizhu.com";
+							String msgContent = "【网蜘蛛】连上您的WIFI，让过客成为顾客。WIFI云店铺已经创建成功，您的帐号为" + mobile + "，密码为" + password
+									+ "。请妥善保管好本信息。网蜘蛛APP下载地址down.wangzhizhu.com";
 							try {
 								wzzService.sendMsg(msgContent, mobile);
 							} catch (Exception e) {
@@ -180,8 +190,7 @@ public class WzzV1RestController {
 	@RequestMapping(value = "/v1/WifiShop", method = RequestMethod.PUT)
 	@ApiOperation(value = "修改WIFI商铺", httpMethod = "PUT", response = WzzWifiShopEntity.class)
 	public @ResponseBody WzzWifiShopEntity updateWzzWifiShop(
-			@RequestBody @ApiParam(value = "wifi商铺实体对象") WzzWifiShopEntity data)
-			throws Exception {
+			@RequestBody @ApiParam(value = "wifi商铺实体对象") WzzWifiShopEntity data) throws Exception {
 		WzzWifiShopEntity result = null;
 		try {
 			result = wzzService.updateWzzWifiShop(data);
@@ -199,8 +208,7 @@ public class WzzV1RestController {
 		String randNum = getRandNum(6);
 		String timeOut = wzzService.getSMSServerTimeout();
 
-		String msgContent = "【网蜘蛛】无线智慧城市创新实践者：您本次的短信验证码" + randNum + "请在"
-				+ timeOut + "分钟内输入。";
+		String msgContent = "【网蜘蛛】无线智慧城市创新实践者：您本次的短信验证码" + randNum + "请在" + timeOut + "分钟内输入。";
 		try {
 			wzzService.sendMsg(msgContent, mobilePhone);
 			ret = new MessageCode();
@@ -214,8 +222,7 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/UploadFiles", method = RequestMethod.POST)
 	@ApiOperation(value = "文件上传", httpMethod = "POST", response = String.class)
-	public @ResponseBody Map<String, Object> uploadFile(
-			HttpServletRequest request,
+	public @ResponseBody Map<String, Object> uploadFile(HttpServletRequest request,
 			@RequestParam(required = false) @ApiParam(value = "省份代码") String province,
 			@RequestParam(required = false) @ApiParam(value = "地市代码") String city,
 			@RequestParam(value = "file", required = true) @ApiParam(value = "文件附件对象<MultipartFile>，必填") MultipartFile file) {
@@ -226,12 +233,10 @@ public class WzzV1RestController {
 			// if (files != null) {
 			// for (MultipartFile file : files) {
 			String fileName = file.getOriginalFilename();
-			String uuidFileName = UUID.randomUUID().toString()
-					.replaceAll("-", "")
+			String uuidFileName = UUID.randomUUID().toString().replaceAll("-", "")
 					+ fileName.substring(fileName.lastIndexOf("."));
 			ftpClient.connect(wzzService.getWzz_ftp_url());
-			ftpClient.login(wzzService.getWzz_ftp_userName(),
-					wzzService.getWzz_ftp_password());
+			ftpClient.login(wzzService.getWzz_ftp_userName(), wzzService.getWzz_ftp_password());
 
 			String uploadPath = wzzService.getWzz_ftp_tmpfile_path();
 			if (!StringUtils.isEmpty(province)) {
@@ -270,23 +275,18 @@ public class WzzV1RestController {
 			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("fileUrl",
-				"http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl="
-						+ fileUrls);
+		map.put("fileUrl", "http://www.wangzhizhu.com/gateway/v1/showFtpFile?ftpUrl=" + fileUrls);
 		return map;
 	}
 
 	@RequestMapping(value = "/v1/deleteFtpFile", method = RequestMethod.GET)
 	@ApiOperation(value = "删除ftp文件", httpMethod = "GET")
-	public void deleteFtpFile(
-			HttpServletRequest request,
-			HttpServletResponse response,
+	public void deleteFtpFile(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "ftpUrl", required = true) @ApiParam(value = "ftp文件路径") String ftpUrl) {
 		FTPClient ftpClient = new FTPClient();
 		try {
 			ftpClient.connect(wzzService.getWzz_ftp_url());
-			ftpClient.login(wzzService.getWzz_ftp_userName(),
-					wzzService.getWzz_ftp_password());
+			ftpClient.login(wzzService.getWzz_ftp_userName(), wzzService.getWzz_ftp_password());
 			ftpClient.deleteFile(ftpUrl);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -302,9 +302,7 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/showFtpZoomFile", method = RequestMethod.GET)
 	@ApiOperation(value = "ftp缩略图显示", httpMethod = "GET")
-	public void showFtpZoomPic(
-			HttpServletRequest request,
-			HttpServletResponse response,
+	public void showFtpZoomPic(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "ftpUrl", required = true) @ApiParam(value = "ftp文件路径") String ftpUrl) {
 		FTPClient ftpClient = new FTPClient();
 		InputStream inputStream = null;
@@ -313,10 +311,8 @@ public class WzzV1RestController {
 		File localFile = null;
 		try {
 			ftpClient.connect(wzzService.getWzz_ftp_url());
-			ftpClient.login(wzzService.getWzz_ftp_userName(),
-					wzzService.getWzz_ftp_password());
-			logger.debug("response.getContentType====1=====>"
-					+ response.getContentType());
+			ftpClient.login(wzzService.getWzz_ftp_userName(), wzzService.getWzz_ftp_password());
+			logger.debug("response.getContentType====1=====>" + response.getContentType());
 			if (ftpUrl.toLowerCase().endsWith("bmp")) {
 				response.setContentType("image/bmp");
 			} else if (ftpUrl.toLowerCase().endsWith("gif")) {
@@ -338,25 +334,21 @@ public class WzzV1RestController {
 			ftpClient.setControlEncoding("utf-8");
 			ftpClient.enterLocalPassiveMode();
 			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-			logger.debug("ftpClient.getControlEncoding=========>"
-					+ ftpClient.getControlEncoding());
-			logger.debug("response.getContentType====2=====>"
-					+ response.getContentType());
+			logger.debug("ftpClient.getControlEncoding=========>" + ftpClient.getControlEncoding());
+			logger.debug("response.getContentType====2=====>" + response.getContentType());
 			response.setLocale(Locale.CHINA);
 			logger.debug("response.getLocale=========>" + response.getLocale());
 
 			inputStream = ftpClient.retrieveFileStream(ftpUrl);
 
-			String localPath = request.getSession().getServletContext()
-					.getRealPath("");
+			String localPath = request.getSession().getServletContext().getRealPath("");
 
 			String basePath = localPath + File.separator + "zoom_tmp";
 			File path = new File(basePath);
 			if (!path.exists()) {
 				path.mkdirs();
 			}
-			localFile = new File(basePath + File.separator
-					+ ftpUrl.substring(ftpUrl.lastIndexOf("/")));
+			localFile = new File(basePath + File.separator + ftpUrl.substring(ftpUrl.lastIndexOf("/")));
 			// localFile = new File("D://"
 			// + ftpUrl.substring(ftpUrl.lastIndexOf("/")));
 			// if(!localFile.exists()){
@@ -409,9 +401,7 @@ public class WzzV1RestController {
 
 	@RequestMapping(value = "/v1/showFtpFile", method = RequestMethod.GET)
 	@ApiOperation(value = "ftp文件显示", httpMethod = "GET")
-	public void showFtpPic(
-			HttpServletRequest request,
-			HttpServletResponse response,
+	public void showFtpPic(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "ftpUrl", required = true) @ApiParam(value = "ftp文件路径") String ftpUrl) {
 		FTPClient ftpClient = new FTPClient();
 		// FileInputStream is = null;
@@ -420,10 +410,8 @@ public class WzzV1RestController {
 		// File localFile = null;
 		try {
 			ftpClient.connect(wzzService.getWzz_ftp_url());
-			ftpClient.login(wzzService.getWzz_ftp_userName(),
-					wzzService.getWzz_ftp_password());
-			logger.debug("response.getContentType====1=====>"
-					+ response.getContentType());
+			ftpClient.login(wzzService.getWzz_ftp_userName(), wzzService.getWzz_ftp_password());
+			logger.debug("response.getContentType====1=====>" + response.getContentType());
 			if (ftpUrl.toLowerCase().endsWith("bmp")) {
 				response.setContentType("image/bmp");
 			} else if (ftpUrl.toLowerCase().endsWith("gif")) {
@@ -445,10 +433,8 @@ public class WzzV1RestController {
 			ftpClient.setControlEncoding("utf-8");
 			ftpClient.enterLocalPassiveMode();
 			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-			logger.debug("ftpClient.getControlEncoding=========>"
-					+ ftpClient.getControlEncoding());
-			logger.debug("response.getContentType====2=====>"
-					+ response.getContentType());
+			logger.debug("ftpClient.getControlEncoding=========>" + ftpClient.getControlEncoding());
+			logger.debug("response.getContentType====2=====>" + response.getContentType());
 			response.setLocale(Locale.CHINA);
 			logger.debug("response.getLocale=========>" + response.getLocale());
 			ftpClient.retrieveFile(ftpUrl, response.getOutputStream());
@@ -492,8 +478,7 @@ public class WzzV1RestController {
 			order.setOrderBy("START", Sort.DESC);
 			WzzWifiShopDiscEntity condition = new WzzWifiShopDiscEntity();
 			condition.setShopId(shopId);
-			results = wzzService.findWzzWifiShopDisc(condition, order,
-					pageIndex, pageSize);
+			results = wzzService.findWzzWifiShopDisc(condition, order, pageIndex, pageSize);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -540,8 +525,7 @@ public class WzzV1RestController {
 			order.setOrderBy("START", Sort.DESC);
 			WzzWifiShopJobEntity condition = new WzzWifiShopJobEntity();
 			condition.setShopId(shopId);
-			results = wzzService.findWzzWifiShopJob(condition, order,
-					pageIndex, pageSize);
+			results = wzzService.findWzzWifiShopJob(condition, order, pageIndex, pageSize);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

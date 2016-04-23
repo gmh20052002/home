@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 import com.gmh.wzz.api.entity.WzzBusinessClassEntity;
+import com.gmh.wzz.api.entity.WzzSPWifiEntity;
 import com.gmh.wzz.api.entity.WzzUserDiscEntity;
 import com.gmh.wzz.api.entity.WzzUserEntity;
 import com.gmh.wzz.api.entity.WzzUserFBEntity;
@@ -24,6 +25,7 @@ import com.gmh.wzz.api.entity.WzzWifiShopJobEntity;
 import com.gmh.wzz.api.entity.WzzWifiShopPicEntity;
 import com.gmh.wzz.api.service.WzzService;
 import com.gmh.wzz.core.dao.WzzBusinessClassEntityMapper;
+import com.gmh.wzz.core.dao.WzzSPWifiEntityMapper;
 import com.gmh.wzz.core.dao.WzzUserDiscEntityMapper;
 import com.gmh.wzz.core.dao.WzzUserEntityMapper;
 import com.gmh.wzz.core.dao.WzzUserFBEntityMapper;
@@ -50,6 +52,8 @@ public class WzzServiceImpl implements WzzService {
 	private WzzUserDiscEntityMapper wzzUserDiscEntityMapper;
 	@Autowired
 	private WzzUserFBEntityMapper wzzUserFBEntityMapper;
+	@Autowired
+	private WzzSPWifiEntityMapper wzzSPWifiEntityMapper;
 
 	private String wzz_ftp_url = "120.25.226.197";
 	private String wzz_ftp_userName = "www";
@@ -271,13 +275,30 @@ public class WzzServiceImpl implements WzzService {
 			data.setId(UUID.randomUUID().toString());
 		}
 		wzzWifiShopEntityMapper.insert(data);
-		return wzzWifiShopEntityMapper.selectByPrimaryKey(data.getId());
+		WzzWifiShopEntity result = wzzWifiShopEntityMapper.selectByPrimaryKey(data.getId());
+		if(result != null && data.getWifis() != null){
+			List<WzzSPWifiEntity> wifis = data.getWifis();
+			for(WzzSPWifiEntity record : wifis){
+				record.setShopId(data.getId());
+				wzzSPWifiEntityMapper.insertSelective(record);
+			}
+		}
+		return result;
 	}
 
 	@Override
 	public WzzWifiShopEntity updateWzzWifiShop(WzzWifiShopEntity data) throws Exception {
 		Assert.notNull(data, "修改对象[WzzWifiShopEntity]不能为空");
 		wzzWifiShopEntityMapper.updateByPrimaryKeySelective(data);
+		if(data != null && data.getWifis() != null){
+			WzzSPWifiEntity tmp = new WzzSPWifiEntity();
+			tmp.setShopId(data.getId());
+			wzzSPWifiEntityMapper.delete(tmp);
+			for(WzzSPWifiEntity record : data.getWifis()){
+				record.setShopId(data.getId());
+				wzzSPWifiEntityMapper.insertSelective(record);
+			}
+		}
 		return data;
 	}
 
@@ -541,6 +562,24 @@ public class WzzServiceImpl implements WzzService {
 		page.setPageIndex(pageIndex);
 		page.setPageSize(pageSize);
 		wzzUserFBEntityMapper.selectByCondition(condition, order, page);
+		return page;
+	}
+
+	public WzzSPWifiEntityMapper getWzzSPWifiEntityMapper() {
+		return wzzSPWifiEntityMapper;
+	}
+
+	public void setWzzSPWifiEntityMapper(WzzSPWifiEntityMapper wzzSPWifiEntityMapper) {
+		this.wzzSPWifiEntityMapper = wzzSPWifiEntityMapper;
+	}
+
+	@Override
+	public Page<WzzSPWifiEntity> findWzzSPWifiEntity(WzzSPWifiEntity condition, Order order, int pageIndex,
+			int pageSize) throws Exception {
+		Page<WzzSPWifiEntity> page = new Page<WzzSPWifiEntity>();
+		page.setPageIndex(pageIndex);
+		page.setPageSize(pageSize);
+		wzzSPWifiEntityMapper.selectByCondition(condition, order, page);
 		return page;
 	}
 }
