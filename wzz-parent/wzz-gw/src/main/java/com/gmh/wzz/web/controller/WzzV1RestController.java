@@ -132,12 +132,13 @@ public class WzzV1RestController {
 			condition.setWifi(wifiBSSId);
 			Order order = new Order();
 			list = wzzService.findWzzWifiShop(condition, order, 1, 1);
-			if (list != null && list.getDatas() != null) {
+			if (list != null && list.getDatas() != null && !list.getDatas().isEmpty()) {
 				results = list.getDatas().get(0);
 			} else {
+				Order order1 = new Order();
 				WzzSPWifiEntity condition1 = new WzzSPWifiEntity();
 				condition1.setWifi(wifiBSSId);
-				Page<WzzSPWifiEntity> wifis = wzzService.findWzzSPWifiEntity(condition1, order, 1, 1);
+				Page<WzzSPWifiEntity> wifis = wzzService.findWzzSPWifiEntity(condition1, order1, 1, 1);
 				if (wifis != null && wifis.getDatas() != null) {
 					for (WzzSPWifiEntity wifi : wifis.getDatas()) {
 						return wzzService.getWzzWifiShopById(wifi.getShopId());

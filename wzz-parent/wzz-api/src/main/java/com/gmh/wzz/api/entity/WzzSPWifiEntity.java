@@ -5,10 +5,13 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "WzzSPWifiEntity-商铺wifi对象")
 public class WzzSPWifiEntity {
-	@ApiModelProperty(value = "商铺id")
+	@ApiModelProperty(value = "商铺id，新增可以为空")
     private String shopId;
 
-	@ApiModelProperty(value = "wifiBSSID")
+	@ApiModelProperty(value = "wifi-ssid，可以为空")
+    private String ssid;
+	
+	@ApiModelProperty(value = "wifiBSSID，唯一标识")
     private String wifi;
 
 	@ApiModelProperty(value = "wifi密码")
@@ -37,4 +40,12 @@ public class WzzSPWifiEntity {
     public void setWifiPassword(String wifiPassword) {
         this.wifiPassword = wifiPassword == null ? null : wifiPassword.trim();
     }
+
+	public String getSsid() {
+		return ssid;
+	}
+
+	public void setSsid(String ssid) {
+		this.ssid = ssid;
+	}
 }

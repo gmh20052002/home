@@ -30,14 +30,11 @@ import org.slf4j.LoggerFactory;
 import com.gmh.wzz.api.entity.Order;
 import com.gmh.wzz.api.entity.Page;
 
-@Intercepts({
-		@Signature(method = "prepare", type = StatementHandler.class, args = { Connection.class }),
-		@Signature(method = "query", type = Executor.class, args = {
-				MappedStatement.class, Object.class, RowBounds.class,
-				ResultHandler.class }) })
+@Intercepts({ @Signature(method = "prepare", type = StatementHandler.class, args = { Connection.class }),
+		@Signature(method = "query", type = Executor.class, args = { MappedStatement.class, Object.class,
+				RowBounds.class, ResultHandler.class }) })
 public class MybatisSpringPageInterceptor implements Interceptor {
-	private static final Logger log = LoggerFactory
-			.getLogger(MybatisSpringPageInterceptor.class);
+	private static final Logger log = LoggerFactory.getLogger(MybatisSpringPageInterceptor.class);
 
 	public static final String MYSQL = "mysql";
 	public static final String ORACLE = "oracle";
@@ -53,11 +50,9 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 	}
 
 	public void setDatabaseType(String databaseType) {
-		if (!databaseType.equalsIgnoreCase(MYSQL)
-				&& !databaseType.equalsIgnoreCase(ORACLE)) {
+		if (!databaseType.equalsIgnoreCase(MYSQL) && !databaseType.equalsIgnoreCase(ORACLE)) {
 			throw new PageNotSupportException(
-					"Page not support for the type of database, database type ["
-							+ databaseType + "]");
+					"Page not support for the type of database, database type [" + databaseType + "]");
 		}
 		this.databaseType = databaseType;
 	}
@@ -81,10 +76,8 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 		if (invocation.getTarget() instanceof StatementHandler) { // 控制SQL和查询总数的地方
 			Page page = pageThreadLocal.get();
 			Order order = orderThreadLocal.get();
-			RoutingStatementHandler handler = (RoutingStatementHandler) invocation
-					.getTarget();
-			StatementHandler delegate = (StatementHandler) ReflectUtil
-					.getFieldValue(handler, "delegate");
+			RoutingStatementHandler handler = (RoutingStatementHandler) invocation.getTarget();
+			StatementHandler delegate = (StatementHandler) ReflectUtil.getFieldValue(handler, "delegate");
 			BoundSql boundSql = delegate.getBoundSql();
 			if (page == null) { // 不是分页查询
 				if (order != null) {
@@ -103,10 +96,9 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 				}
 			} else {
 				Object parameterObj = boundSql.getParameterObject();
-				MappedStatement mappedStatement = (MappedStatement) ReflectUtil
-						.getFieldValue(delegate, "mappedStatement");
-				queryTotalRecord(page, parameterObj, mappedStatement,
-						connection);
+				MappedStatement mappedStatement = (MappedStatement) ReflectUtil.getFieldValue(delegate,
+						"mappedStatement");
+				queryTotalRecord(page, parameterObj, mappedStatement, connection);
 			}
 
 			String sql = boundSql.getSql();
@@ -121,29 +113,28 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 
 			return invocation.proceed();
 		} else { // 查询结果的地方
-			// 获取是否有分页Page对象
-			Page<?> page = findPageObject(invocation.getArgs()[1]);
-			// 获取是否有排序Order对象
-			Order order = findOrderObject(invocation.getArgs()[1]);
-			if (order != null) {
-				orderThreadLocal.set(order);
-			}
-			if (page == null) {
-				if (log.isTraceEnabled()) {
-					log.trace("没有Page对象作为参数, 不是分页查询.");
-				}
-				return invocation.proceed();
-			} else {
-				if (log.isTraceEnabled()) {
-					log.trace("检测到分页Page对象, 使用分页查询.");
-				}
-			}
-			// 设置真正的parameterObj
-			invocation.getArgs()[1] = extractRealParameterObject(invocation
-					.getArgs()[1]);
-
-			pageThreadLocal.set(page);
 			try {
+				// 获取是否有分页Page对象
+				Page<?> page = findPageObject(invocation.getArgs()[1]);
+				// 获取是否有排序Order对象
+				Order order = findOrderObject(invocation.getArgs()[1]);
+				if (order != null) {
+					orderThreadLocal.set(order);
+				}
+				if (page == null) {
+					if (log.isTraceEnabled()) {
+						log.trace("没有Page对象作为参数, 不是分页查询.");
+					}
+					return invocation.proceed();
+				} else {
+					if (log.isTraceEnabled()) {
+						log.trace("检测到分页Page对象, 使用分页查询.");
+					}
+				}
+				// 设置真正的parameterObj
+				invocation.getArgs()[1] = extractRealParameterObject(invocation.getArgs()[1]);
+
+				pageThreadLocal.set(page);
 				Object resultObj = invocation.proceed(); // Executor.query(..)
 				if (resultObj instanceof List) {
 					/* @SuppressWarnings({ "unchecked", "rawtypes" }) */
@@ -225,11 +216,9 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 		return parameterObj;
 	}
 
-	protected void prepareAndCheckDatabaseType(Connection connection)
-			throws SQLException {
+	protected void prepareAndCheckDatabaseType(Connection connection) throws SQLException {
 		if (databaseType == null) {
-			String productName = connection.getMetaData()
-					.getDatabaseProductName();
+			String productName = connection.getMetaData().getDatabaseProductName();
 			if (log.isTraceEnabled()) {
 				log.trace("Database productName: " + productName);
 			}
@@ -240,8 +229,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 				databaseType = ORACLE;
 			} else {
 				throw new PageNotSupportException(
-						"Page not support for the type of database, database product name ["
-								+ productName + "]");
+						"Page not support for the type of database, database product name [" + productName + "]");
 			}
 			if (log.isInfoEnabled()) {
 				log.info("自动检测到的数据库类型为: " + databaseType);
@@ -269,9 +257,9 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 	}
 
 	protected String buildOrderSql(Order order, String sql) {
-		if(order.getOrderBy() != null && !"".equals(order.getOrderBy())){
+		if (order.getOrderBy() != null && !"".equals(order.getOrderBy())) {
 			return new StringBuilder(sql).append(" ORDER BY " + order.getOrderBy()).toString();
-		}else{
+		} else {
 			return sql;
 		}
 	}
@@ -289,8 +277,8 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 	protected String buildMysqlPageSql(Page<?> page, String sql) {
 		// 计算第一条记录的位置，Mysql中记录的位置是从0开始的。
 		int offset = (page.getPageIndex() - 1) * page.getPageSize();
-		return new StringBuilder(sql).append(" limit ").append(offset)
-				.append(",").append(page.getPageSize()).toString();
+		return new StringBuilder(sql).append(" limit ").append(offset).append(",").append(page.getPageSize())
+				.toString();
 	}
 
 	/**
@@ -307,9 +295,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 		// 计算第一条记录的位置，Oracle分页是通过rownum进行的，而rownum是从1开始的
 		int offset = (page.getPageIndex() - 1) * page.getPageSize() + 1;
 		StringBuilder sb = new StringBuilder(sql);
-		sb.insert(0, "select u.*, rownum r from (")
-				.append(") u where rownum < ")
-				.append(offset + page.getPageSize());
+		sb.insert(0, "select u.*, rownum r from (").append(") u where rownum < ").append(offset + page.getPageSize());
 		sb.insert(0, "select * from (").append(") where r >= ").append(offset);
 		return sb.toString();
 	}
@@ -326,9 +312,8 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 	 * @param connection
 	 * @throws SQLException
 	 */
-	protected void queryTotalRecord(Page<?> page, Object parameterObject,
-			MappedStatement mappedStatement, Connection connection)
-			throws SQLException {
+	protected void queryTotalRecord(Page<?> page, Object parameterObject, MappedStatement mappedStatement,
+			Connection connection) throws SQLException {
 		BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
 		String sql = boundSql.getSql();
 		String countSql = this.buildCountSql(sql);
@@ -336,13 +321,11 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 			log.debug("分页时, 生成countSql: " + countSql);
 		}
 
-		List<ParameterMapping> parameterMappings = boundSql
-				.getParameterMappings();
-		BoundSql countBoundSql = new BoundSql(
-				mappedStatement.getConfiguration(), countSql,
-				parameterMappings, parameterObject);
-		ParameterHandler parameterHandler = new DefaultParameterHandler(
-				mappedStatement, parameterObject, countBoundSql);
+		List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+		BoundSql countBoundSql = new BoundSql(mappedStatement.getConfiguration(), countSql, parameterMappings,
+				parameterObject);
+		ParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, parameterObject,
+				countBoundSql);
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -428,8 +411,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 		 */
 		private static Field getField(Object obj, String fieldName) {
 			Field field = null;
-			for (Class<?> clazz = obj.getClass(); clazz != Object.class; clazz = clazz
-					.getSuperclass()) {
+			for (Class<?> clazz = obj.getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
 				try {
 					field = clazz.getDeclaredField(fieldName);
 					break;
@@ -450,8 +432,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 		 * @param fieldValue
 		 *            目标值
 		 */
-		public static void setFieldValue(Object obj, String fieldName,
-				String fieldValue) {
+		public static void setFieldValue(Object obj, String fieldName, String fieldValue) {
 			Field field = ReflectUtil.getField(obj, fieldName);
 			if (field != null) {
 				try {

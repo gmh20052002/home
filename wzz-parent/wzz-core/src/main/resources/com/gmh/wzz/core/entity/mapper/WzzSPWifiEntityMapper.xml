@@ -3,15 +3,18 @@
 <mapper namespace="com.gmh.wzz.core.dao.WzzSPWifiEntityMapper">
 	<resultMap id="BaseResultMap" type="com.gmh.wzz.api.entity.WzzSPWifiEntity">
 		<result column="SHOP_ID" property="shopId" jdbcType="VARCHAR" />
+		<result column="SSID" property="ssid" jdbcType="VARCHAR" />
 		<result column="WIFI" property="wifi" jdbcType="VARCHAR" />
 		<result column="WIFI_PASSWORD" property="wifiPassword"
 			jdbcType="VARCHAR" />
 	</resultMap>
 	<insert id="insert" parameterType="com.gmh.wzz.api.entity.WzzSPWifiEntity">
 		insert into WZZ_SHOP_WIFI
-		(SHOP_ID, WIFI, WIFI_PASSWORD
+		(SHOP_ID, SSID, WIFI, WIFI_PASSWORD
 		)
-		values (#{shopId,jdbcType=VARCHAR},
+		values
+		(#{shopId,jdbcType=VARCHAR},
+		#{ssid,jdbcType=VARCHAR},
 		#{wifi,jdbcType=VARCHAR},
 		#{wifiPassword,jdbcType=VARCHAR}
 		)
@@ -21,6 +24,9 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="shopId != null">
 				SHOP_ID,
+			</if>
+			<if test="ssid != null">
+				SSID,
 			</if>
 			<if test="wifi != null">
 				WIFI,
@@ -33,6 +39,9 @@
 			<if test="shopId != null">
 				#{shopId,jdbcType=VARCHAR},
 			</if>
+			<if test="ssid != null">
+				#{ssid,jdbcType=VARCHAR},
+			</if>
 			<if test="wifi != null">
 				#{wifi,jdbcType=VARCHAR},
 			</if>
@@ -44,6 +53,9 @@
 	<delete id="delete" parameterType="com.gmh.wzz.api.entity.WzzSPWifiEntity">
 		delete from WZZ_SHOP_WIFI
 		<where>
+			<if test="ssid != null">
+				AND SSID = #{ssid,jdbcType=VARCHAR}
+			</if>
 			<if test="wifi != null">
 				AND WIFI = #{wifi,jdbcType=VARCHAR}
 			</if>
@@ -62,6 +74,9 @@
 			<if test="condition != null">
 				<if test="condition.shopId != null">
 					AND SHOP_ID = #{condition.shopId,jdbcType=VARCHAR}
+				</if>
+				<if test="condition.ssid != null">
+					AND SSID = #{condition.ssid,jdbcType=VARCHAR}
 				</if>
 				<if test="condition.wifi != null">
 					AND WIFI = #{condition.wifi,jdbcType=VARCHAR}
